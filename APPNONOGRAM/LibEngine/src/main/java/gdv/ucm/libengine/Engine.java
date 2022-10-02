@@ -1,4 +1,8 @@
 package gdv.ucm.libengine;
 
-public class Engine {
+public interface Engine {
+    Graphics getGraphics();
+    Input getInput();
+    Audio getAudio();
 }
+
