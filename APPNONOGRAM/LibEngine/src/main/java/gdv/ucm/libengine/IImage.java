@@ -1,6 +1,6 @@
 package gdv.ucm.libengine;
 
-public interface Image {
+public interface IImage {
     int getWidth();
     int getHeight();
 }

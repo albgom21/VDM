@@ -1,5 +1,7 @@
 package gdv.ucm.liblogica;
 
+import gdv.ucm.libengine.IGraphics;
+
 public class Board {
    // Attributes
    private int width, height;
@@ -34,6 +36,6 @@ public class Board {
          }
       }
    }
-
+   void render(IGraphics g){}
    //HACER CARGA DE RECURSOS EN EL MÓDULO DE LÓGICAS
 }

@@ -1,7 +1,5 @@
 package gdv.ucm.liblogica;
 
-import javafx.util.Pair;
-
 public class Hints {
     // Attributes
     private int horizontalHints[][];
@@ -42,7 +40,7 @@ public class Hints {
         }
     }
 
-    public Pair<Integer,Integer> Check(Board b)
+    public Pair Check(Board b)
     {
         int counterBlue = 0;
         int counterRed = 0;
@@ -66,7 +64,7 @@ public class Hints {
             }
         }
 
-        Pair<Integer,Integer> a = new Pair<>(counterBlue,counterRed);
+        Pair a = new Pair(counterBlue,counterRed);
         return a;
     }
 }

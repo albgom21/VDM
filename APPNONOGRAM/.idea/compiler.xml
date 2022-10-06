@@ -2,6 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
+      <module name="APPNONOGRAM.AndroidE" target="11" />
+      <module name="APPNONOGRAM.AndroidEngine" target="11" />
       <module name="APPNONOGRAM.app" target="11" />
       <module name="APPNONOGRAM.LibEngineANDROID" target="11" />
     </bytecodeTargetLevel>

@@ -1,5 +1,7 @@
 package gdv.ucm.liblogica;
 
+import gdv.ucm.libengine.IGraphics;
+
 public class Cell {
     // Attributes
     private int x;
@@ -46,4 +48,7 @@ public class Cell {
     public CellState getState() {
         return state;
     }
+
+    void render(IGraphics g){}
+
 }
