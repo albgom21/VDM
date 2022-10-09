@@ -5,18 +5,19 @@ import java.awt.Font;
 import java.awt.Image;
 
 public interface IGraphics {
-    Image newImage(String name);
+
+    IImage newImage(String name);
     IFont newFont(String filename,int size,boolean isBold);
 
     void translate(int x, int y);
-    void scale(int x, int y);
+    void scale(double x, double y);
 
     void save();
     void restore();
 
-    //void drawImage(Image image);
+    void drawImage(IImage image, int x, int y);
     void setColor(Color color);
-    void clear(int color);
+    void clear(Color color);
 
     void fillSquare(int cx, int cy, int side);
     void drawSquare(int cx, int cy, int side);
@@ -27,6 +28,6 @@ public interface IGraphics {
     int getWidth();
     int getHeight();
     //Setters
-    void setResolution();
-    void setFont();
+    void setResolution(int w, int h);
+    void setFont(IFont font);
 }
