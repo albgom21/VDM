@@ -125,7 +125,7 @@ public class GraphicsPC implements IGraphics {
 
     @Override
     public void drawLine(int initX, int initY, int endX, int endY) {
-        this.graphics2D.drawLine(initX,initY,endX,endY); //REVISAR
+        this.graphics2D.drawLine(initX,initY,endX,endY);
     }
 
     @Override

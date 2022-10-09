@@ -10,7 +10,7 @@ public class SceneTest implements IState {
     private Circulito circulito;
     private Circulito circulote;
     private EnginePC engine;
-    SceneTest(EnginePC engine){
+    public SceneTest(EnginePC engine){
         this.engine = engine;
         this.circulito = new Circulito(50,50,10,150,engine.getGraphics().getWidth());
         engine.getGraphics().setColor(Color.blue);
