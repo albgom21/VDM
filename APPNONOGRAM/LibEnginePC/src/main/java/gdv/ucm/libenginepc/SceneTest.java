@@ -3,10 +3,10 @@ package gdv.ucm.libenginepc;
 import java.awt.Color;
 
 import gdv.ucm.libengine.IEngine;
-import gdv.ucm.libengine.IScene;
+import gdv.ucm.libengine.IState;
 import gdv.ucm.liblogica.Circulito;
 
-public class SceneTest implements IScene {
+public class SceneTest implements IState {
     private Circulito circulito;
     private Circulito circulote;
     private EnginePC engine;

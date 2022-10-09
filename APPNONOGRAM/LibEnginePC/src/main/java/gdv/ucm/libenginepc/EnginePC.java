@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IGraphics;
-import gdv.ucm.libengine.IScene;
+import gdv.ucm.libengine.IState;
 
 public class EnginePC implements Runnable, IEngine {
     private Graphics2D graphics2D;
@@ -17,7 +17,7 @@ public class EnginePC implements Runnable, IEngine {
     private JFrame myView;
     private Thread renderThread;
     private boolean running;
-    private IScene scene;
+    private IState scene;
 
     private GraphicsPC graphics;
 
@@ -129,7 +129,7 @@ public class EnginePC implements Runnable, IEngine {
     }
 
     @Override
-    public void setScene(IScene scene) {
+    public void setScene(IState scene) {
         this.scene = scene;
     }
 }

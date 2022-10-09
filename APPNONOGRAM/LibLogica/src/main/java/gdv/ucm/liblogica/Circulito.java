@@ -3,7 +3,6 @@ package gdv.ucm.liblogica;
 
 import java.awt.Color;
 
-import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IInterface;
 

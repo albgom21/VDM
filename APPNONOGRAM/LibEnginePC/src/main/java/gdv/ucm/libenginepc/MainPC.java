@@ -2,7 +2,7 @@ package gdv.ucm.libenginepc;
 
 import javax.swing.JFrame;
 
-public class MainActivity {
+class MainPC {
 
     public static void main(String[] args) {
         JFrame renderView = new JFrame("Mi aplicación");
