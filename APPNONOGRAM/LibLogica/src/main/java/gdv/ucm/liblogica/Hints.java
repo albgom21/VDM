@@ -51,7 +51,7 @@ public class Hints {
                 Cell cell = b.getCell(i,j);
                 if(sol)
                 {
-                    if (cell.getState() == CellState.GREY || cell.getState() == CellState.WHITE)
+                    if (cell.getState() == CellState.GRAY || cell.getState() == CellState.WHITE)
                         counterBlue++;
                 }
                 else // !Sol

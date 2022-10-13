@@ -1,5 +1,7 @@
 package gdv.ucm.liblogica;
 
+import java.awt.Color;
+
 import gdv.ucm.libengine.IGraphics;
 
 public class Cell {
@@ -17,7 +19,7 @@ public class Cell {
         this.x = x;
         this.y = y;
         this.isSol = false;
-        this.state = CellState.GREY;
+        this.state = CellState.GRAY;
     }
 
     // Setters
@@ -49,6 +51,17 @@ public class Cell {
         return state;
     }
 
-    void render(IGraphics g){}
+    void render(IGraphics g){
+
+        if(state.equals(CellState.GRAY))
+            g.setColor(Color.gray);
+        else if(state.equals(CellState.BLUE))
+            g.setColor(Color.blue);
+        else if(state.equals(CellState.RED))
+            g.setColor(Color.red);
+        else if(state.equals(CellState.WHITE))
+            g.setColor(Color.white);
+        g.fillSquare((1920/3)+(this.x *52),(1080/3)+(this.y*52),50);
+    }
 
 }

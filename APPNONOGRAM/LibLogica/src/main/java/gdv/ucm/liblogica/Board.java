@@ -36,6 +36,12 @@ public class Board {
          }
       }
    }
-   void render(IGraphics g){}
+   public void render(IGraphics g){
+      for (int i = 0; i < width; ++i) {
+         for (int j = 0; j < height; ++j) {
+            board[i][j].render(g);
+         }
+      }
+   }
    //HACER CARGA DE RECURSOS EN EL MÓDULO DE LÓGICAS
 }

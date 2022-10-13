@@ -4,8 +4,8 @@
     <bytecodeTargetLevel target="1.7">
       <module name="APPNONOGRAM.AndroidE" target="11" />
       <module name="APPNONOGRAM.AndroidEngine" target="11" />
-      <module name="APPNONOGRAM.app" target="1.8" />
-      <module name="APPNONOGRAM.LibEngineANDROID" target="1.8" />
+      <module name="APPNONOGRAM.app" target="11" />
+      <module name="APPNONOGRAM.LibEngineANDROID" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

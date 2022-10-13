@@ -53,7 +53,7 @@ public class EnginePC implements Runnable, IEngine {
         }
         // Si el Thread se pone en marcha
         // muy rápido, la vista podría todavía no estar inicializada.
-        while(this.running && this.getGraphics().getWidth() == 0);
+        while(this.running && this.myView.getWidth() == 0);
         // Espera activa. Sería más elegante al menos dormir un poco.
         long lastFrameTime = System.nanoTime();
         long informePrevio = lastFrameTime; // Informes de FPS
@@ -87,6 +87,7 @@ public class EnginePC implements Runnable, IEngine {
 
     protected void update(double deltaTime) {
         this.scene.update(deltaTime);
+
     }
 
     protected void render() {

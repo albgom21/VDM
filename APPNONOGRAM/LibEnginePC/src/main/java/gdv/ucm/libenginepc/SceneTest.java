@@ -4,28 +4,27 @@ import java.awt.Color;
 
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IState;
+import gdv.ucm.liblogica.Board;
 import gdv.ucm.liblogica.Circulito;
 
 public class SceneTest implements IState {
     private Circulito circulito;
-    private Circulito circulote;
     private EnginePC engine;
+    private Board board;
     public SceneTest(EnginePC engine){
         this.engine = engine;
-        this.circulito = new Circulito(50,50,10,150,engine.getGraphics().getWidth());
-        engine.getGraphics().setColor(Color.blue);
+        //this.circulito = new Circulito(1920/3,1080/3,50,150,engine.getGraphics().getWidth(), Color.blue);
+        this.board = new Board(9,9);
 
-        this.circulote = new Circulito(50,50,50, 50, engine.getGraphics().getWidth());
     }
     @Override
     public void update(double deltaTime) {
-        this.circulito.update(deltaTime);
-        this.circulote.update(deltaTime);
+        //this.circulito.update(deltaTime);
     }
 
     @Override
     public void render(IEngine engine) {
-        this.circulito.render(engine.getGraphics());
-        this.circulote.render(engine.getGraphics());
+        //this.circulito.render(engine.getGraphics());
+        this.board.render(engine.getGraphics());
     }
 }

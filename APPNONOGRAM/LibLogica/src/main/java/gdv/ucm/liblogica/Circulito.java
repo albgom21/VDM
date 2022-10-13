@@ -8,46 +8,38 @@ import gdv.ucm.libengine.IInterface;
 
 public class Circulito implements IInterface {
 
-    private int x;
-    private int y;
+    private float x;
+    private float y;
     private int side;
     private int speed;
 
     private Color color;
 
     private int maxX;
-    public Circulito(int x, int y, int r, int speed, int maxX){
+    public Circulito(int x, int y, int side, int speed, int maxX, Color color){
         this.x=x;
         this.y=y;
-        this.side = r;
+        this.side = side;
         this.speed = speed;
         this.maxX = maxX;
+        this.color = color;
     }
 
 
     @Override
     public void render(IGraphics g) {
         g.setColor(this.color);
-        g.drawSquare(this.x,this.y,this.side);
+
+        for (int i = 0; i < 10; ++i) {
+            for (int j = 0; j < 10; ++j) {
+              g.fillSquare((int)this.x +(i*52),(int)this.y+(j*52),this.side);
+            }
+        }
+
     }
 
     @Override
     public void update(Double deltaTime) {
-        int maxX = this.maxX-this.side;
 
-        this.x += this.speed * deltaTime;
-        this.y += 2*deltaTime;
-        while(this.x < 0 || this.x > maxX-this.side) {
-            // Vamos a pintar fuera de la pantalla. Rectificamos.
-            if (this.x < 0) {
-                // Nos salimos por la izquierda. Rebotamos.
-                this.x = -this.x;
-                this.speed *= -1;
-            } else if (this.x > maxX-this.side) {
-                // Nos salimos por la derecha. Rebotamos
-                this.x = 2 * (maxX-this.side) - this.x;
-                this.speed *= -1;
-            }
-        }
     }
 }
