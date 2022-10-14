@@ -1,20 +1,15 @@
-package gdv.ucm.libengineandroid;
+package com.example.libenginea;
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.graphics.fonts.Font;
-import android.media.Image;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -25,13 +20,18 @@ import gdv.ucm.libengine.IImage;
 
 public class GraphicsA implements IGraphics {
     private SurfaceView myView;
+    private SurfaceHolder holder;
     private Paint paint;
     private Canvas canvas;
     private AssetManager mgr;
 
-    GraphicsA(SurfaceView myView, Paint paint){
+    GraphicsA(SurfaceView myView, Canvas canvas){
         this.myView = myView;
-        this.paint = paint;
+        this.holder = this.myView.getHolder();
+        this.paint = new Paint();
+        this.paint.setColor(0xFFFFFF);
+        this.canvas = canvas;
+
         //this.mgr = getAssets();
     }
 
@@ -139,9 +139,7 @@ public class GraphicsA implements IGraphics {
 
     @Override
     public void clear(IColor color) {
-        this.paint.setColor(getColor(color));
-        Rect rect = new Rect(0,0, this.getWidth(), this.getHeight());
-        this.canvas.drawRect(rect,this.paint);
+        this.canvas.drawColor(getColor(color));
     }
 
     @Override

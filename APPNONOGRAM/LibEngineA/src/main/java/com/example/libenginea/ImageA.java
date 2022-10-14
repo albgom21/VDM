@@ -1,7 +1,6 @@
-package gdv.ucm.libengineandroid;
+package com.example.libenginea;
 
 import android.graphics.Bitmap;
-import android.media.Image; //Preguntar si Image o Bitmap
 
 import gdv.ucm.libengine.IImage;
 

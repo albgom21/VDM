@@ -16,8 +16,8 @@ public interface IGraphics {
     void restore();
 
     void drawImage(IImage image, int x, int y);
-    void setColor(Color color);
-    void clear(Color color);
+    void setColor(IColor color);
+    void clear(IColor color);
 
     void fillSquare(int cx, int cy, int side);
     void drawSquare(int cx, int cy, int side);

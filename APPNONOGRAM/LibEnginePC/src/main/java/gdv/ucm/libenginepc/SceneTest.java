@@ -5,10 +5,8 @@ import java.awt.Color;
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IState;
 import gdv.ucm.liblogica.Board;
-import gdv.ucm.liblogica.Circulito;
 
 public class SceneTest implements IState {
-    private Circulito circulito;
     private EnginePC engine;
     private Board board;
     public SceneTest(EnginePC engine){

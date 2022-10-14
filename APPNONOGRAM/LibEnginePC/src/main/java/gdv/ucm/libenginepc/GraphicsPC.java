@@ -13,6 +13,7 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import gdv.ucm.libengine.IColor;
 import gdv.ucm.libengine.IFont;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IImage;
@@ -71,7 +72,10 @@ public class GraphicsPC implements IGraphics {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        font = font.deriveFont(Font.BOLD, size);
+
+        if(isBold)
+            font = font.deriveFont(Font.BOLD, size);
+
         FontPC fontPC= new FontPC(font);
         return fontPC;
     }
@@ -102,13 +106,27 @@ public class GraphicsPC implements IGraphics {
     }
 
     @Override
-    public void setColor(Color color) {
-        this.graphics2D.setColor(color);
+    public void setColor(IColor color) {
+        this.graphics2D.setColor(getColor(color));
+    }
+
+    Color getColor(IColor color)
+    {
+        if(color == IColor.GRAY)
+            return Color.gray;
+        else if(color == IColor.WHITE)
+            return Color.white;
+        else if(color == IColor.BLACK)
+            return Color.black;
+        else if(color == IColor.BLUE)
+            return Color.blue;
+        else //RED
+            return Color.red;
     }
 
     @Override
-    public void clear(Color color) {
-        this.graphics2D.setColor(color);
+    public void clear(IColor color) {
+        this.graphics2D.setColor(getColor(color));
         this.graphics2D.fillRect(0,0, this.getWidth(), this.getHeight());
     }
 

@@ -1,49 +1,38 @@
-package gdv.ucm.libenginepc;
+package com.example.libenginea;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferStrategy;
-
-import javax.swing.JFrame;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 import gdv.ucm.libengine.IColor;
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IState;
 
-public class EnginePC implements Runnable, IEngine {
-    private Graphics2D graphics2D;
-    private BufferStrategy bufferStrategy;
-    private JFrame myView;
+public class EngineA implements Runnable, IEngine {
+    private SurfaceView myView;
+    private SurfaceHolder holder;
+    private Canvas canvas;
+    private Paint paint;
+
     private Thread renderThread;
     private boolean running;
     private IState scene;
 
-    private GraphicsPC graphics;
+    private GraphicsA graphics;
 
-    public EnginePC(JFrame myView){
+    public EngineA(SurfaceView myView){
         // Intentamos crear el buffer strategy con 2 buffers.
         this.myView = myView;
-        int intentos = 100;
-        while(intentos-- > 0) {
-            try {
-                this.myView.createBufferStrategy(2);
-                break;
-            }
-            catch(Exception e) {
-            }
-        } // while pidiendo la creación de la buffeStrategy
-        if (intentos == 0) {
-            System.err.println("No pude crear la BufferStrategy");
-            return;
-        }
+        this.holder = this.myView.getHolder();
+        this.paint = new Paint();
+        this.paint.setColor(0xFF0000);
 
-        this.bufferStrategy = this.myView.getBufferStrategy();
-        this.graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
-        this.graphics = new GraphicsPC(this.myView, this.graphics2D);
+        this.canvas = this.holder.lockCanvas();
+        this.graphics = new GraphicsA(this.myView, this.canvas); //Pasar Canvas?
     }
-    
+
     //bucle principal
     @Override
     public void run() {
@@ -52,11 +41,14 @@ public class EnginePC implements Runnable, IEngine {
             // Programación defensiva
             throw new RuntimeException("run() should not be called directly");
         }
+
         // Si el Thread se pone en marcha
         // muy rápido, la vista podría todavía no estar inicializada.
         while(this.running && this.myView.getWidth() == 0);
         // Espera activa. Sería más elegante al menos dormir un poco.
+
         long lastFrameTime = System.nanoTime();
+
         long informePrevio = lastFrameTime; // Informes de FPS
         int frames = 0;
 
@@ -66,36 +58,38 @@ public class EnginePC implements Runnable, IEngine {
             long nanoElapsedTime = currentTime - lastFrameTime;
             lastFrameTime = currentTime;
 
-            // Actualizamos
+            // Informe de FPS
             double elapsedTime = (double) nanoElapsedTime / 1.0E9;
             this.update(elapsedTime);
+            if (currentTime - informePrevio > 1000000000l) {
+                long fps = frames * 1000000000l / (currentTime - informePrevio);
+                System.out.println("" + fps + " fps");
+                frames = 0;
+                informePrevio = currentTime;
+            }
+            ++frames;
 
             // Pintamos el frame
-            do {
-                do {
-                    Graphics graphics = this.bufferStrategy.getDrawGraphics();
-                    try {
-                        this.render();
-                    }
-                    finally {
-                        graphics.dispose(); //Elimina el contexto gráfico y libera recursos del sistema realacionado
-                    }
-                } while(this.bufferStrategy.contentsRestored());
-                this.bufferStrategy.show();
-            } while(this.bufferStrategy.contentsLost());
+            while (!this.holder.getSurface().isValid());
+            this.canvas = this.holder.lockCanvas();
+            this.render();
+            this.holder.unlockCanvasAndPost(canvas);
         }
     }
 
     protected void update(double deltaTime) {
         this.scene.update(deltaTime);
-
     }
 
     protected void render() {
         // "Borramos" el fondo.
-        this.getGraphics().clear(IColor.BLACK);
+        this.getGraphics().clear(IColor.WHITE);
         // Pintamos la escena
         this.scene.render(this);
+
+        // "Borramos" el fondo.
+        //this.canvas.drawColor(0xFFFFFF); // ARGB
+        //scene.render();
     }
 
     //Métodos sincronización (parar y reiniciar aplicación)

@@ -1,4 +1,4 @@
-package gdv.ucm.libengineandroid;
+package com.example.libenginea;
 
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IState;
