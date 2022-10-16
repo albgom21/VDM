@@ -14,7 +14,7 @@ public class EngineA implements Runnable, IEngine {
     private SurfaceView myView;
     private SurfaceHolder holder;
     private Canvas canvas;
-    private Paint paint;
+//    private Paint paint;
 
     private Thread renderThread;
     private boolean running;
@@ -23,13 +23,12 @@ public class EngineA implements Runnable, IEngine {
     private GraphicsA graphics;
 
     public EngineA(SurfaceView myView){
-        // Intentamos crear el buffer strategy con 2 buffers.
         this.myView = myView;
         this.holder = this.myView.getHolder();
-        this.paint = new Paint();
-        this.paint.setColor(0xFF0000);
-
-        this.canvas = this.holder.lockCanvas();
+//        this.paint = new Paint();
+//        this.paint.setColor(0xFF0000);
+        this.canvas = new Canvas();
+//        this.canvas = this.holder.lockCanvas();
         this.graphics = new GraphicsA(this.myView, this.canvas); //Pasar Canvas?
     }
 
@@ -71,9 +70,9 @@ public class EngineA implements Runnable, IEngine {
 
             // Pintamos el frame
             while (!this.holder.getSurface().isValid());
-            this.canvas = this.holder.lockCanvas();
+            this.graphics.lockCanvas();
             this.render();
-            this.holder.unlockCanvasAndPost(canvas);
+            this.graphics.unlockCanvas();
         }
     }
 
@@ -83,13 +82,10 @@ public class EngineA implements Runnable, IEngine {
 
     protected void render() {
         // "Borramos" el fondo.
-        this.getGraphics().clear(IColor.WHITE);
-        // Pintamos la escena
-        this.scene.render(this);
+        this.getGraphics().clear(IColor.BLACK);
 
-        // "Borramos" el fondo.
-        //this.canvas.drawColor(0xFFFFFF); // ARGB
-        //scene.render();
+        //this.canvas.drawColor(0xFFFFFFFF); // ARGB
+        this.scene.render(this);
     }
 
     //Métodos sincronización (parar y reiniciar aplicación)
@@ -121,7 +117,7 @@ public class EngineA implements Runnable, IEngine {
 
     @Override
     public IGraphics getGraphics() {
-        return graphics;
+        return this.graphics;
     }
 
     @Override

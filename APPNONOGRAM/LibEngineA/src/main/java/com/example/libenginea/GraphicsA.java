@@ -20,14 +20,14 @@ import gdv.ucm.libengine.IImage;
 
 public class GraphicsA implements IGraphics {
     private SurfaceView myView;
-    private SurfaceHolder holder;
+//    private SurfaceHolder holder;
     private Paint paint;
     private Canvas canvas;
     private AssetManager mgr;
 
     GraphicsA(SurfaceView myView, Canvas canvas){
         this.myView = myView;
-        this.holder = this.myView.getHolder();
+//        this.holder = this.myView.getHolder();
         this.paint = new Paint();
         this.paint.setColor(0xFFFFFF);
         this.canvas = canvas;
@@ -123,18 +123,17 @@ public class GraphicsA implements IGraphics {
         this.paint.setColor(getColor(color));
     }
 
-    int getColor(IColor color)
-    {
+    int getColor(IColor color) { //ARGB
         if(color == IColor.GRAY)
-            return 0xDCDCDC;
+            return 0xFFDCDCDC;
         else if(color == IColor.WHITE)
-            return 0xFFFFFF;
+            return 0xFFFFFFFF;
         else if(color == IColor.BLACK)
-            return 0x000000;
+            return 0xFF000000;
         else if(color == IColor.BLUE)
-            return 0x0000FF;
+            return 0xFF0000FF;
         else //RED
-            return 0xFF0000;
+            return 0xFFFF0000;
     }
 
     @Override
@@ -144,7 +143,7 @@ public class GraphicsA implements IGraphics {
 
     @Override
     public void fillSquare(int cx, int cy, int side) {
-        Rect rect = new Rect(cx,cy,side,side);
+        Rect rect = new Rect(cx,cy,cx+side,cy+side);
         this.paint.setStyle(Paint.Style.FILL);
         this.canvas.drawRect(rect, this.paint);
     }
@@ -164,5 +163,11 @@ public class GraphicsA implements IGraphics {
     @Override
     public void drawText(String text, int x, int y) {
         this.canvas.drawText(text,x,y,this.paint);
+    }
+    public void lockCanvas(){
+        this.canvas = this.myView.getHolder().lockCanvas();
+    }
+    public void unlockCanvas(){
+        this.myView.getHolder().unlockCanvasAndPost(this.canvas);
     }
 }

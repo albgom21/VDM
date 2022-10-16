@@ -59,7 +59,7 @@ public class Cell {
             g.setColor(IColor.RED);
         else if(state.equals(CellState.WHITE))
             g.setColor(IColor.WHITE);
-        g.fillSquare((1920/3)+(this.x *52),(1080/3)+(this.y*52),50);
+//        g.fillSquare((1920/3)+(this.x *52),(1080/3)+(this.y*52),150);
+        g.fillSquare(200+(this.x*75),100+(this.y*75),50);
     }
-
 }
