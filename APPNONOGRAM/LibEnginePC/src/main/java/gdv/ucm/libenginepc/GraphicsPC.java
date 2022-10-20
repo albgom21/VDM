@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -20,17 +21,42 @@ import gdv.ucm.libengine.IImage;
 
 public class GraphicsPC implements IGraphics {
     private JFrame myView;
+    private BufferStrategy bufferStrategy;
     private Graphics2D graphics2D;
 
-    GraphicsPC(JFrame myView,Graphics2D graphics2D){
+    public int logicWidth;
+    public int logicHeight;
+
+    GraphicsPC(JFrame myView){
         this.myView = myView;
-        this.graphics2D = graphics2D;
+        // Intentamos crear el buffer strategy con 2 buffers.
+        int intentos = 100;
+        while(intentos-- > 0) {
+            try {
+                this.myView.createBufferStrategy(2);
+                break;
+            }
+            catch(Exception e) {
+            }
+        } // while pidiendo la creación de la buffeStrategy
+        if (intentos == 0) {
+            System.err.println("No pude crear la BufferStrategy");
+            return;
+        }
+        this.bufferStrategy = this.myView.getBufferStrategy();
+        this.graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
+
+        this.logicHeight = myView.getHeight(); //600x400
+        this.logicWidth = myView.getWidth();
     }
 
     @Override
     public int getHeight() {
         return this.myView.getHeight();
     }
+
+    @Override
+    public int getHeightLogic() { return this.logicHeight; }
 
     @Override
     public void setResolution(int w, int h) {
@@ -49,15 +75,20 @@ public class GraphicsPC implements IGraphics {
     }
 
     @Override
+    public int getWidthLogic() { return this.logicWidth; }
+
+    @Override
     public IImage newImage(String name) {
-        Image img = null;
-        try {
-            img = ImageIO.read(new File(name));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        ImagePC imgPC = new ImagePC(img);
-        return imgPC;
+//        Image img = null;
+//        try {
+//            img = ImageIO.read(new File(name));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        ImagePC imgPC = new ImagePC(img);
+//        return imgPC;
+        ImagePC img = new ImagePC(name);
+        return img;
     }
 
     @Override
@@ -77,6 +108,8 @@ public class GraphicsPC implements IGraphics {
             font = font.deriveFont(Font.BOLD, size);
 
         FontPC fontPC= new FontPC(font);
+//        FontPC fontPC= new FontPC(font);
+
         return fontPC;
     }
 
@@ -86,7 +119,7 @@ public class GraphicsPC implements IGraphics {
     }
 
     @Override
-    public void scale(double x, double y) {
+    public void scale(float x, float y) {
         this.graphics2D.scale(x,y); //REVISAR
     }
 
@@ -102,7 +135,7 @@ public class GraphicsPC implements IGraphics {
 
     @Override
     public void drawImage(IImage image, int x, int y) {
-        this.graphics2D.drawImage((Image) image,x,y,null);
+        this.graphics2D.drawImage(((ImagePC) image).getImg(),x,y,null); //(int) w, (int)h
     }
 
     @Override
@@ -126,8 +159,9 @@ public class GraphicsPC implements IGraphics {
 
     @Override
     public void clear(IColor color) {
-        this.graphics2D.setColor(getColor(color));
+        this.graphics2D.setColor(getColor(color)); //new Color
         this.graphics2D.fillRect(0,0, this.getWidth(), this.getHeight());
+        this.graphics2D.setPaintMode();
     }
 
     @Override
@@ -149,5 +183,15 @@ public class GraphicsPC implements IGraphics {
     @Override
     public void drawText(String text, int x, int y) {
         this.graphics2D.drawString(text , x, y);
+    }
+
+    @Override
+    public int realToLogicX(int x) {
+        return 0;
+    }
+
+    @Override
+    public int realToLogicY(int y) {
+        return 0;
     }
 }

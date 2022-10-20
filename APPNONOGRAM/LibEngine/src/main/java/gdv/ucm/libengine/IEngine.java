@@ -4,8 +4,7 @@ public interface IEngine {
       IGraphics getGraphics();
 //    IAudio getAudio();
 //    IState getState();
-
-    //Input getInput();
+//    IInput getInput();
      void setScene(IState scene);
 }
 

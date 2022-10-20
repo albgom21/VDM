@@ -13,7 +13,6 @@ import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IState;
 
 public class EnginePC implements Runnable, IEngine {
-    private Graphics2D graphics2D;
     private BufferStrategy bufferStrategy;
     private JFrame myView;
     private Thread renderThread;
@@ -23,25 +22,25 @@ public class EnginePC implements Runnable, IEngine {
     private GraphicsPC graphics;
 
     public EnginePC(JFrame myView){
-        // Intentamos crear el buffer strategy con 2 buffers.
         this.myView = myView;
-        int intentos = 100;
-        while(intentos-- > 0) {
-            try {
-                this.myView.createBufferStrategy(2);
-                break;
-            }
-            catch(Exception e) {
-            }
-        } // while pidiendo la creación de la buffeStrategy
-        if (intentos == 0) {
-            System.err.println("No pude crear la BufferStrategy");
-            return;
-        }
-
-        this.bufferStrategy = this.myView.getBufferStrategy();
-        this.graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
-        this.graphics = new GraphicsPC(this.myView, this.graphics2D);
+//        int intentos = 100;
+//        while(intentos-- > 0) {
+//            try {
+//                this.myView.createBufferStrategy(2);
+//                break;
+//            }
+//            catch(Exception e) {
+//            }
+//        } // while pidiendo la creación de la buffeStrategy
+//        if (intentos == 0) {
+//            System.err.println("No pude crear la BufferStrategy");
+//            return;
+//        }
+//
+//        this.bufferStrategy = this.myView.getBufferStrategy();
+//        this.graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
+        this.graphics = new GraphicsPC(this.myView);
+        //REFACTORIZAR BUFFER STRATEGY EN EL RUN
     }
     
     //bucle principal

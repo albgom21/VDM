@@ -41,6 +41,11 @@ public class GraphicsA implements IGraphics {
     }
 
     @Override
+    public int getHeightLogic() {
+        return 0;
+    }
+
+    @Override
     public void setResolution(int w, int h) {
         this.myView.getHolder().setFixedSize(w,h); //No seguros si equivale a setSize
     }
@@ -54,6 +59,11 @@ public class GraphicsA implements IGraphics {
     @Override
     public int getWidth() {
         return this.myView.getWidth();
+    }
+
+    @Override
+    public int getWidthLogic() {
+        return 0;
     }
 
     @Override
@@ -98,7 +108,7 @@ public class GraphicsA implements IGraphics {
     }
 
     @Override
-    public void scale(double x, double y) {
+    public void scale(float x, float y) {
         //this.graphics2D.scale(x,y); //REVISAR
     }
 
@@ -164,6 +174,17 @@ public class GraphicsA implements IGraphics {
     public void drawText(String text, int x, int y) {
         this.canvas.drawText(text,x,y,this.paint);
     }
+
+    @Override
+    public int realToLogicX(int x) {
+        return 0;
+    }
+
+    @Override
+    public int realToLogicY(int y) {
+        return 0;
+    }
+
     public void lockCanvas(){
         this.canvas = this.myView.getHolder().lockCanvas();
     }
