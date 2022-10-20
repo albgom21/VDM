@@ -130,25 +130,35 @@ public class GraphicsA implements IGraphics {
 
     @Override
     public void setColor(IColor color) {
-        this.paint.setColor(getColor(color));
-    }
-
-    int getColor(IColor color) { //ARGB
-        if(color == IColor.GRAY)
-            return 0xFFDCDCDC;
-        else if(color == IColor.WHITE)
-            return 0xFFFFFFFF;
-        else if(color == IColor.BLACK)
-            return 0xFF000000;
-        else if(color == IColor.BLUE)
-            return 0xFF0000FF;
-        else //RED
-            return 0xFFFF0000;
+        this.paint.setColor(color.getColor());
     }
 
     @Override
+    public void setColor(int color) {
+        this.paint.setColor(color);
+    }
+
+//    int getColor(IColor color) { //ARGB
+//        if(color == IColor.GRAY)
+//            return 0xFFDCDCDC;
+//        else if(color == IColor.WHITE)
+//            return 0xFFFFFFFF;
+//        else if(color == IColor.BLACK)
+//            return 0xFF000000;
+//        else if(color == IColor.BLUE)
+//            return 0xFF0000FF;
+//        else //RED
+//            return 0xFFFF0000;
+//    }
+
+    @Override
     public void clear(IColor color) {
-        this.canvas.drawColor(getColor(color));
+        this.canvas.drawColor(color.getColor());
+    }
+
+    @Override
+    public void clear(int color) {
+
     }
 
     @Override

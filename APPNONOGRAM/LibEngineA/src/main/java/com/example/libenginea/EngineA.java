@@ -5,7 +5,6 @@ import android.graphics.Paint;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import gdv.ucm.libengine.IColor;
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IState;
@@ -82,7 +81,7 @@ public class EngineA implements Runnable, IEngine {
 
     protected void render() {
         // "Borramos" el fondo.
-        this.getGraphics().clear(IColor.BLACK);
+        this.getGraphics().clear(0xFFFFFFFF);
 
         //this.canvas.drawColor(0xFFFFFFFF); // ARGB
         this.scene.render(this);

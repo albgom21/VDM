@@ -1,13 +1,11 @@
 package gdv.ucm.libenginepc;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
-import gdv.ucm.libengine.IColor;
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IState;
@@ -40,7 +38,6 @@ public class EnginePC implements Runnable, IEngine {
 //        this.bufferStrategy = this.myView.getBufferStrategy();
 //        this.graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
         this.graphics = new GraphicsPC(this.myView);
-        //REFACTORIZAR BUFFER STRATEGY EN EL RUN
     }
     
     //bucle principal
@@ -72,16 +69,16 @@ public class EnginePC implements Runnable, IEngine {
             // Pintamos el frame
             do {
                 do {
-                    Graphics graphics = this.bufferStrategy.getDrawGraphics();
+                    Graphics graphics = this.graphics.getbufferStrategy().getDrawGraphics();
                     try {
                         this.render();
                     }
                     finally {
                         graphics.dispose(); //Elimina el contexto gráfico y libera recursos del sistema realacionado
                     }
-                } while(this.bufferStrategy.contentsRestored());
-                this.bufferStrategy.show();
-            } while(this.bufferStrategy.contentsLost());
+                } while( this.graphics.getbufferStrategy().contentsRestored());
+                this.graphics.getbufferStrategy().show();
+            } while(this.graphics.getbufferStrategy().contentsLost());
         }
     }
 
@@ -92,7 +89,7 @@ public class EnginePC implements Runnable, IEngine {
 
     protected void render() {
         // "Borramos" el fondo.
-        this.getGraphics().clear(IColor.BLACK);
+        this.getGraphics().clear(0x000000);
         // Pintamos la escena
         this.scene.render(this);
     }

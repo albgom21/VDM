@@ -16,8 +16,10 @@ public interface IGraphics {
     void restore();
 
     void drawImage(IImage image, int x, int y); // float w, float h para la escala double rotate para rotación
-    void setColor(IColor color);
-    void clear(IColor color);
+//    void setColor(IColor color);
+    void setColor(int color);
+//    void clear(IColor color);
+    void clear(int color);
 
     void fillSquare(int cx, int cy, int side);
     void drawSquare(int cx, int cy, int side);

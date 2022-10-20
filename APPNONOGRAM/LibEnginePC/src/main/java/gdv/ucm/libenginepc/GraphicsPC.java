@@ -14,7 +14,6 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-import gdv.ucm.libengine.IColor;
 import gdv.ucm.libengine.IFont;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IImage;
@@ -50,6 +49,10 @@ public class GraphicsPC implements IGraphics {
         this.logicWidth = myView.getWidth();
     }
 
+    public BufferStrategy getbufferStrategy() {
+        return this.bufferStrategy;
+    }
+
     @Override
     public int getHeight() {
         return this.myView.getHeight();
@@ -79,14 +82,6 @@ public class GraphicsPC implements IGraphics {
 
     @Override
     public IImage newImage(String name) {
-//        Image img = null;
-//        try {
-//            img = ImageIO.read(new File(name));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        ImagePC imgPC = new ImagePC(img);
-//        return imgPC;
         ImagePC img = new ImagePC(name);
         return img;
     }
@@ -108,7 +103,6 @@ public class GraphicsPC implements IGraphics {
             font = font.deriveFont(Font.BOLD, size);
 
         FontPC fontPC= new FontPC(font);
-//        FontPC fontPC= new FontPC(font);
 
         return fontPC;
     }
@@ -138,28 +132,16 @@ public class GraphicsPC implements IGraphics {
         this.graphics2D.drawImage(((ImagePC) image).getImg(),x,y,null); //(int) w, (int)h
     }
 
-    @Override
-    public void setColor(IColor color) {
-        this.graphics2D.setColor(getColor(color));
-    }
 
-    Color getColor(IColor color)
-    {
-        if(color == IColor.GRAY)
-            return Color.gray;
-        else if(color == IColor.WHITE)
-            return Color.white;
-        else if(color == IColor.BLACK)
-            return Color.black;
-        else if(color == IColor.BLUE)
-            return Color.blue;
-        else //RED
-            return Color.red;
+
+    @Override
+    public void setColor(int color) {
+        this.graphics2D.setColor(new Color(color)); //new Color
     }
 
     @Override
-    public void clear(IColor color) {
-        this.graphics2D.setColor(getColor(color)); //new Color
+    public void clear(int color) {
+        this.graphics2D.setColor(new Color(color)); //new Color
         this.graphics2D.fillRect(0,0, this.getWidth(), this.getHeight());
         this.graphics2D.setPaintMode();
     }

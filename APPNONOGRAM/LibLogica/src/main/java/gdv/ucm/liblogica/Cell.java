@@ -1,6 +1,5 @@
 package gdv.ucm.liblogica;
 
-import gdv.ucm.libengine.IColor;
 import gdv.ucm.libengine.IGraphics;
 
 public class Cell {
@@ -51,14 +50,22 @@ public class Cell {
     }
 
     void render(IGraphics g){
+        int color;
+
         if(state.equals(CellState.GRAY))
-            g.setColor(IColor.GRAY);
+            color=0x808080;
         else if(state.equals(CellState.BLUE))
-            g.setColor(IColor.BLUE);
+            color=0x808080;
+
         else if(state.equals(CellState.RED))
-            g.setColor(IColor.RED);
-        else if(state.equals(CellState.WHITE))
-            g.setColor(IColor.WHITE);
+            color=0x808080;
+
+        else //WHITE
+            color=0x808080;
+
+
+        g.setColor(color);
+
 //        g.fillSquare((1920/3)+(this.x *52),(1080/3)+(this.y*52),150);
         g.fillSquare(200+(this.x*75),100+(this.y*75),50);
     }
