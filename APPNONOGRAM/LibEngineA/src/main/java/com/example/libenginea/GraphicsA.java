@@ -13,7 +13,6 @@ import android.view.SurfaceView;
 import java.io.IOException;
 import java.io.InputStream;
 
-import gdv.ucm.libengine.IColor;
 import gdv.ucm.libengine.IFont;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IImage;
@@ -29,7 +28,7 @@ public class GraphicsA implements IGraphics {
         this.myView = myView;
 //        this.holder = this.myView.getHolder();
         this.paint = new Paint();
-        this.paint.setColor(0xFFFFFF);
+//        this.paint.setColor(0xFFFFFF);
         this.canvas = canvas;
 
         //this.mgr = getAssets();
@@ -128,14 +127,12 @@ public class GraphicsA implements IGraphics {
         //this.canvas.drawBitmap((Bitmap) image,x,y,paintTemp);
     }
 
-    @Override
-    public void setColor(IColor color) {
-        this.paint.setColor(color.getColor());
-    }
 
     @Override
-    public void setColor(int color) {
-        this.paint.setColor(color);
+    public void setColor(int colorRGB) {
+        colorRGB += 0xFF000000;
+        int colorARGB = colorRGB + 0xFF000000;
+        this.paint.setColor(colorARGB);
     }
 
 //    int getColor(IColor color) { //ARGB
@@ -151,14 +148,10 @@ public class GraphicsA implements IGraphics {
 //            return 0xFFFF0000;
 //    }
 
-    @Override
-    public void clear(IColor color) {
-        this.canvas.drawColor(color.getColor());
-    }
 
     @Override
     public void clear(int color) {
-
+        this.canvas.drawColor(color);
     }
 
     @Override
