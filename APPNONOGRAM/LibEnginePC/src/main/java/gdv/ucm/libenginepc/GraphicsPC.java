@@ -71,6 +71,23 @@ public class GraphicsPC implements IGraphics {
         this.graphics2D.setFont((Font) font); // REVISAR
     }
 
+    public void prepareFrame() {
+        this.graphics2D = (Graphics2D)this.bufferStrategy.getDrawGraphics();
+//        this.myView.scale();
+//        this.myView.translate();
+        this.clear(0xFFFFFF);
+    }
+
+    public void finishFrame() {
+        this.graphics2D.dispose();
+    }
+
+    public boolean cambioBuffer(){
+        if(bufferStrategy.contentsRestored()){
+            return false; // se ha restaurod en algun momento el bufer
+        }
+        return !this.bufferStrategy.contentsLost();
+    }
 
     @Override
     public int getWidth() {
@@ -81,9 +98,8 @@ public class GraphicsPC implements IGraphics {
     public int getWidthLogic() { return this.logicWidth; }
 
     @Override
-    public IImage newImage(String name) {
-        ImagePC img = new ImagePC(name);
-        return img;
+    public IImage newImage(String name) { //ruta nombreproyecto/data
+        return new ImagePC(name); //"/data/start.png"
     }
 
     @Override

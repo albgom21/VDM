@@ -9,4 +9,5 @@ java {
 dependencies {
     implementation project(':LibEnginePC')
     implementation project(':LibEngine')
+    implementation project(':LibLogica')
 }

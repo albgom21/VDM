@@ -1,13 +1,16 @@
 package gdv.ucm.liblogica;
 
-public class Hints {
+import gdv.ucm.libengine.IGraphics;
+import gdv.ucm.libengine.IInterface;
+
+public class Hints implements IInterface {
     // Attributes
     private int horizontalHints[][];
     private int verticalHints[][];
     private int depthCounter [];
     private boolean ant[];
 
-    public Hints(Board b){
+    public Hints(Board b) {
         //Vectors
         horizontalHints = new int[b.getWidth()][(b.getHeight()+1)/2];
         verticalHints = new int[b.getHeight()][(b.getWidth()+1)/2];
@@ -66,5 +69,19 @@ public class Hints {
 
         Pair a = new Pair(counterBlue,counterRed);
         return a;
+    }
+
+    @Override
+    public void render(IGraphics g) {
+//        for (int i = 0; i < ; ++i) {
+//            for (int j = 0; j < ; ++j) {
+//                g.drawText(verticalHints[i][j], i+offset, j +offset);
+//            }
+//        }
+    }
+
+    @Override
+    public void update(Double deltaTime) {
+
     }
 }

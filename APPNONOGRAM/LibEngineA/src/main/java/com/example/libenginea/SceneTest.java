@@ -20,4 +20,9 @@ public class SceneTest implements IState {
     public void render(IEngine engine) {
         this.board.render(engine.getGraphics());
     }
+
+    @Override
+    public void handleInputs() {
+
+    }
 }

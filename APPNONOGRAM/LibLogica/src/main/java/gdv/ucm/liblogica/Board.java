@@ -1,8 +1,9 @@
 package gdv.ucm.liblogica;
 
 import gdv.ucm.libengine.IGraphics;
+import gdv.ucm.libengine.IInterface;
 
-public class Board {
+public class Board implements IInterface {
    // Attributes
    private int width, height;
    private Cell [] [] board;
@@ -36,12 +37,19 @@ public class Board {
          }
       }
    }
+   
+   @Override
    public void render(IGraphics g){
       for (int i = 0; i < width; ++i) {
          for (int j = 0; j < height; ++j) {
             board[i][j].render(g);
          }
       }
+   }
+
+   @Override
+   public void update(Double deltaTime) {
+
    }
    //HACER CARGA DE RECURSOS EN EL MÓDULO DE LÓGICAS
 }

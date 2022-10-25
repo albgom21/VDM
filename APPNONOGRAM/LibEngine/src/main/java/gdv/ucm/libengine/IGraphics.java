@@ -6,7 +6,7 @@ import java.awt.Image;
 
 public interface IGraphics {
     //Crear recursos (fuentes, imagenes)
-    IImage newImage(String name);
+    IImage newImage(String ruta);
     IFont newFont(String filename, int size, boolean isBold);
 
     void translate(int x, int y);
@@ -38,4 +38,5 @@ public interface IGraphics {
     //Setters
     void setResolution(int w, int h);
     void setFont(IFont font);
+
 }

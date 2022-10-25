@@ -1,12 +1,13 @@
 package com.example.libenginea;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import gdv.ucm.libengine.IAudio;
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IGraphics;
+import gdv.ucm.libengine.IInput;
 import gdv.ucm.libengine.IState;
 
 public class EngineA implements Runnable, IEngine {
@@ -120,7 +121,27 @@ public class EngineA implements Runnable, IEngine {
     }
 
     @Override
-    public void setScene(IState scene) {
-        this.scene = scene;
+    public IAudio getAudio() {
+        return null;
+    }
+
+    @Override
+    public IState getState() {
+        return null;
+    }
+
+    @Override
+    public IInput getInput() {
+        return null;
+    }
+
+    @Override
+    public void setState(IState state) {
+
+    }
+
+    @Override
+    public void setCurrentScene(IState currentScene) {
+        this.scene = currentScene;
     }
 }

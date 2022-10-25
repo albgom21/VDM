@@ -14,10 +14,10 @@ public class ImagePC implements IImage {
         this.img = img;
     }
 
-    ImagePC(String name){
+    ImagePC(String ruta){
         this.img = null;
         try {
-            img = ImageIO.read(new File(name));
+            img = ImageIO.read(new File(ruta));
         } catch (IOException e) {
             e.printStackTrace();
         }

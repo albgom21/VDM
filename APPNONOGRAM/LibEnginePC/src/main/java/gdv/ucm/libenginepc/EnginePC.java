@@ -1,13 +1,14 @@
 package gdv.ucm.libenginepc;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
+import gdv.ucm.libengine.IAudio;
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IGraphics;
+import gdv.ucm.libengine.IInput;
 import gdv.ucm.libengine.IState;
 
 public class EnginePC implements Runnable, IEngine {
@@ -15,8 +16,9 @@ public class EnginePC implements Runnable, IEngine {
     private JFrame myView;
     private Thread renderThread;
     private boolean running;
-    private IState scene;
-
+    //sonido
+    //inputs
+    private IState currentScene;
     private GraphicsPC graphics;
 
     public EnginePC(JFrame myView){
@@ -39,15 +41,37 @@ public class EnginePC implements Runnable, IEngine {
 //        this.graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
         this.graphics = new GraphicsPC(this.myView);
     }
-    
+
+    //hasmap al crear una imagen nombre-IImage
+
     //bucle principal
     @Override
     public void run() {
-        if (renderThread != Thread.currentThread()) {
-            // Evita que cualquiera que no sea esta clase llame a este Runnable en un Thread
-            // Programación defensiva
-            throw new RuntimeException("run() should not be called directly");
-        }
+//        if (this.renderThread != Thread.currentThread()) {
+//            // Evita que cualquiera que no sea esta clase llame a este Runnable en un Thread
+//            // Programación defensiva
+//            throw new RuntimeException("run() should not be called directly");
+//        }
+//        //--------------------------------------------------------------------------------------------
+//        while(this.currentScene != null){
+//            //inputs
+//            this.currentScene.handleInputs(); //getInput().getlist
+//            //update
+//            this.currentScene.update(0.016);
+//            do{
+//                //render
+//                //preparar Fram
+//                this.graphics.prepareFrame();
+//                this.currentScene.render();
+//                //terminar Frame
+//                this.graphics.finishFrame();
+//            }
+//            while(!this.graphics.cambioBuffer());
+//
+//
+//        }
+        //--------------------------------------------------------------------------------------------
+
         // Si el Thread se pone en marcha
         // muy rápido, la vista podría todavía no estar inicializada.
         while(this.running && this.myView.getWidth() == 0);
@@ -57,7 +81,7 @@ public class EnginePC implements Runnable, IEngine {
         int frames = 0;
 
         // Bucle de juego principal.
-        while(running) {
+        while(this.running) {
             long currentTime = System.nanoTime();
             long nanoElapsedTime = currentTime - lastFrameTime;
             lastFrameTime = currentTime;
@@ -83,7 +107,7 @@ public class EnginePC implements Runnable, IEngine {
     }
 
     protected void update(double deltaTime) {
-        this.scene.update(deltaTime);
+        this.currentScene.update(deltaTime);
 
     }
 
@@ -91,7 +115,7 @@ public class EnginePC implements Runnable, IEngine {
         // "Borramos" el fondo.
         this.getGraphics().clear(0xFFFFFF);
         // Pintamos la escena
-        this.scene.render(this);
+        this.currentScene.render();
     }
 
     //Métodos sincronización (parar y reiniciar aplicación)
@@ -123,11 +147,31 @@ public class EnginePC implements Runnable, IEngine {
 
     @Override
     public IGraphics getGraphics() {
-        return graphics;
+        return this.graphics;
     }
 
     @Override
-    public void setScene(IState scene) {
-        this.scene = scene;
+    public IAudio getAudio() {
+        return null;
+    }
+
+    @Override
+    public IState getState() {
+        return null;
+    }
+
+    @Override
+    public IInput getInput() {
+        return null;
+    }
+
+    @Override
+    public void setState(IState state) {
+
+    }
+
+    @Override
+    public void setCurrentScene(IState currentScene) {
+        this.currentScene = currentScene;
     }
 }

@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         this.engine = new EngineA(this.renderView);
         SceneTest scene = new SceneTest(engine);
-        engine.setScene(scene);
+        engine.setCurrentScene(scene);
         engine.resume();
     }
 

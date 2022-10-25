@@ -1,8 +1,9 @@
 package gdv.ucm.liblogica;
 
 import gdv.ucm.libengine.IGraphics;
+import gdv.ucm.libengine.IInterface;
 
-public class Cell {
+public class Cell implements IInterface {
     // Attributes
     private int x;
     private int y;
@@ -49,7 +50,8 @@ public class Cell {
         return state;
     }
 
-    void render(IGraphics g){
+    @Override
+    public void render(IGraphics g){
         int color;
 
         if(state.equals(CellState.GRAY))
@@ -67,6 +69,13 @@ public class Cell {
         g.setColor(color);
 
 //        g.fillSquare((1920/3)+(this.x *52),(1080/3)+(this.y*52),150);
-        g.fillSquare(200+(this.x*75),100+(this.y*75),50);
+//        g.fillSquare(200+(this.x*75),100+(this.y*75),50);
+        g.fillSquare(100+(this.x*75),100+(this.y*75),50);
+        //bordes en PC
+    }
+
+    @Override
+    public void update(Double deltaTime) {
+
     }
 }
