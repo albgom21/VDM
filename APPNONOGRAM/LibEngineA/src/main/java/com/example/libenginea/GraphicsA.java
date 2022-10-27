@@ -31,7 +31,10 @@ public class GraphicsA implements IGraphics {
 //        this.paint.setColor(0xFFFFFF);
         this.canvas = canvas;
 
-        //this.mgr = getAssets();
+    }
+
+    public void setAssetManager(AssetManager mgr){
+        this.mgr = mgr;
     }
 
     @Override
@@ -51,7 +54,7 @@ public class GraphicsA implements IGraphics {
 
     @Override
     public void setFont(IFont font) {
-        //this.paint.setFont((Font) font); // REVISAR
+        this.paint.setTypeface(((FontA)font).getFont());
     }
 
 
@@ -174,7 +177,11 @@ public class GraphicsA implements IGraphics {
     }
 
     @Override
-    public void drawText(String text, int x, int y) {
+    public void drawText(String text, int x, int y, int color) {
+        color += 0xFF000000;
+        int colorARGB = color + 0xFF000000;
+        this.paint.setColor(colorARGB);
+
         this.canvas.drawText(text,x,y,this.paint);
     }
 

@@ -24,7 +24,7 @@ public interface IGraphics {
     void fillSquare(int cx, int cy, int side);
     void drawSquare(int cx, int cy, int side);
     void drawLine(int initX, int initY, int endX, int endY);
-    void drawText(String text, int x, int y); //IFont font, int tamaño, IColor color
+    void drawText(String text, int x, int y, int color); //IFont font, int tamaño, IColor color
 
     int realToLogicX(int x);
     int realToLogicY(int y);

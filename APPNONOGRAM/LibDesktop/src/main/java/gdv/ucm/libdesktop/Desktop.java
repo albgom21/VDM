@@ -3,8 +3,7 @@ package gdv.ucm.libdesktop;
 import javax.swing.JFrame;
 
 import gdv.ucm.libenginepc.EnginePC;
-import gdv.ucm.libenginepc.SceneTest;
-import gdv.ucm.liblogica.Scene;
+import gdv.ucm.liblogica.MainScene;
 
 public class Desktop {
     public static void main(String[] args) {
@@ -17,10 +16,7 @@ public class Desktop {
         renderView.setVisible(true);
         EnginePC engine = new EnginePC(renderView);
 
-        SceneTest scene = new SceneTest(engine);
-        //---------------------------------------------------
-//        Scene s = new Scene(engine);
-        //---------------------------------------------------
+        MainScene scene = new MainScene(engine);
 
         engine.setCurrentScene(scene);
         engine.resume();

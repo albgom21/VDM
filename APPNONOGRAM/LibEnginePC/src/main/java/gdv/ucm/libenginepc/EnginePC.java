@@ -166,11 +166,6 @@ public class EnginePC implements Runnable, IEngine {
     }
 
     @Override
-    public void setState(IState state) {
-
-    }
-
-    @Override
     public void setCurrentScene(IState currentScene) {
         this.currentScene = currentScene;
     }

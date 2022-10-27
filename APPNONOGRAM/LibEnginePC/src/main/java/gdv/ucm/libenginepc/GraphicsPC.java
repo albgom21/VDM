@@ -68,7 +68,7 @@ public class GraphicsPC implements IGraphics {
 
     @Override
     public void setFont(IFont font) {
-        this.graphics2D.setFont((Font) font); // REVISAR
+        this.graphics2D.setFont(((FontPC) font).getFont()); // REVISAR
     }
 
     public void prepareFrame() {
@@ -98,8 +98,16 @@ public class GraphicsPC implements IGraphics {
     public int getWidthLogic() { return this.logicWidth; }
 
     @Override
-    public IImage newImage(String name) { //ruta nombreproyecto/data
-        return new ImagePC(name); //"/data/start.png"
+    public IImage newImage(String filename) { //ruta nombreproyecto/data
+
+        Image img = null;
+        try {
+            img = ImageIO.read(new File("data/"+filename));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ImagePC imgPC = new ImagePC(img);
+        return imgPC; //"/data/start.png"
     }
 
     @Override
@@ -107,7 +115,7 @@ public class GraphicsPC implements IGraphics {
         InputStream is = null;
         Font font = null;
         try {
-            is = new FileInputStream(filename);
+            is = new FileInputStream("data/" +filename);
             font = Font.createFont(Font.TRUETYPE_FONT, is);
         } catch (FontFormatException e) {
             e.printStackTrace();
@@ -118,6 +126,7 @@ public class GraphicsPC implements IGraphics {
         if(isBold)
             font = font.deriveFont(Font.BOLD, size);
 
+        font = font.deriveFont(font.getStyle(), size);
         FontPC fontPC= new FontPC(font);
 
         return fontPC;
@@ -179,7 +188,8 @@ public class GraphicsPC implements IGraphics {
     }
 
     @Override
-    public void drawText(String text, int x, int y) {
+    public void drawText(String text, int x, int y, int color) {
+        this.graphics2D.setColor(new Color (color));
         this.graphics2D.drawString(text , x, y);
     }
 

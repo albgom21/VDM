@@ -11,6 +11,7 @@ public class FontA implements IFont {
         this.font = font;
     }
 
+    public Typeface getFont(){return this.font;}
     @Override
     public int getSize() {
         //TextView myTextView = (TextView) findViewById(yourTextViewId);

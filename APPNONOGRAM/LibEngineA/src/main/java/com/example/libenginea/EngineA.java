@@ -1,5 +1,6 @@
 package com.example.libenginea;
 
+import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -14,6 +15,8 @@ public class EngineA implements Runnable, IEngine {
     private SurfaceView myView;
     private SurfaceHolder holder;
     private Canvas canvas;
+    private AssetManager mgr;
+
 //    private Paint paint;
 
     private Thread renderThread;
@@ -24,12 +27,15 @@ public class EngineA implements Runnable, IEngine {
 
     public EngineA(SurfaceView myView){
         this.myView = myView;
+        this.mgr = myView.getContext().getAssets();
         this.holder = this.myView.getHolder();
 //        this.paint = new Paint();
 //        this.paint.setColor(0xFF0000);
         this.canvas = new Canvas();
 //        this.canvas = this.holder.lockCanvas();
         this.graphics = new GraphicsA(this.myView, this.canvas); //Pasar Canvas?
+        this.graphics.setAssetManager(this.mgr);
+
     }
 
     //bucle principal
@@ -85,7 +91,7 @@ public class EngineA implements Runnable, IEngine {
         this.getGraphics().clear(0xFFFFFFFF);
 
         //this.canvas.drawColor(0xFFFFFFFF); // ARGB
-        this.scene.render(this);
+        this.scene.render();
     }
 
     //Métodos sincronización (parar y reiniciar aplicación)
@@ -133,11 +139,6 @@ public class EngineA implements Runnable, IEngine {
     @Override
     public IInput getInput() {
         return null;
-    }
-
-    @Override
-    public void setState(IState state) {
-
     }
 
     @Override

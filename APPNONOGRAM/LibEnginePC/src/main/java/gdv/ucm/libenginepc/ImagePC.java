@@ -13,15 +13,15 @@ public class ImagePC implements IImage {
     ImagePC(Image img){
         this.img = img;
     }
-
-    ImagePC(String ruta){
+/*
+    ImagePC(String path){
         this.img = null;
         try {
-            img = ImageIO.read(new File(ruta));
+            img = ImageIO.read(new File(path));
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
     Image getImg(){return this.img;}
     @Override
     public int getWidth() {

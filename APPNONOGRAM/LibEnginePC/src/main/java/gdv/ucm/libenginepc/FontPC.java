@@ -15,7 +15,7 @@ public class FontPC implements IFont {
     FontPC(Font font){
         this.font = font;
     }
-    FontPC(String name, int size, boolean isBold){
+    /*FontPC(String name, int size, boolean isBold){
         InputStream is = null;
         try {
             is = new FileInputStream(name);
@@ -27,8 +27,8 @@ public class FontPC implements IFont {
         if(isBold)
             font = font.deriveFont(Font.BOLD);
         font = font.deriveFont(size);
-    }
-
+    }*/
+    public Font getFont() {return this.font;}
     @Override
     public int getSize() {
         return this.font.getSize();

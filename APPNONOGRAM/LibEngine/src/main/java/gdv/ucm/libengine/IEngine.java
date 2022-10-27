@@ -6,7 +6,6 @@ public interface IEngine {
       IState getState();
       IInput getInput();
 
-      void setState(IState state);
-     void setCurrentScene(IState currentScene);
+      void setCurrentScene(IState currentScene);
 }
 
