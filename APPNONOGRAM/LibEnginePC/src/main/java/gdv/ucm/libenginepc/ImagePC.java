@@ -22,7 +22,7 @@ public class ImagePC implements IImage {
             e.printStackTrace();
         }
     }*/
-    Image getImg(){return this.img;}
+    public Image getImg(){return this.img;}
     @Override
     public int getWidth() {
         return this.img.getWidth(null);

@@ -84,7 +84,7 @@ public class GraphicsPC implements IGraphics {
 
     public boolean cambioBuffer(){
         if(bufferStrategy.contentsRestored()){
-            return false; // se ha restaurod en algun momento el bufer
+            return false; // se ha restaurado en algun momento el bufer
         }
         return !this.bufferStrategy.contentsLost();
     }

@@ -9,22 +9,28 @@ public class Hints implements IInterface {
     private int verticalHints[][];
     private int depthCounter [];
     private boolean ant[];
+    private int x;
+    private int y;
+
+    //Las j´s actuan como X y las i´s actuan como Y
 
     public Hints(Board b) {
-        //Vectors
-        horizontalHints = new int[b.getWidth()][(b.getHeight()+1)/2];
-        verticalHints = new int[b.getHeight()][(b.getWidth()+1)/2];
-        ant = new boolean[b.getWidth()];
-        depthCounter = new int[b.getWidth()];
+        x = b.getWidth();
+        y = b.getHeight();
 
-        //Comprobar si se inicializa depth a 0 y ant a false (Preguntar)
+        //Vectors
+        horizontalHints = new int[x][y];
+        verticalHints = new int[y][x];
+        ant = new boolean[x];
+        depthCounter = new int[x];
+
 
         //Counter
         int depthx = 0;
-        for (int i = 0; i < b.getHeight(); ++i) {
+        for (int i = 0; i < y; ++i) {
             depthx = 0;
-            for (int j = 0; j < b.getWidth(); ++j) {
-                boolean sol = b.getCell(i,j).getisSol();
+            for (int j = 0; j < x; ++j) {
+                boolean sol = b.getCell(j,i).getisSol();
                 if(sol){
                     verticalHints[i][depthx]++;
                     ant[j] = true;
@@ -48,10 +54,10 @@ public class Hints implements IInterface {
         int counterBlue = 0;
         int counterRed = 0;
 
-        for (int i = 0; i < b.getHeight(); ++i) {
-            for (int j = 0; j < b.getWidth(); ++j) {
-                boolean sol = b.getCell(i,j).getisSol();
-                Cell cell = b.getCell(i,j);
+        for (int i = 0; i < y; ++i) {
+            for (int j = 0; j < x; ++j) {
+                boolean sol = b.getCell(j,i).getisSol();
+                Cell cell = b.getCell(j,i);
                 if(sol)
                 {
                     if (cell.getState() == CellState.GRAY || cell.getState() == CellState.WHITE)
@@ -73,11 +79,27 @@ public class Hints implements IInterface {
 
     @Override
     public void render(IGraphics g) {
-//        for (int i = 0; i < ; ++i) {
-//            for (int j = 0; j < ; ++j) {
-//                g.drawText(verticalHints[i][j], i+offset, j +offset);
-//            }
-//        }
+        int dH1=0;
+        int dH2=0;
+        int dV1=y-1;
+        int dV2=x-1;
+        for (int i = y-1; i >= 0; --i) {
+            for (int j = x-1; j >= 0; --j) {
+                if(verticalHints[i][j]!=0) {
+                    g.drawText(Integer.toString(verticalHints[i][j]), 175 - (dH1 * 35), 230 + (dV1 * 75), 0x000000);
+                    dH1++;
+                }
+                if(horizontalHints[j][i]!=0) {
+                    g.drawText(Integer.toString(horizontalHints[j][i]), 220 + (dV2 * 75), 175 - (dH2 * 35), 0x000000);
+                    dH2++;
+                }
+            }
+            if(i == dV2)
+                dV2--;
+            dH1=0;
+            dH2=0;
+            dV1--;
+        }
     }
 
     @Override

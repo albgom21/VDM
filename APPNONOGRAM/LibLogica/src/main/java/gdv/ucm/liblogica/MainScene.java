@@ -12,11 +12,13 @@ public class MainScene implements IState {
     private IGraphics gr;
     private int xImage;
     private Board board;
+    private Hints hints;
 
     public MainScene(IEngine engine){
         this.board = new Board(9,9);
+        this.hints = new Hints(this.board);
         this.gr = engine.getGraphics();
-        this.textoJugar = engine.getGraphics().newFont("zero.ttf", 200 , false);
+        this.textoJugar = engine.getGraphics().newFont("zero.ttf", 20 , false);
         this.imagen = engine.getGraphics().newImage("perroTriste.jpg");
         this.gr.setFont(this.textoJugar);
     }
@@ -28,9 +30,10 @@ public class MainScene implements IState {
 
     @Override
     public void render() {
-        this.gr.drawImage(this.imagen,100,100);
-        this.gr.drawText("JUGAR",500,500, 0x000000);
-        //this.board.render(this.gr);
+        //this.gr.drawImage(this.imagen,100,100);
+        //this.gr.drawText("JUGAR",500,500, 0x000000);
+        this.board.render(this.gr);
+        this.hints.render(this.gr);
     }
 
     @Override

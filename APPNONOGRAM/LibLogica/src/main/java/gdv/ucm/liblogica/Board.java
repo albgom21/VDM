@@ -33,7 +33,12 @@ public class Board implements IInterface {
       board = new Cell [width][height];
       for (int i = 0; i < width; ++i) {
          for (int j = 0; j < height; ++j) {
-            board[i][j] = new Cell(i,j);
+            int valorEntero = (int)Math.floor(Math.random()*(1-0+1)+0);  // Valor entre M y N, ambos incluidos.
+            if(valorEntero==0)
+               board[i][j] = new Cell(i,j,false, CellState.GRAY);
+            else
+               board[i][j] = new Cell(i,j,true, CellState.RED);
+
          }
       }
    }

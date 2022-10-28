@@ -14,11 +14,11 @@ public class Cell implements IInterface {
     private boolean isSol;
 
     // Default constructor
-    public Cell(int x, int y) {
+    public Cell(int x, int y, boolean sol, CellState state) {
         this.x = x;
         this.y = y;
-        this.isSol = false;
-        this.state = CellState.GRAY;
+        this.isSol = sol;
+        this.state = state;
     }
 
     // Setters
@@ -57,20 +57,20 @@ public class Cell implements IInterface {
         if(state.equals(CellState.GRAY))
             color=0x808080;
         else if(state.equals(CellState.BLUE))
-            color=0x808080;
+            color=0x0000ff;
 
         else if(state.equals(CellState.RED))
-            color=0x808080;
+            color=0xff0000;
 
         else //WHITE
-            color=0x808080;
+            color=0xffffff;
 
 
         g.setColor(color);
 
 //        g.fillSquare((1920/3)+(this.x *52),(1080/3)+(this.y*52),150);
 //        g.fillSquare(200+(this.x*75),100+(this.y*75),50);
-        g.fillSquare(100+(this.x*75),100+(this.y*75),50);
+        g.fillSquare(200+(this.x*75),200+(this.y*75),50);
         //bordes en PC
     }
 
