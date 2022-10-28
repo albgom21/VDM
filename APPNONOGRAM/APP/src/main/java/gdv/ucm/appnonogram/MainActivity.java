@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.view.SurfaceView;
 
 import com.example.libenginea.EngineA;
-import com.example.libenginea.GraphicsA;
-
 import gdv.ucm.liblogica.MainScene;
 
 public class MainActivity extends AppCompatActivity {

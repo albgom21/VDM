@@ -35,7 +35,6 @@ public class EngineA implements Runnable, IEngine {
 //        this.canvas = this.holder.lockCanvas();
         this.graphics = new GraphicsA(this.myView, this.canvas); //Pasar Canvas?
         this.graphics.setAssetManager(this.mgr);
-
     }
 
     //bucle principal

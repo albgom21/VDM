@@ -28,7 +28,7 @@ public class MainScene implements IState {
 
     @Override
     public void render() {
-        this.gr.drawImage(this.imagen,200,200);
+        this.gr.drawImage(this.imagen,100,100);
         this.gr.drawText("JUGAR",500,500, 0x000000);
         //this.board.render(this.gr);
     }

@@ -126,8 +126,8 @@ public class GraphicsA implements IGraphics {
 
     @Override
     public void drawImage(IImage image, int x, int y) {
-        //Paint paintTemp = new Paint();
-        //this.canvas.drawBitmap((Bitmap) image,x,y,paintTemp);
+        Paint paintTemp = new Paint();
+        this.canvas.drawBitmap(((ImageA)image).getImg(),x,y,paintTemp);
     }
 
 
