@@ -70,7 +70,7 @@ public class Cell implements IInterface {
 
 //        g.fillSquare((1920/3)+(this.x *52),(1080/3)+(this.y*52),150);
 //        g.fillSquare(200+(this.x*75),100+(this.y*75),50);
-        g.fillSquare(200+(this.x*75),200+(this.y*75),50);
+        g.fillSquare(200+(this.x*75),200+(this.y*75),50); //Espacio dependiendo de las columnas y filas
         //bordes en PC
     }
 

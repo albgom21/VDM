@@ -34,7 +34,7 @@ public class Hints implements IInterface {
                 if(sol){
                     verticalHints[i][depthx]++;
                     ant[j] = true;
-                    horizontalHints[depthCounter[j]][j]++;
+                    horizontalHints[j][depthCounter[j]]++;
                 }
                 else // !Sol
                 {
@@ -79,26 +79,20 @@ public class Hints implements IInterface {
 
     @Override
     public void render(IGraphics g) {
+        int depth[] = new int[x];
         int dH1=0;
-        int dH2=0;
-        int dV1=y-1;
-        int dV2=x-1;
         for (int i = y-1; i >= 0; --i) {
             for (int j = x-1; j >= 0; --j) {
                 if(verticalHints[i][j]!=0) {
-                    g.drawText(Integer.toString(verticalHints[i][j]), 175 - (dH1 * 35), 230 + (dV1 * 75), 0x000000);
+                    g.drawText(Integer.toString(verticalHints[i][j]), 170 - (dH1* 35), 230 + (i * 75), 0x000000);
                     dH1++;
                 }
                 if(horizontalHints[j][i]!=0) {
-                    g.drawText(Integer.toString(horizontalHints[j][i]), 220 + (dV2 * 75), 175 - (dH2 * 35), 0x000000);
-                    dH2++;
+                    g.drawText(Integer.toString(horizontalHints[j][i]), 220 + (j * 75),180 - (depth[j]*35), 0x000000);
+                    depth[j]++;
                 }
             }
-            if(i == dV2)
-                dV2--;
             dH1=0;
-            dH2=0;
-            dV1--;
         }
     }
 

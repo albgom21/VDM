@@ -15,7 +15,7 @@ public class MainScene implements IState {
     private Hints hints;
 
     public MainScene(IEngine engine){
-        this.board = new Board(9,9);
+        this.board = new Board(8,8);
         this.hints = new Hints(this.board);
         this.gr = engine.getGraphics();
         this.textoJugar = engine.getGraphics().newFont("zero.ttf", 20 , false);
