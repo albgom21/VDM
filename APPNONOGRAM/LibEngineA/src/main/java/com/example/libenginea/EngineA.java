@@ -2,8 +2,11 @@ package com.example.libenginea;
 
 import android.content.res.AssetManager;
 import android.graphics.Canvas;
+import android.os.Build;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import androidx.annotation.RequiresApi;
 
 import gdv.ucm.libengine.IAudio;
 import gdv.ucm.libengine.IEngine;
@@ -24,7 +27,9 @@ public class EngineA implements Runnable, IEngine {
     private IState scene;
 
     private GraphicsA graphics;
+    private AudioA audio;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public EngineA(SurfaceView myView){
         this.myView = myView;
         this.mgr = myView.getContext().getAssets();
@@ -34,7 +39,9 @@ public class EngineA implements Runnable, IEngine {
         this.canvas = new Canvas();
 //        this.canvas = this.holder.lockCanvas();
         this.graphics = new GraphicsA(this.myView, this.canvas); //Pasar Canvas?
+        this.audio = new AudioA();
         this.graphics.setAssetManager(this.mgr);
+        this.audio.setAssetManager(this.mgr);
     }
 
     //bucle principal
@@ -127,7 +134,7 @@ public class EngineA implements Runnable, IEngine {
 
     @Override
     public IAudio getAudio() {
-        return null;
+        return this.audio;
     }
 
     @Override

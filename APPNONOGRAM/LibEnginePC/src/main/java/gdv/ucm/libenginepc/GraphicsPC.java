@@ -12,8 +12,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import gdv.ucm.libengine.IButton;
 import gdv.ucm.libengine.IFont;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IImage;
@@ -111,6 +113,15 @@ public class GraphicsPC implements IGraphics {
     }
 
     @Override
+    public IButton newButton(){
+        JButton boton = new JButton("Finalizar");
+        boton.setBounds(50,50,200,60);
+        this.myView.add(boton);
+        ButtonPC botonPC = new ButtonPC(boton);
+        return botonPC;
+    }
+
+    @Override
     public IFont newFont(String filename, int size, boolean isBold) {
         InputStream is = null;
         Font font = null;
@@ -156,8 +167,6 @@ public class GraphicsPC implements IGraphics {
     public void drawImage(IImage image, int x, int y) {
         this.graphics2D.drawImage(((ImagePC) image).getImg(),x,y,null); //(int) w, (int)h
     }
-
-
 
     @Override
     public void setColor(int color) {

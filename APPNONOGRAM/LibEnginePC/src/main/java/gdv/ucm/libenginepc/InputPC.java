@@ -11,7 +11,7 @@ public class InputPC implements IInput {
 
     public void addEvent(MouseEvent evento){
         InputTouchType tipo = null;
-        if(evento.getID() == MouseEvent.BUTTON1_DOWN_MASK ) //izq
+        if(evento.getID() == MouseEvent.BUTTON1_DOWN_MASK) //izq
             tipo = InputTouchType.TOUCH_DOWN;
         eventos.add(new Event(evento.getX(),evento.getY(),0,tipo));
     }

@@ -1,6 +1,11 @@
 package gdv.ucm.libengine;
 
+import java.io.IOException;
+
+import javax.sound.sampled.LineUnavailableException;
+
 public interface IAudio {
     ISound newSound(String file);
-    //Sound playsound(String id);
+    void playSound(String id);
+
 }

@@ -8,6 +8,7 @@ public interface IGraphics {
     //Crear recursos (fuentes, imagenes)
     IImage newImage(String ruta);
     IFont newFont(String filename, int size, boolean isBold);
+    IButton newButton();
 
     void translate(int x, int y);
     void scale(float x, float y);

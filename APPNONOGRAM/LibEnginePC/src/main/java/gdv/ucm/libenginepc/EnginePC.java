@@ -20,6 +20,7 @@ public class EnginePC implements Runnable, IEngine {
     //inputs
     private IState currentScene;
     private GraphicsPC graphics;
+    private AudioPC audio;
 
     public EnginePC(JFrame myView){
         this.myView = myView;
@@ -40,6 +41,7 @@ public class EnginePC implements Runnable, IEngine {
 //        this.bufferStrategy = this.myView.getBufferStrategy();
 //        this.graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
         this.graphics = new GraphicsPC(this.myView);
+        this.audio = new AudioPC();
     }
 
     //hasmap al crear una imagen nombre-IImage
@@ -144,7 +146,7 @@ public class EnginePC implements Runnable, IEngine {
             }
         }
     }
-
+    public JFrame getCanvas() {return this.myView;}
     @Override
     public IGraphics getGraphics() {
         return this.graphics;
@@ -152,12 +154,12 @@ public class EnginePC implements Runnable, IEngine {
 
     @Override
     public IAudio getAudio() {
-        return null;
+        return this.audio;
     }
 
     @Override
     public IState getState() {
-        return null;
+        return this.currentScene;
     }
 
     @Override
