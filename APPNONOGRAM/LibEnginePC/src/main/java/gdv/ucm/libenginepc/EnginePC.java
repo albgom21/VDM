@@ -16,14 +16,15 @@ public class EnginePC implements Runnable, IEngine {
     private JFrame myView;
     private Thread renderThread;
     private boolean running;
-    //sonido
-    //inputs
+    private InputPC input;
     private IState currentScene;
     private GraphicsPC graphics;
     private AudioPC audio;
 
     public EnginePC(JFrame myView){
         this.myView = myView;
+        this.input = new InputPC();
+        this.myView.addMouseListener(this.input);
 //        int intentos = 100;
 //        while(intentos-- > 0) {
 //            try {
@@ -42,6 +43,7 @@ public class EnginePC implements Runnable, IEngine {
 //        this.graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
         this.graphics = new GraphicsPC(this.myView);
         this.audio = new AudioPC();
+
     }
 
     //hasmap al crear una imagen nombre-IImage

@@ -12,11 +12,13 @@ import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IImage;
 import gdv.ucm.libengine.ISound;
 import gdv.ucm.libengine.IState;
+import gdv.ucm.libengine.IInput;
 
 public class MainScene implements IState {
     private IImage imagen;
     private IFont textoJugar;
     private IGraphics gr;
+    private IInput input;
     private IAudio audio;
     private ISound sonidoClick;
     private int xImage;
@@ -57,7 +59,8 @@ public class MainScene implements IState {
     }
 
     @Override
-    public void handleInputs(/*List<Events> eventos*/) {
+    public void handleInputs() {
+        //this.input.getEvents()
         // X, Y
         // if(evento)
         // this.tabler.action()

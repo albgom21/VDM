@@ -34,7 +34,7 @@ public class AudioA implements IAudio {
             throw new RuntimeException("Couldn't load sound.");
         }
 
-        SoundA sound = null;
+        SoundA sound = new SoundA(soundId);
 
         return sound;
     }

@@ -13,6 +13,7 @@ import android.view.SurfaceView;
 import java.io.IOException;
 import java.io.InputStream;
 
+import gdv.ucm.libengine.IButton;
 import gdv.ucm.libengine.IFont;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IImage;
@@ -102,6 +103,11 @@ public class GraphicsA implements IGraphics {
 
         FontA fontA= new FontA(tface);
         return fontA;
+    }
+
+    @Override
+    public IButton newButton() {
+        return null;
     }
 
     @Override

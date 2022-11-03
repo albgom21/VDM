@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 
 import gdv.ucm.libenginepc.EnginePC;
 import gdv.ucm.liblogica.MainScene;
+import gdv.ucm.liblogica.SelectLvlScene;
+import gdv.ucm.liblogica.TitleScene;
 
 public class Desktop {
     public static void main(String[] args) throws LineUnavailableException, IOException {
@@ -18,7 +20,9 @@ public class Desktop {
         renderView.setVisible(true);
         EnginePC engine = new EnginePC(renderView);
 
-        MainScene scene = new MainScene(engine);
+        //MainScene scene = new MainScene(engine);
+        //TitleScene scene = new TitleScene(engine);
+        SelectLvlScene scene = new SelectLvlScene(engine);
 
         engine.setCurrentScene(scene);
         engine.resume();

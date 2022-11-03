@@ -18,6 +18,7 @@ public interface IInput {
         public int y;
         public InputTouchType type;
         public int index;
+
         public Event(int x, int y,int index, InputTouchType type){
 
         }
@@ -25,6 +26,8 @@ public interface IInput {
 
         }
     }
+    public List<Event> getEvents();
     class TouchEvent{};
     List<TouchEvent> getTouchEvents();
+
 }
