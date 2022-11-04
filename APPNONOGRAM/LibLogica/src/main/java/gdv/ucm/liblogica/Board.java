@@ -1,6 +1,7 @@
 package gdv.ucm.liblogica;
 
 import gdv.ucm.libengine.IGraphics;
+import gdv.ucm.libengine.IInput;
 import gdv.ucm.libengine.IInterface;
 
 public class Board implements IInterface {
@@ -42,7 +43,7 @@ public class Board implements IInterface {
          }
       }
    }
-   
+
    @Override
    public void render(IGraphics g){
       for (int i = 0; i < width; ++i) {
@@ -55,6 +56,15 @@ public class Board implements IInterface {
    @Override
    public void update(Double deltaTime) {
 
+   }
+
+   @Override
+   public void handleEvent(IInput.Event e) {
+      for (int i = 0; i < width; ++i) {
+         for (int j = 0; j < height; ++j) {
+            board[i][j].handleEvent(e);
+         }
+      }
    }
    //HACER CARGA DE RECURSOS EN EL MÓDULO DE LÓGICAS
 }

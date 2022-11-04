@@ -90,6 +90,8 @@ public class EnginePC implements Runnable, IEngine {
             long nanoElapsedTime = currentTime - lastFrameTime;
             lastFrameTime = currentTime;
 
+            //INPUT
+            this.handleInputs();
             // Actualizamos
             double elapsedTime = (double) nanoElapsedTime / 1.0E9;
             this.update(elapsedTime);
@@ -100,6 +102,7 @@ public class EnginePC implements Runnable, IEngine {
                     Graphics graphics = this.graphics.getbufferStrategy().getDrawGraphics();
                     try {
                         this.render();
+                        this.clearInputs();
                     }
                     finally {
                         graphics.dispose(); //Elimina el contexto gráfico y libera recursos del sistema realacionado
@@ -107,12 +110,12 @@ public class EnginePC implements Runnable, IEngine {
                 } while( this.graphics.getbufferStrategy().contentsRestored());
                 this.graphics.getbufferStrategy().show();
             } while(this.graphics.getbufferStrategy().contentsLost());
+
         }
     }
 
     protected void update(double deltaTime) {
         this.currentScene.update(deltaTime);
-
     }
 
     protected void render() {
@@ -121,6 +124,15 @@ public class EnginePC implements Runnable, IEngine {
         // Pintamos la escena
         this.currentScene.render();
     }
+
+    protected void handleInputs() {
+        this.currentScene.handleInputs();
+    }
+    protected void clearInputs() {
+        this.input.clearEvents();
+    }
+
+
 
     //Métodos sincronización (parar y reiniciar aplicación)
     public void resume() {
@@ -166,7 +178,7 @@ public class EnginePC implements Runnable, IEngine {
 
     @Override
     public IInput getInput() {
-        return null;
+        return this.input;
     }
 
     @Override

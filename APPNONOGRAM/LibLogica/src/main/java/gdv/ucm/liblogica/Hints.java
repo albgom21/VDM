@@ -1,6 +1,7 @@
 package gdv.ucm.liblogica;
 
 import gdv.ucm.libengine.IGraphics;
+import gdv.ucm.libengine.IInput;
 import gdv.ucm.libengine.IInterface;
 
 public class Hints implements IInterface {
@@ -98,6 +99,11 @@ public class Hints implements IInterface {
 
     @Override
     public void update(Double deltaTime) {
+
+    }
+
+    @Override
+    public void handleEvent(IInput.Event e) {
 
     }
 }

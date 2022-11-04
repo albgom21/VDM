@@ -9,7 +9,6 @@ public class TitleScene implements IState {
     private IFont textoJugar;
     private IGraphics gr;
 
-
     public TitleScene(IEngine engine) {
         this.gr = engine.getGraphics();
         this.textoJugar = this.gr.newFont("zero.ttf", 30 , false);

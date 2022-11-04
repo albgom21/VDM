@@ -20,9 +20,9 @@ public class Desktop {
         renderView.setVisible(true);
         EnginePC engine = new EnginePC(renderView);
 
-        //MainScene scene = new MainScene(engine);
+        MainScene scene = new MainScene(engine);
         //TitleScene scene = new TitleScene(engine);
-        SelectLvlScene scene = new SelectLvlScene(engine);
+        //SelectLvlScene scene = new SelectLvlScene(engine);
 
         engine.setCurrentScene(scene);
         engine.resume();

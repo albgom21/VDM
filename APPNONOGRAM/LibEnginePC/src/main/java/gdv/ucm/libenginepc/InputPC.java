@@ -8,13 +8,24 @@ import java.util.List;
 import gdv.ucm.libengine.IInput;
 
 public class InputPC implements IInput, MouseListener {
-    public List<Event> eventos = new ArrayList<Event>();
+    public List<Event> eventos;
+
+    InputPC(){
+        eventos = new ArrayList<>();
+    }
 
     public void addEvent(MouseEvent evento){
         InputTouchType tipo = null;
-        if(evento.getID() == MouseEvent.BUTTON1_DOWN_MASK) //izq
-            tipo = InputTouchType.TOUCH_DOWN;
-        eventos.add(new Event(evento.getX(),evento.getY(),0,tipo));
+        if(evento.getID() == MouseEvent.MOUSE_CLICKED)
+            tipo = InputTouchType.CLICKED;
+        else if(evento.getID() == MouseEvent.MOUSE_PRESSED)
+            tipo = InputTouchType.PRESSED;
+        else if(evento.getID() == MouseEvent.MOUSE_RELEASED)
+            tipo = InputTouchType.RELEASED;
+//        else if(evento.getID() == MouseEvent.MOUSE_DRAGGED)
+//            tipo = InputTouchType.MOVE;
+
+        eventos.add(new Event(evento.getX(),evento.getY(),evento.getButton(),tipo));
     }
 
     @Override
@@ -23,35 +34,28 @@ public class InputPC implements IInput, MouseListener {
     }
 
     @Override
-    public List<TouchEvent> getTouchEvents() {
-        return null;
+    public void clearEvents() {
+        eventos.clear();
     }
-
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        Event e = new Event(mouseEvent.getX(), mouseEvent.getY(), mouseEvent.getID(), InputTouchType.TOUCH_DOWN);
         addEvent(mouseEvent);  //Añadir a la lista
-
     }
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
-
+        addEvent(mouseEvent);  //Añadir a la lista
     }
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
-
+        addEvent(mouseEvent);  //Añadir a la lista
     }
 
     @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
+    public void mouseEntered(MouseEvent mouseEvent) {  }
 
     @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-
-    }
+    public void mouseExited(MouseEvent mouseEvent) { }
 }
