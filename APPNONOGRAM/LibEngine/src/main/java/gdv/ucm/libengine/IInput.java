@@ -5,9 +5,8 @@ import java.util.List;
 public interface IInput {
     public static enum InputTouchType{
         PRESSED,
-        CLICKED,
-        RELEASED
-//        MOVE
+        RELEASED,
+        MOVE
     }
 //    public static enum InputKeyType{
 //        KEY_DOWN,

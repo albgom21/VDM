@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.io.IOException;
@@ -106,9 +105,10 @@ public class GraphicsA implements IGraphics {
     }
 
     @Override
-    public IButton newButton() {
+    public IButton newButton(String filename, int x, int y, int w, int h) {
         return null;
     }
+
 
     @Override
     public void translate(int x, int y) {
@@ -131,7 +131,7 @@ public class GraphicsA implements IGraphics {
     }
 
     @Override
-    public void drawImage(IImage image, int x, int y) {
+    public void drawImage(IImage image, int x, int y, int w, int h) { //PONER W Y H
         Paint paintTemp = new Paint();
         this.canvas.drawBitmap(((ImageA)image).getImg(),x,y,paintTemp);
     }

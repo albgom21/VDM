@@ -16,8 +16,8 @@ public class InputPC implements IInput, MouseListener {
 
     public void addEvent(MouseEvent evento){
         InputTouchType tipo = null;
-        if(evento.getID() == MouseEvent.MOUSE_CLICKED)
-            tipo = InputTouchType.CLICKED;
+        if(evento.getID() == MouseEvent.MOUSE_MOVED) //MOUSE_DRAGGED
+            tipo = InputTouchType.MOVE;
         else if(evento.getID() == MouseEvent.MOUSE_PRESSED)
             tipo = InputTouchType.PRESSED;
         else if(evento.getID() == MouseEvent.MOUSE_RELEASED)

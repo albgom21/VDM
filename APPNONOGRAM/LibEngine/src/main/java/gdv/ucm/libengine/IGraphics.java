@@ -1,14 +1,10 @@
 package gdv.ucm.libengine;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
-
 public interface IGraphics {
     //Crear recursos (fuentes, imagenes)
     IImage newImage(String ruta);
     IFont newFont(String filename, int size, boolean isBold);
-    IButton newButton();
+    IButton newButton(String filename, int x, int y, int w, int h);
 
     void translate(int x, int y);
     void scale(float x, float y);
@@ -16,7 +12,7 @@ public interface IGraphics {
     void save();
     void restore();
 
-    void drawImage(IImage image, int x, int y); // float w, float h para la escala double rotate para rotación
+    void drawImage(IImage image, int x, int y, int w, int h); // double rotate para rotación
 //    void setColor(IColor color);
     void setColor(int color);
 //    void clear(IColor color);

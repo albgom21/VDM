@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import gdv.ucm.libengine.IButton;
@@ -22,14 +21,16 @@ import gdv.ucm.libengine.IImage;
 
 public class GraphicsPC implements IGraphics {
     private JFrame myView;
+    private EnginePC engine;
     private BufferStrategy bufferStrategy;
     private Graphics2D graphics2D;
 
     public int logicWidth;
     public int logicHeight;
 
-    GraphicsPC(JFrame myView){
+    GraphicsPC(JFrame myView, EnginePC engine){
         this.myView = myView;
+        this.engine = engine;
         // Intentamos crear el buffer strategy con 2 buffers.
         int intentos = 100;
         while(intentos-- > 0) {
@@ -113,15 +114,6 @@ public class GraphicsPC implements IGraphics {
     }
 
     @Override
-    public IButton newButton(){
-        JButton boton = new JButton("Finalizar");
-        boton.setBounds(50,50,200,60);
-        this.myView.add(boton);
-        ButtonPC botonPC = new ButtonPC(boton);
-        return botonPC;
-    }
-
-    @Override
     public IFont newFont(String filename, int size, boolean isBold) {
         InputStream is = null;
         Font font = null;
@@ -141,6 +133,12 @@ public class GraphicsPC implements IGraphics {
         FontPC fontPC= new FontPC(font);
 
         return fontPC;
+    }
+
+    @Override
+    public IButton newButton(String filename, int x, int y, int w, int h) {
+      ButtonPC bPC= new ButtonPC((ImagePC) newImage(filename),this.engine, x, y, w, h);
+      return bPC;
     }
 
     @Override
@@ -164,8 +162,8 @@ public class GraphicsPC implements IGraphics {
     }
 
     @Override
-    public void drawImage(IImage image, int x, int y) {
-        this.graphics2D.drawImage(((ImagePC) image).getImg(),x,y,null); //(int) w, (int)h
+    public void drawImage(IImage image, int x, int y, int w, int h) {
+        this.graphics2D.drawImage(((ImagePC) image).getImg(),x,y,w,h,null); //(int) w, (int)h
     }
 
     @Override

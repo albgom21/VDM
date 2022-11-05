@@ -12,45 +12,46 @@ public class Hints implements IInterface {
     private boolean ant[];
     private int x;
     private int y;
-
+    private Board b;
     //Las j´s actuan como X y las i´s actuan como Y
 
     public Hints(Board b) {
-        x = b.getWidth();
-        y = b.getHeight();
+        this.x = b.getWidth();
+        this.y = b.getHeight();
+        this.b = b;
 
         //Vectors
-        horizontalHints = new int[x][y];
-        verticalHints = new int[y][x];
-        ant = new boolean[x];
-        depthCounter = new int[x];
+        this.horizontalHints = new int[x][y];
+        this.verticalHints = new int[y][x];
+        this.ant = new boolean[x];
+        this.depthCounter = new int[x];
 
 
         //Counter
         int depthx = 0;
-        for (int i = 0; i < y; ++i) {
+        for (int i = 0; i < this.y; ++i) {
             depthx = 0;
-            for (int j = 0; j < x; ++j) {
+            for (int j = 0; j < this.x; ++j) {
                 boolean sol = b.getCell(j,i).getisSol();
                 if(sol){
-                    verticalHints[i][depthx]++;
-                    ant[j] = true;
-                    horizontalHints[j][depthCounter[j]]++;
+                    this.verticalHints[i][depthx]++;
+                    this.ant[j] = true;
+                    this.horizontalHints[j][this.depthCounter[j]]++;
                 }
                 else // !Sol
                 {
-                    if(verticalHints[i][depthx] >= 1)
+                    if(this.verticalHints[i][depthx] >= 1)
                         depthx++;
-                    if (ant[j])
-                        depthCounter[j]++;
+                    if (this.ant[j])
+                        this.depthCounter[j]++;
 
-                    ant[j] = false;
+                    this.ant[j] = false;
                 }
             }
         }
     }
 
-    public Pair Check(Board b)
+    public Pair check()
     {
         int counterBlue = 0;
         int counterRed = 0;

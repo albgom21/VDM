@@ -41,7 +41,7 @@ public class EnginePC implements Runnable, IEngine {
 //
 //        this.bufferStrategy = this.myView.getBufferStrategy();
 //        this.graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
-        this.graphics = new GraphicsPC(this.myView);
+        this.graphics = new GraphicsPC(this.myView, this);
         this.audio = new AudioPC();
 
     }
@@ -184,5 +184,8 @@ public class EnginePC implements Runnable, IEngine {
     @Override
     public void setCurrentScene(IState currentScene) {
         this.currentScene = currentScene;
+    }
+    public IState getCurrentScene() {
+        return currentScene;
     }
 }

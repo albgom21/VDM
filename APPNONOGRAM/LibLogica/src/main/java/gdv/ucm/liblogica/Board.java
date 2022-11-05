@@ -29,18 +29,25 @@ public class Board implements IInterface {
    public Board(int w, int h) {
       width = w;
       height = h;
-
+      int cont = 0;
       // Initialization of the board
       board = new Cell [width][height];
       for (int i = 0; i < width; ++i) {
          for (int j = 0; j < height; ++j) {
-            int valorEntero = (int)Math.floor(Math.random()*(1-0+1)+0);  // Valor entre M y N, ambos incluidos.
+            int valorEntero = (int)Math.floor(Math.random()*(1-0+1)+0);
             if(valorEntero==0)
                board[i][j] = new Cell(i,j,false, CellState.GRAY);
-            else
-               board[i][j] = new Cell(i,j,true, CellState.RED);
+            else{
+               board[i][j] = new Cell(i,j,true, CellState.GRAY);
+               cont++;
+            }
 
          }
+      }
+      if(cont == 0 || cont == w*h){
+         int i = (int)Math.floor(Math.random()*(width));
+         int j = (int)Math.floor(Math.random()*(height));
+         board[i][j] = new Cell(i,j,cont == 0, CellState.GRAY);
       }
    }
 

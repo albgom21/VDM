@@ -1,5 +1,4 @@
 package gdv.ucm.libengine;
 
-public interface IButton {
-
+public interface IButton extends IInterface{
 }
