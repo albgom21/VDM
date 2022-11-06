@@ -102,7 +102,7 @@ public class EngineA implements Runnable, IEngine {
 
     protected void render() {
         // "Borramos" el fondo.
-        this.getGraphics().clear(0xFFFFFFFF);
+        this.getGraphics().clear(0xe7d6bd);
 
         //this.canvas.drawColor(0xFFFFFFFF); // ARGB
         this.currentScene.render();

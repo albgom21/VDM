@@ -65,13 +65,13 @@ public class Cell implements IInterface {
         int color;
 
         if(state.equals(CellState.GRAY))
-            color=0x808080;
+            color=0x7f7a7a;
         else if(state.equals(CellState.BLUE))
-            color=0x0000ff;
+            color=0x5b6ee1;
         else if(state.equals(CellState.RED))
-            color=0xff0000;
+            color=0xac3232;
         else //WHITE
-            color=0xffffff;
+            color=0xececec;
         g.setColor(color);
 
         if(!state.equals(CellState.NORENDER)) {

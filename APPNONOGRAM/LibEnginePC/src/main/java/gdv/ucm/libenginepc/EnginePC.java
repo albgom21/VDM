@@ -120,7 +120,7 @@ public class EnginePC implements Runnable, IEngine {
 
     protected void render() {
         // "Borramos" el fondo.
-        this.getGraphics().clear(0xFFFFFF);
+        this.getGraphics().clear(0xe7d6bd);
         // Pintamos la escena
         this.currentScene.render();
     }
