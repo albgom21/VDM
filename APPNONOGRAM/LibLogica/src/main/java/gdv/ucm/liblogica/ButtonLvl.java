@@ -1,0 +1,54 @@
+package gdv.ucm.liblogica;
+
+import gdv.ucm.libengine.IAudio;
+import gdv.ucm.libengine.IButton;
+import gdv.ucm.libengine.IEngine;
+import gdv.ucm.libengine.IGraphics;
+import gdv.ucm.libengine.IImage;
+import gdv.ucm.libengine.IInput;
+
+public class ButtonLvl implements IButton {
+    private IImage img;
+    private IEngine engine;
+    private int x;
+    private int y;
+    private int w;
+    private int h;
+    private int fils;
+    private int cols;
+    private IAudio audio;
+
+    ButtonLvl(String filename, IEngine engine, int x, int y, int w, int h, int cols, int fils){
+        this.engine = engine;
+        this.img = this.engine.getGraphics().newImage(filename);
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.cols = cols;
+        this.fils = fils;
+        this.audio = this.engine.getAudio();
+    }
+
+    @Override
+    public void render(IGraphics g) {
+        g.drawImage(this.img,x,y,w,h);
+    }
+
+    @Override
+    public void update(Double deltaTime) {
+    }
+
+    @Override
+    public void handleEvent(IInput.Event e) {
+        int mX = e.x;
+        int mY = e.y;
+        if(e.type == IInput.InputTouchType.PRESSED && //click
+                e.index == 1 &&                            // boton izq
+                (mX >= x && mX <= w + x && mY >= y && mY <= h + y)){ // dentro del cuadrado
+            this.audio.playSound("click");
+            MainScene scene = new MainScene(engine, this.cols, this.fils);
+            engine.setCurrentScene(scene);
+        }
+    }
+}

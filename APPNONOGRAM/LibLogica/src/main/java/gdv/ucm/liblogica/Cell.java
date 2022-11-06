@@ -75,11 +75,13 @@ public class Cell implements IInterface {
         g.setColor(color);
 //        g.fillSquare((1920/3)+(this.x *52),(1080/3)+(this.y*52),150);
 //        g.fillSquare(200+(this.x*75),100+(this.y*75),50);
-        g.fillSquare(200+(this.x*75),200+(this.y*75),this.side); //Espacio dependiendo de las columnas y filas
-        if(state.equals(CellState.WHITE)){
-            g.setColor(0x000000);
-            g.drawSquare(200+(this.x*75),200+(this.y*75),this.side);
-            g.drawLine(200+(this.x*75),200+(this.y*75),200+(this.x*75)+this.side,200+(this.y*75)+this.side);
+        if(!state.equals(CellState.NORENDER)) {
+            g.fillSquare(200 + (this.x * 75), 200 + (this.y * 75), this.side); //Espacio dependiendo de las columnas y filas
+            if (state.equals(CellState.WHITE)) {
+                g.setColor(0x000000);
+                g.drawSquare(200 + (this.x * 75), 200 + (this.y * 75), this.side);
+                g.drawLine(200 + (this.x * 75), 200 + (this.y * 75), 200 + (this.x * 75) + this.side, 200 + (this.y * 75) + this.side);
+            }
         }
         //bordes en PC
     }

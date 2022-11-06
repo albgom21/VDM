@@ -14,23 +14,27 @@ public class MainScene implements IState {
     private IFont textoJugar;
     private IGraphics gr;
     private IInput input;
+    private IEngine engine;
 //    private IAudio audio;
 //    private ISound sonidoClick;
     private Board board;
     public Hints hints;
-    private IButton bCheck;
+    private ButtonCheck bCheck;
+    private ButtonSurrender bSurrender;
 
 
-    public MainScene(IEngine engine) {
-        this.board = new Board(5,5);
+    public MainScene(IEngine engine, int cols, int fils) {
+        this.board = new Board(cols, fils);
         this.hints = new Hints(this.board);
-        this.gr = engine.getGraphics();
-        this.input = engine.getInput();
-        this.bCheck = this.gr.newButton("perroTriste.jpg",(this.gr.getWidthLogic()/2) - 25,this.gr.getHeightLogic()/2,200,200);
+        this.engine = engine;
+        this.gr = this.engine.getGraphics();
+        this.input = this.engine.getInput();
+        //this.bCheck = this.gr.newButton("perroTriste.jpg",(this.gr.getWidthLogic()/2) - 25,this.gr.getHeightLogic()/2,200,200);
         this.textoJugar = this.gr.newFont("coolvetica.otf", 20 , false);
-//        this.imagen = this.gr.newImage("perroTriste.jpg");
+        //this.imagen = this.gr.newImage("perroTriste.jpg");
         this.gr.setFont(this.textoJugar);
-
+        this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (this.gr.getWidthLogic()/2) - 25,this.gr.getHeightLogic()/2,200,75);
+        this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, 100,100,200,75);
 //        this.audio = engine.getAudio();
         //this.audio.newSound("click.wav");
         //this.audio.playsound("click");
@@ -43,20 +47,26 @@ public class MainScene implements IState {
 
     @Override
     public void update(double deltaTime) {
-
+        this.bCheck.update(deltaTime);
+        this.hints.update(deltaTime);
+        if(this.hints.getEnd()) {
+            WinScene scene = new WinScene(this.engine, this.board);
+            this.engine.setCurrentScene(scene);
+        }
     }
 
     @Override
     public void render() {
-        //this.gr.drawImage(this.imagen,100,100);
+        //this.gr.drawImage(this.imagen,100,100, 500, 500);
         //this.gr.drawText("JUGAR",500,500, 0x000000);
         this.board.render(this.gr);
         this.hints.render(this.gr);
-        //this.bCheck.render(this.gr);
+        this.bCheck.render(this.gr);
+        this.bSurrender.render(this.gr);
 
-        Pair aux = this.hints.check();
-        String s = "Te falta "+ aux.getFirst()+" casilla Tienes mal "+ aux.getSecond()+" casillas";
-        this.gr.drawText(s,600,600,0xFF0000);
+        //Pair aux = this.hints.check();
+        //String s = "Te falta "+ aux.getFirst()+" casilla Tienes mal "+ aux.getSecond()+" casillas";
+        //this.gr.drawText(s,600,600,0xFF0000);
     }
 
     @Override
@@ -64,6 +74,7 @@ public class MainScene implements IState {
         for(int i = 0; i < this.input.getEvents().size(); i++){
             this.board.handleEvent(this.input.getEvents().get(i));
             this.bCheck.handleEvent(this.input.getEvents().get(i));
+            this.bSurrender.handleEvent(this.input.getEvents().get(i));
         }
     }
 }

@@ -10,6 +10,7 @@ public class Hints implements IInterface {
     private int verticalHints[][];
     private int depthCounter [];
     private boolean ant[];
+    private boolean end;
     private int x;
     private int y;
     private Board b;
@@ -19,6 +20,7 @@ public class Hints implements IInterface {
         this.x = b.getWidth();
         this.y = b.getHeight();
         this.b = b;
+        this.end = false;
 
         //Vectors
         this.horizontalHints = new int[x][y];
@@ -100,11 +102,64 @@ public class Hints implements IInterface {
 
     @Override
     public void update(Double deltaTime) {
-
+        Pair a = isSol();
+        if(a.getFirst()==0 && a.getSecond()==0) {
+            endGame();
+            this.end = true;
+        }
     }
 
     @Override
     public void handleEvent(IInput.Event e) {
+    }
 
+    public void clearWrongs() {
+        for (int i = 0; i < y; ++i) {
+            for (int j = 0; j < x; ++j) {
+                Cell cell = b.getCell(j,i);
+                if(cell.getState()==CellState.RED)
+                    cell.setState(CellState.BLUE);
+            }
+        }
+    }
+
+    public boolean getEnd() { return this.end; }
+
+    private void endGame()
+    {
+        for (int i = 0; i < y; ++i) {
+            for (int j = 0; j < x; ++j) {
+                Cell cell = b.getCell(j,i);
+                if(cell.getState()!=CellState.BLUE)
+                    cell.setState(CellState.NORENDER);
+            }
+        }
+    }
+
+    private Pair isSol()
+    {
+        int counterBlue = 0;
+        int counterRed = 0;
+
+        for (int i = 0; i < y; ++i) {
+            for (int j = 0; j < x; ++j) {
+                boolean sol = b.getCell(j,i).getisSol();
+                Cell cell = b.getCell(j,i);
+                if(sol)
+                {
+                    if (cell.getState() == CellState.GRAY || cell.getState() == CellState.WHITE)
+                        counterBlue++;
+                }
+                else // !Sol
+                {
+                    if(cell.getState() == CellState.BLUE || cell.getState() == CellState.RED) {
+                        counterRed++;
+                    }
+                }
+            }
+        }
+
+        Pair a = new Pair(counterBlue,counterRed);
+        return a;
     }
 }

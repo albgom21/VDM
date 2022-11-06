@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 import gdv.ucm.libenginepc.EnginePC;
 import gdv.ucm.liblogica.MainScene;
@@ -20,7 +21,7 @@ public class Desktop {
         renderView.setVisible(true);
         EnginePC engine = new EnginePC(renderView);
 
-        MainScene scene = new MainScene(engine);
+        TitleScene scene = new TitleScene(engine);
         //TitleScene scene = new TitleScene(engine);
         //SelectLvlScene scene = new SelectLvlScene(engine);
 

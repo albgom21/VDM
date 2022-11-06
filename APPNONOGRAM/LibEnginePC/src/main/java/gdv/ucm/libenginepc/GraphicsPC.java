@@ -166,6 +166,10 @@ public class GraphicsPC implements IGraphics {
         this.graphics2D.drawImage(((ImagePC) image).getImg(),x,y,w,h,null); //(int) w, (int)h
     }
 
+    public void drawImage(IImage image, int x, int y) {
+        this.graphics2D.drawImage(((ImagePC) image).getImg(),x,y,null); //(int) w, (int)h
+    }
+
     @Override
     public void setColor(int color) {
         this.graphics2D.setColor(new Color(color)); //new Color

@@ -13,6 +13,7 @@ public interface IGraphics {
     void restore();
 
     void drawImage(IImage image, int x, int y, int w, int h); // double rotate para rotación
+    void drawImage(IImage image, int x, int y);
 //    void setColor(IColor color);
     void setColor(int color);
 //    void clear(IColor color);
