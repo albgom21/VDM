@@ -16,20 +16,21 @@ public class Cell implements IInterface {
     private int tr_x; // x a nivel render, pos en pixeles de la pantalla
     private int tr_y;
     private CellState state;
+    IGraphics gr;
 
     private boolean isSol;
 
     // Default constructor
-    public Cell(int x, int y, boolean sol, CellState state)  {
+    public Cell(int x, int y, boolean sol, CellState state, IGraphics graphics)  {
         this.x = x;
         this.y = y;
-        this.side = 50;
-        this.tr_x = 200+(this.x*75);
-        this.tr_y = 200+(this.y*75);
+        this.side = 30;
+        this.gr = graphics;
+        this.tr_x = this.gr.getWidth()/3 + (this.x*(this.side+10));
+        this.tr_y = this.gr.getHeight()/3 + (this.y*(this.side+10));
         this.isSol = sol;
         this.state = state;
     }
-
 
     // Setters
     public void setX(int x) {
@@ -43,7 +44,6 @@ public class Cell implements IInterface {
     public void setState(CellState state) {
         this.state = state;
     }
-
 
    // Getters
     public int getX() {
@@ -73,14 +73,13 @@ public class Cell implements IInterface {
         else //WHITE
             color=0xffffff;
         g.setColor(color);
-//        g.fillSquare((1920/3)+(this.x *52),(1080/3)+(this.y*52),150);
-//        g.fillSquare(200+(this.x*75),100+(this.y*75),50);
+
         if(!state.equals(CellState.NORENDER)) {
-            g.fillSquare(200 + (this.x * 75), 200 + (this.y * 75), this.side); //Espacio dependiendo de las columnas y filas
+            g.fillSquare(tr_x, tr_y, this.side); //Espacio dependiendo de las columnas y filas
             if (state.equals(CellState.WHITE)) {
                 g.setColor(0x000000);
-                g.drawSquare(200 + (this.x * 75), 200 + (this.y * 75), this.side);
-                g.drawLine(200 + (this.x * 75), 200 + (this.y * 75), 200 + (this.x * 75) + this.side, 200 + (this.y * 75) + this.side);
+                g.drawSquare(tr_x, tr_y, this.side);
+                g.drawLine(tr_x, tr_y, tr_x + this.side, tr_y + this.side);
             }
         }
         //bordes en PC
@@ -105,9 +104,6 @@ public class Cell implements IInterface {
                 state = CellState.WHITE;
             else if(state.equals(CellState.WHITE))
                 state = CellState.GRAY;
-
-
-
        }
     }
 }

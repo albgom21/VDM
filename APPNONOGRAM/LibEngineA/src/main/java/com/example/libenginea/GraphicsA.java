@@ -4,6 +4,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -12,7 +13,6 @@ import android.view.SurfaceView;
 import java.io.IOException;
 import java.io.InputStream;
 
-import gdv.ucm.libengine.IButton;
 import gdv.ucm.libengine.IFont;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IImage;
@@ -105,12 +105,6 @@ public class GraphicsA implements IGraphics {
     }
 
     @Override
-    public IButton newButton(String filename, int x, int y, int w, int h) {
-        return null;
-    }
-
-
-    @Override
     public void translate(int x, int y) {
         //this.graphics2D.translate(x,y); //REVISAR
     }
@@ -130,12 +124,28 @@ public class GraphicsA implements IGraphics {
         //COMPLETAR
     }
 
+    public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+        return resizedBitmap;
+    }
+
     @Override
-    public void drawImage(IImage image, int x, int y, int w, int h) { //PONER W Y H
+    public void drawImage(IImage image, int x, int y, int w, int h) {
+        Paint paintTemp = new Paint();
+        this.canvas.drawBitmap(getResizedBitmap(((ImageA)image).getImg(),w,h),x,y,paintTemp);
+    }
+
+    @Override
+    public void drawImage(IImage image, int x, int y) {
         Paint paintTemp = new Paint();
         this.canvas.drawBitmap(((ImageA)image).getImg(),x,y,paintTemp);
     }
-
 
     @Override
     public void setColor(int colorRGB) {
@@ -199,6 +209,11 @@ public class GraphicsA implements IGraphics {
     @Override
     public int realToLogicY(int y) {
         return 0;
+    }
+
+    @Override
+    public int getWidthString(String text) {
+       return (int)this.paint.measureText(text,0,text.length());
     }
 
     public void lockCanvas(){

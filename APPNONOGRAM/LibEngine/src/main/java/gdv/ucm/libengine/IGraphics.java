@@ -4,7 +4,6 @@ public interface IGraphics {
     //Crear recursos (fuentes, imagenes)
     IImage newImage(String ruta);
     IFont newFont(String filename, int size, boolean isBold);
-    IButton newButton(String filename, int x, int y, int w, int h);
 
     void translate(int x, int y);
     void scale(float x, float y);
@@ -27,11 +26,14 @@ public interface IGraphics {
     int realToLogicX(int x);
     int realToLogicY(int y);
 
+    int getWidthString(String text);
+
     //Getters
     int getWidth();
     int getWidthLogic();
     int getHeight();
     int getHeightLogic();
+    int getBorderTop();
 
     //Setters
     void setResolution(int w, int h);

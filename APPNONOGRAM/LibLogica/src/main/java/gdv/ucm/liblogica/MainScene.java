@@ -1,6 +1,5 @@
 package gdv.ucm.liblogica;
 
-import gdv.ucm.libengine.IButton;
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IFont;
 import gdv.ucm.libengine.IGraphics;
@@ -24,25 +23,24 @@ public class MainScene implements IState {
 
 
     public MainScene(IEngine engine, int cols, int fils) {
-        this.board = new Board(cols, fils);
-        this.hints = new Hints(this.board);
         this.engine = engine;
         this.gr = this.engine.getGraphics();
         this.input = this.engine.getInput();
+        this.board = new Board(cols, fils, this.gr);
+        this.hints = new Hints(this.board, this.gr);
         //this.bCheck = this.gr.newButton("perroTriste.jpg",(this.gr.getWidthLogic()/2) - 25,this.gr.getHeightLogic()/2,200,200);
         this.textoJugar = this.gr.newFont("coolvetica.otf", 20 , false);
         //this.imagen = this.gr.newImage("perroTriste.jpg");
         this.gr.setFont(this.textoJugar);
-        this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (this.gr.getWidthLogic()/2) - 25,this.gr.getHeightLogic()/2,200,75);
-        this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, 100,100,200,75);
-//        this.audio = engine.getAudio();
+        this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (this.gr.getWidth()/3)*2 - 100,this.gr.getBorderTop(),200/2,75/2);
+        this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (this.gr.getWidth()/3),this.gr.getBorderTop(),200/2,75/2);
+
+        //        this.audio = engine.getAudio();
         //this.audio.newSound("click.wav");
         //this.audio.playsound("click");
 //        this.sonidoClick = this.audio.newSound("click.wav");
         //this.audio.playSound("click"); // 2 formas de reproducir un sonido
         //this.sonidoClick.play();
-
-
     }
 
     @Override

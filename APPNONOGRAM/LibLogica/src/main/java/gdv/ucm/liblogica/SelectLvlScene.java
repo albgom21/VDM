@@ -1,8 +1,6 @@
 package gdv.ucm.liblogica;
 
-import gdv.ucm.libengine.IButton;
 import gdv.ucm.libengine.IEngine;
-import gdv.ucm.libengine.IFont;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IInput;
 import gdv.ucm.libengine.IState;
@@ -17,13 +15,13 @@ public class SelectLvlScene implements IState {
         this.gr = engine.getGraphics();
         this.input = engine.getInput();
         this.bLvls = new ButtonLvl[6];
-        this.bLvls[0] = new ButtonLvl("4x4.png",engine, (this.gr.getWidthLogic()/2) - 200,this.gr.getHeightLogic()/2,200,200, 4, 4);
-        this.bLvls[1] = new ButtonLvl("5x5.png",engine,(this.gr.getWidthLogic()/2) ,this.gr.getHeightLogic()/2,200,200, 5, 5);
-        this.bLvls[2] = new ButtonLvl("5x10.png",engine,(this.gr.getWidthLogic()/2) + 200,this.gr.getHeightLogic()/2,200,200, 5, 10);
-        this.bLvls[3] = new ButtonLvl("8x8.png",engine,(this.gr.getWidthLogic()/2) - 200,this.gr.getHeightLogic()/2 + 300,200,200, 8, 8);
-        this.bLvls[4] = new ButtonLvl("10x10.png",engine,(this.gr.getWidthLogic()/2),this.gr.getHeightLogic()/2 + 300,200,200, 10 , 10);
-        this.bLvls[5] = new ButtonLvl("10x15.png",engine,(this.gr.getWidthLogic()/2) + 200,this.gr.getHeightLogic()/2 + 300,200,200, 10, 15);
-        this.bBack = new ButtonBack("back.png",engine,100,100,200,75);
+        this.bLvls[0] = new ButtonLvl("4x4.png",engine, (this.gr.getWidth()/3) ,this.gr.getHeight()/2 - 150,100,100, 4, 4);
+        this.bLvls[1] = new ButtonLvl("5x5.png",engine,(this.gr.getWidth()/2) - 50 ,this.gr.getHeight()/2 - 150,100,100, 5, 5);
+        this.bLvls[2] = new ButtonLvl("5x10.png",engine,(this.gr.getWidth()/3)*2 - 100,this.gr.getHeight()/2 - 150,100,100, 5, 10);
+        this.bLvls[3] = new ButtonLvl("8x8.png",engine,(this.gr.getWidth()/3),this.gr.getHeight()/2 + 50,100,100, 8, 8);
+        this.bLvls[4] = new ButtonLvl("10x10.png",engine,(this.gr.getWidth()/2) - 50,this.gr.getHeight()/2 + 50,100,100, 10 , 10);
+        this.bLvls[5] = new ButtonLvl("10x15.png",engine,(this.gr.getWidth()/3)*2 - 100,this.gr.getHeight()/2 + 50,100,100, 10, 15);
+        this.bBack = new ButtonBack("back.png",engine,(this.gr.getWidth()/3),this.gr.getBorderTop(),200/2,75/2);
     }
 
     @Override
@@ -32,7 +30,8 @@ public class SelectLvlScene implements IState {
 
     @Override
     public void render() {
-        this.gr.drawText("Selecciona el tamaño del puzzle",(this.gr.getWidthLogic()/2) - 175,this.gr.getHeightLogic()/5, 0x000000);
+        String s = "Selecciona el tamaño del puzzle";
+        this.gr.drawText(s,(this.gr.getWidth()/2) - (this.gr.getWidthString(s)/2),this.gr.getHeight()/5, 0x000000);
         for(int i = 0; i < 6; i++)
             this.bLvls[i].render(this.gr);
         this.bBack.render(this.gr);

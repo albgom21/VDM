@@ -1,12 +1,12 @@
 package gdv.ucm.liblogica;
 
-import gdv.ucm.libengine.IButton;
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IImage;
 import gdv.ucm.libengine.IInput;
+import gdv.ucm.libengine.IInterface;
 
-public class ButtonBack implements IButton {
+public class ButtonBack implements IInterface {
     private IImage img;
     private IEngine engine;
     private int x;

@@ -8,6 +8,7 @@ import android.view.SurfaceView;
 
 import com.example.libenginea.EngineA;
 import gdv.ucm.liblogica.MainScene;
+import gdv.ucm.liblogica.TitleScene;
 
 public class MainActivity extends AppCompatActivity {
     private EngineA engine;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         this.renderView = new SurfaceView(this);
         setContentView(this.renderView);
         this.engine = new EngineA(this.renderView);
-        MainScene scene = new MainScene(engine);
+        TitleScene scene = new TitleScene(engine);
         engine.setCurrentScene(scene);
         engine.resume();
     }

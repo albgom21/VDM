@@ -20,7 +20,7 @@ public interface IInput {
         public InputTouchType type;
         public int index;
 
-        public Event(int x, int y,int index, InputTouchType type){
+        public Event(int x, int y, int index, InputTouchType type){
             this.x = x;
             this.y = y;
             this.index = index;

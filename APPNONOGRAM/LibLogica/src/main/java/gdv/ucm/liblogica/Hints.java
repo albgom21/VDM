@@ -14,13 +14,16 @@ public class Hints implements IInterface {
     private int x;
     private int y;
     private Board b;
+    private IGraphics gr;
     //Las j´s actuan como X y las i´s actuan como Y
 
-    public Hints(Board b) {
+    public Hints(Board b, IGraphics gr) {
         this.x = b.getWidth();
         this.y = b.getHeight();
         this.b = b;
         this.end = false;
+
+        this.gr = gr;
 
         //Vectors
         this.horizontalHints = new int[x][y];

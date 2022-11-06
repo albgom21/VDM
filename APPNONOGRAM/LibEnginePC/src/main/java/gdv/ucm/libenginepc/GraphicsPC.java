@@ -3,6 +3,7 @@ package gdv.ucm.libenginepc;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferStrategy;
@@ -14,7 +15,6 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-import gdv.ucm.libengine.IButton;
 import gdv.ucm.libengine.IFont;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IImage;
@@ -27,6 +27,8 @@ public class GraphicsPC implements IGraphics {
 
     public int logicWidth;
     public int logicHeight;
+
+    private int borderTop;
 
     GraphicsPC(JFrame myView, EnginePC engine){
         this.myView = myView;
@@ -48,8 +50,9 @@ public class GraphicsPC implements IGraphics {
         this.bufferStrategy = this.myView.getBufferStrategy();
         this.graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
 
-        this.logicHeight = myView.getHeight(); //600x400
-        this.logicWidth = myView.getWidth();
+        this.logicWidth = 400;
+        this.logicHeight = 600;
+        this.borderTop = getHeight() - this.myView.getContentPane().getHeight();
     }
 
     public BufferStrategy getbufferStrategy() {
@@ -63,6 +66,11 @@ public class GraphicsPC implements IGraphics {
 
     @Override
     public int getHeightLogic() { return this.logicHeight; }
+
+    @Override
+    public int getBorderTop() {
+        return this.borderTop;
+    }
 
     @Override
     public void setResolution(int w, int h) {
@@ -136,12 +144,6 @@ public class GraphicsPC implements IGraphics {
     }
 
     @Override
-    public IButton newButton(String filename, int x, int y, int w, int h) {
-      ButtonPC bPC= new ButtonPC((ImagePC) newImage(filename),this.engine, x, y, w, h);
-      return bPC;
-    }
-
-    @Override
     public void translate(int x, int y) {
         this.graphics2D.translate(x,y); //REVISAR
     }
@@ -212,5 +214,10 @@ public class GraphicsPC implements IGraphics {
     @Override
     public int realToLogicY(int y) {
         return 0;
+    }
+
+    @Override
+    public int getWidthString(String text) {
+        return (int)this.graphics2D.getFont().getStringBounds(text,this.graphics2D.getFontRenderContext()).getWidth();
     }
 }

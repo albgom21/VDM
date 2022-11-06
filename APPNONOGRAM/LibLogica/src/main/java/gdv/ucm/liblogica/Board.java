@@ -26,7 +26,7 @@ public class Board implements IInterface {
       this.width = width;
    }
 
-   public Board(int w, int h) {
+   public Board(int w, int h, IGraphics gr) {
       width = w;
       height = h;
       int cont = 0;
@@ -36,9 +36,9 @@ public class Board implements IInterface {
          for (int j = 0; j < height; ++j) {
             int valorEntero = (int)Math.floor(Math.random()*(1-0+1)+0);
             if(valorEntero==0)
-               board[i][j] = new Cell(i,j,false, CellState.GRAY);
+               board[i][j] = new Cell(i,j,false, CellState.GRAY, gr);
             else{
-               board[i][j] = new Cell(i,j,true, CellState.GRAY);
+               board[i][j] = new Cell(i,j,true, CellState.GRAY, gr);
                cont++;
             }
 
@@ -47,7 +47,7 @@ public class Board implements IInterface {
       if(cont == 0 || cont == w*h){
          int i = (int)Math.floor(Math.random()*(width));
          int j = (int)Math.floor(Math.random()*(height));
-         board[i][j] = new Cell(i,j,cont == 0, CellState.GRAY);
+         board[i][j] = new Cell(i,j,cont == 0, CellState.GRAY, gr);
       }
    }
 

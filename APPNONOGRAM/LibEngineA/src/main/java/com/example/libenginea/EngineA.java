@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.os.Build;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
 import androidx.annotation.RequiresApi;
 
@@ -24,13 +25,16 @@ public class EngineA implements Runnable, IEngine {
 
     private Thread renderThread;
     private boolean running;
-    private IState scene;
+    private IState currentScene;
+    private IInput input;
 
     private GraphicsA graphics;
 //    private AudioA audio;
 
     public EngineA(SurfaceView myView){
         this.myView = myView;
+        this.input = new InputA();
+        this.myView.setOnTouchListener((View.OnTouchListener) this.input);
         this.mgr = myView.getContext().getAssets();
         this.holder = this.myView.getHolder();
 //        this.paint = new Paint();
@@ -70,6 +74,9 @@ public class EngineA implements Runnable, IEngine {
 
             // Informe de FPS
             double elapsedTime = (double) nanoElapsedTime / 1.0E9;
+            //INPUT
+            this.handleInputs();
+            //UPDATE
             this.update(elapsedTime);
             if (currentTime - informePrevio > 1000000000l) {
                 long fps = frames * 1000000000l / (currentTime - informePrevio);
@@ -83,12 +90,14 @@ public class EngineA implements Runnable, IEngine {
             while (!this.holder.getSurface().isValid());
             this.graphics.lockCanvas();
             this.render();
+            this.clearInputs();
             this.graphics.unlockCanvas();
+
         }
     }
 
     protected void update(double deltaTime) {
-        this.scene.update(deltaTime);
+        this.currentScene.update(deltaTime);
     }
 
     protected void render() {
@@ -96,7 +105,14 @@ public class EngineA implements Runnable, IEngine {
         this.getGraphics().clear(0xFFFFFFFF);
 
         //this.canvas.drawColor(0xFFFFFFFF); // ARGB
-        this.scene.render();
+        this.currentScene.render();
+    }
+
+    protected void handleInputs() {
+        this.currentScene.handleInputs();
+    }
+    protected void clearInputs() {
+        this.input.clearEvents();
     }
 
     //Métodos sincronización (parar y reiniciar aplicación)
@@ -138,16 +154,16 @@ public class EngineA implements Runnable, IEngine {
 
     @Override
     public IState getState() {
-        return null;
+        return this.currentScene;
     }
 
     @Override
     public IInput getInput() {
-        return null;
+        return this.input;
     }
 
     @Override
     public void setCurrentScene(IState currentScene) {
-        this.scene = currentScene;
+        this.currentScene = currentScene;
     }
 }

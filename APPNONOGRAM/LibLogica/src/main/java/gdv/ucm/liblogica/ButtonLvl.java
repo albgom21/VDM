@@ -1,13 +1,13 @@
 package gdv.ucm.liblogica;
 
 import gdv.ucm.libengine.IAudio;
-import gdv.ucm.libengine.IButton;
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IImage;
 import gdv.ucm.libengine.IInput;
+import gdv.ucm.libengine.IInterface;
 
-public class ButtonLvl implements IButton {
+public class ButtonLvl implements IInterface {
     private IImage img;
     private IEngine engine;
     private int x;
@@ -46,7 +46,7 @@ public class ButtonLvl implements IButton {
         if(e.type == IInput.InputTouchType.PRESSED && //click
                 e.index == 1 &&                            // boton izq
                 (mX >= x && mX <= w + x && mY >= y && mY <= h + y)){ // dentro del cuadrado
-            this.audio.playSound("click");
+//            this.audio.playSound("click");
             MainScene scene = new MainScene(engine, this.cols, this.fils);
             engine.setCurrentScene(scene);
         }
