@@ -1,5 +1,6 @@
 package gdv.ucm.liblogica;
 
+import gdv.ucm.libengine.IAudio;
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IImage;
@@ -19,6 +20,7 @@ public class ButtonCheck implements IInterface {
     private int onScreen;
 
     private Hints hints;
+    private IAudio audio;
 
     ButtonCheck(String filename, IEngine engine, Hints hints, int x, int y, int w, int h){
         this.engine = engine;
@@ -30,6 +32,7 @@ public class ButtonCheck implements IInterface {
         this.hints = hints;
         this.check = false;
         this.onScreen = 3000;
+        this.audio = this.engine.getAudio();
     }
 
     @Override
@@ -56,11 +59,9 @@ public class ButtonCheck implements IInterface {
                 (mX >= x && mX <= w + x && mY >= y && mY <= h + y)){ // dentro del cuadrado
             Pair aux = this.hints.check();
             this.s = "Te falta "+ aux.getFirst()+" casilla\nTienes mal "+ aux.getSecond()+" casillas";
-//            this.engine.getGraphics().drawText(s,400,100,0xFF0000);
-//            SelectLvlScene scene = new SelectLvlScene(engine);
-//            engine.setCurrentScene(scene);
             this.timer = System.currentTimeMillis();
             this.check = true;
+            this.audio.playSound("click");
         }
     }
 }

@@ -29,7 +29,7 @@ public class EngineA implements Runnable, IEngine {
     private IInput input;
 
     private GraphicsA graphics;
-//    private AudioA audio;
+    private AudioA audio;
 
     public EngineA(SurfaceView myView){
         this.myView = myView;
@@ -42,9 +42,9 @@ public class EngineA implements Runnable, IEngine {
         this.canvas = new Canvas();
 //        this.canvas = this.holder.lockCanvas();
         this.graphics = new GraphicsA(this.myView, this.canvas); //Pasar Canvas?
-        //this.audio = new AudioA();
+        this.audio = new AudioA();
         this.graphics.setAssetManager(this.mgr);
-//        this.audio.setAssetManager(this.mgr);
+        this.audio.setAssetManager(this.mgr);
     }
 
     //bucle principal
@@ -130,6 +130,7 @@ public class EngineA implements Runnable, IEngine {
     public void pause() {
         if (this.running) {
             this.running = false;
+            //this.audio.getmPlayer().pause();---------------------------------------------
             while (true) {
                 try {
                     this.renderThread.join();
@@ -149,7 +150,7 @@ public class EngineA implements Runnable, IEngine {
 
     @Override
     public IAudio getAudio() {
-        return null;// this.audio;
+        return this.audio;
     }
 
     @Override

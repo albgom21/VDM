@@ -17,11 +17,18 @@ public class TitleScene implements IState {
     public TitleScene(IEngine engine) {
         this.gr = engine.getGraphics();
         this.input = engine.getInput();
+        //CARGA DE RECURSOS
+        if(!engine.getAudio().isLoaded("click.wav"))
+            engine.getAudio().newSound("click.wav", false);
+        if(!engine.getAudio().isLoaded("ambiente.wav")){
+            engine.getAudio().newSoundAmbient("ambiente.wav");
+            engine.getAudio().playSound("ambiente");
+        }
         this.font = this.gr.newFont("coolvetica.otf", 30 , false);
-        this.gr.setFont(this.font);
         this.logo = this.gr.newImage("logo.png");
+
+        this.gr.setFont(this.font);
         this.bPlay = new ButtonPlay("jugar.png",engine, (this.gr.getWidth()/2)-(200/2),(this.gr.getHeight()/10)*6,200,75);
-//        engine.getAudio().newSound("click.wav");
     }
 
     @Override
@@ -36,11 +43,8 @@ public class TitleScene implements IState {
 
     @Override
     public void handleInputs() {
-        for(int i = 0; i < this.input.getEvents().size(); i++){
+        for(int i = 0; i < this.input.getEvents().size(); i++)
             this.bPlay.handleEvent(this.input.getEvents().get(i));
-            System.out.println("CLICKKKKKKKKKK");
-
-        }
     }
 }
 

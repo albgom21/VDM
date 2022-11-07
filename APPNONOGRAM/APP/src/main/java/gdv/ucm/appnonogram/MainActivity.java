@@ -30,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
         engine.setCurrentScene(scene);
         engine.resume();
     }
+//    public void PlayBackgroundSound() {
+//        Intent intent = new Intent(MainActivity.this, BackgroundSoundService.class);
+//        startService(intent);
+//    }
 
     @Override
     protected void onResume() {

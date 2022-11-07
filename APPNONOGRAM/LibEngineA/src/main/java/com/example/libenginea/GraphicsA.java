@@ -48,6 +48,11 @@ public class GraphicsA implements IGraphics {
     }
 
     @Override
+    public int getBorderTop() {
+        return 50; // IMPLEMENTAR---------------------------------------------------
+    }
+
+    @Override
     public void setResolution(int w, int h) {
         this.myView.getHolder().setFixedSize(w,h); //No seguros si equivale a setSize
     }
@@ -170,6 +175,7 @@ public class GraphicsA implements IGraphics {
 
     @Override
     public void clear(int color) {
+        color+= 0xFF000000;
         this.canvas.drawColor(color);
     }
 

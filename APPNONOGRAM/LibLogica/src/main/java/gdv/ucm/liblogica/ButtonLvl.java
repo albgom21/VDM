@@ -46,7 +46,7 @@ public class ButtonLvl implements IInterface {
         if(e.type == IInput.InputTouchType.PRESSED && //click
                 e.index == 1 &&                            // boton izq
                 (mX >= x && mX <= w + x && mY >= y && mY <= h + y)){ // dentro del cuadrado
-//            this.audio.playSound("click");
+            this.audio.playSound("click");
             MainScene scene = new MainScene(engine, this.cols, this.fils);
             engine.setCurrentScene(scene);
         }

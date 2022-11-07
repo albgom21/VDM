@@ -1,5 +1,6 @@
 package gdv.ucm.liblogica;
 
+import gdv.ucm.libengine.IAudio;
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IImage;
@@ -7,6 +8,7 @@ import gdv.ucm.libengine.IInput;
 import gdv.ucm.libengine.IInterface;
 
 public class ButtonSurrender implements IInterface {
+    private final IAudio audio;
     private IImage img;
     private IEngine engine;
     private int x;
@@ -21,6 +23,7 @@ public class ButtonSurrender implements IInterface {
         this.y = y;
         this.w = w;
         this.h = h;
+        this.audio = this.engine.getAudio();
     }
 
     @Override
@@ -39,6 +42,7 @@ public class ButtonSurrender implements IInterface {
         if(e.type == IInput.InputTouchType.PRESSED && //click
                 e.index == 1 &&                            // boton izq
                 (mX >= x && mX <= w + x && mY >= y && mY <= h + y)){ // dentro del cuadrado
+            this.audio.playSound("click");this.audio.playSound("click");
             SelectLvlScene scene = new SelectLvlScene(engine);
             engine.setCurrentScene(scene);
         }

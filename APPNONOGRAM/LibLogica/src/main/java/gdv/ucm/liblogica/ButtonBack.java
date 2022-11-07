@@ -1,5 +1,6 @@
 package gdv.ucm.liblogica;
 
+import gdv.ucm.libengine.IAudio;
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IImage;
@@ -13,6 +14,7 @@ public class ButtonBack implements IInterface {
     private int y;
     private int w;
     private int h;
+    private IAudio audio;
 
     ButtonBack(String filename, IEngine engine, int x, int y, int w, int h){
         this.engine = engine;
@@ -21,6 +23,7 @@ public class ButtonBack implements IInterface {
         this.y = y;
         this.w = w;
         this.h = h;
+        this.audio = this.engine.getAudio();
     }
 
     @Override
@@ -39,6 +42,7 @@ public class ButtonBack implements IInterface {
         if(e.type == IInput.InputTouchType.PRESSED && //click
                 e.index == 1 &&                            // boton izq
                 (mX >= x && mX <= w + x && mY >= y && mY <= h + y)){ // dentro del cuadrado
+            this.audio.playSound("click");
             TitleScene scene = new TitleScene(engine);
             engine.setCurrentScene(scene);
         }

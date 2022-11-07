@@ -14,10 +14,10 @@ import gdv.ucm.libengine.ISound;
 import java.util.HashMap;
 
 public class AudioPC implements IAudio {
-    HashMap<String,SoundPC> sounds = new HashMap<String,SoundPC>();
+    HashMap<String,SoundPC> sounds = new HashMap<>();
 
     @Override
-    public ISound newSound(String file) {
+    public ISound newSound(String file, boolean loop) {
         AudioInputStream audioStream = null;
         Clip clip = null;
         try {
@@ -35,6 +35,8 @@ public class AudioPC implements IAudio {
 
         try {
             clip.open(audioStream);
+            if(loop)
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (LineUnavailableException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -53,7 +55,45 @@ public class AudioPC implements IAudio {
     }
 
     @Override
+    public ISound newSoundAmbient(String file) {
+        AudioInputStream audioStream = null;
+        Clip clip = null;
+        try {
+            File audioFile = new File("data/"+file);
+            audioStream = AudioSystem.getAudioInputStream(audioFile);
+        } catch (Exception e) {
+            System.err.println("Couldn't load audio file");
+            e.printStackTrace();
+        }
+        try {
+            clip = AudioSystem.getClip();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            clip.open(audioStream);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        SoundPC sound = new SoundPC(clip);
+        sounds.put(file,sound);
+
+        return sound;
+    }
+
+    @Override
     public void playSound(String id) {
+        sounds.get(id+".wav").getClip().setFramePosition(0);
         sounds.get(id+".wav").play();
+    }
+
+    @Override
+    public boolean isLoaded(String id) {
+        return sounds.containsKey(id);
     }
 }

@@ -22,6 +22,7 @@ public class SelectLvlScene implements IState {
         this.bLvls[4] = new ButtonLvl("10x10.png",engine,(this.gr.getWidth()/2) - 50,this.gr.getHeight()/2 + 50,100,100, 10 , 10);
         this.bLvls[5] = new ButtonLvl("10x15.png",engine,(this.gr.getWidth()/3)*2 - 100,this.gr.getHeight()/2 + 50,100,100, 10, 15);
         this.bBack = new ButtonBack("back.png",engine,(this.gr.getWidth()/3),this.gr.getBorderTop(),200/2,75/2);
+//        engine.getAudio().newSound("click.wav");
     }
 
     @Override

@@ -13,15 +13,13 @@ public interface IGraphics {
 
     void drawImage(IImage image, int x, int y, int w, int h); // double rotate para rotación
     void drawImage(IImage image, int x, int y);
-//    void setColor(IColor color);
     void setColor(int color);
-//    void clear(IColor color);
     void clear(int color);
 
     void fillSquare(int cx, int cy, int side);
     void drawSquare(int cx, int cy, int side);
     void drawLine(int initX, int initY, int endX, int endY);
-    void drawText(String text, int x, int y, int color); //IFont font, int tamaño, IColor color
+    void drawText(String text, int x, int y, int color); //IFont font, int tamaño
 
     int realToLogicX(int x);
     int realToLogicY(int y);
