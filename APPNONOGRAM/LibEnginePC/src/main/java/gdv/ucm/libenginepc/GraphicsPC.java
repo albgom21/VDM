@@ -23,12 +23,21 @@ public class GraphicsPC implements IGraphics {
     private JFrame myView;
     private EnginePC engine;
     private BufferStrategy bufferStrategy;
+
+    private IFont font;
     private Graphics2D graphics2D;
 
     public int logicWidth;
     public int logicHeight;
 
     private int borderTop;
+
+    private float factorScale;
+    private float factorX;
+    private float factorY;
+
+    private int ofx;
+    private int ofy;
 
     GraphicsPC(JFrame myView, EnginePC engine){
         this.myView = myView;
@@ -52,6 +61,11 @@ public class GraphicsPC implements IGraphics {
 
         this.logicWidth = 400;
         this.logicHeight = 600;
+        setResolution(this.logicWidth,this.logicHeight);
+
+        this.factorX = getWidth()/ this.logicWidth;
+        this.factorY = getHeight()/ this.logicHeight;
+        this.factorScale = Math.min(this.factorX, this.factorY);
         this.borderTop = getHeight() - this.myView.getContentPane().getHeight();
     }
 
@@ -59,6 +73,8 @@ public class GraphicsPC implements IGraphics {
         return this.bufferStrategy;
     }
 
+    @Override
+    public int getWidth() { return this.myView.getWidth();}
     @Override
     public int getHeight() {
         return this.myView.getHeight();
@@ -75,18 +91,27 @@ public class GraphicsPC implements IGraphics {
     @Override
     public void setResolution(int w, int h) {
         this.myView.setSize(w, h);
+
+        this.factorX = w / this.logicWidth;
+        this.factorY = h / this.logicHeight;
+
+        this.factorScale = Math.min(this.factorX, this.factorY);
+//        this.borderTop = h - this.myView.getContentPane().getHeight();
     }
 
     @Override
     public void setFont(IFont font) {
+        this.font = font;
         this.graphics2D.setFont(((FontPC) font).getFont()); // REVISAR
     }
 
     public void prepareFrame() {
+        setResolution(getWidth(),getHeight());
+
         this.graphics2D = (Graphics2D)this.bufferStrategy.getDrawGraphics();
 //        this.myView.scale();
 //        this.myView.translate();
-        this.clear(0xFFFFFF);
+        //this.clear(0xFFFFFF);
     }
 
     public void finishFrame() {
@@ -100,10 +125,7 @@ public class GraphicsPC implements IGraphics {
         return !this.bufferStrategy.contentsLost();
     }
 
-    @Override
-    public int getWidth() {
-        return this.myView.getWidth();
-    }
+
 
     @Override
     public int getWidthLogic() { return this.logicWidth; }
@@ -154,6 +176,26 @@ public class GraphicsPC implements IGraphics {
     }
 
     @Override
+    public void setOffsetX(int ofx) {
+        this.ofx = ofx;
+    }
+
+    @Override
+    public void setOffsetY(int ofy) {
+        this.ofy = ofy;
+    }
+
+    @Override
+    public int getOffsetX() {
+        return this.ofx;
+    }
+
+    @Override
+    public int getOffsetY() {
+        return this.ofy;
+    }
+
+    @Override
     public void save() {
         //COMPLETAR
     }
@@ -165,11 +207,13 @@ public class GraphicsPC implements IGraphics {
 
     @Override
     public void drawImage(IImage image, int x, int y, int w, int h) {
-        this.graphics2D.drawImage(((ImagePC) image).getImg(),x,y,w,h,null); //(int) w, (int)h
+        this.graphics2D.drawImage(((ImagePC) image).getImg(),
+                                logicToRealX(x) - (w/2),logicToRealY(y),
+                                   (w),(h),null);
     }
 
     public void drawImage(IImage image, int x, int y) {
-        this.graphics2D.drawImage(((ImagePC) image).getImg(),x,y,null); //(int) w, (int)h
+        this.graphics2D.drawImage(((ImagePC) image).getImg(),logicToRealX(x),logicToRealY(y),null); //(int) w, (int)h
     }
 
     @Override
@@ -201,19 +245,39 @@ public class GraphicsPC implements IGraphics {
     }
 
     @Override
-    public void drawText(String text, int x, int y, int color) {
+    public void drawText(String text, int x, int y, int color,IFont font) {
+        if(font != null)
+            setFont(font);
+        else
+            setFont(this.font);
+
         this.graphics2D.setColor(new Color (color));
-        this.graphics2D.drawString(text , x, y);
+        this.graphics2D.drawString(text, x, y);
     }
 
     @Override
     public int realToLogicX(int x) {
-        return 0;
+        return (int)(x*(getWidth()*this.logicWidth));
     }
 
     @Override
     public int realToLogicY(int y) {
-        return 0;
+        return (int)(y*(getHeight()*this.logicHeight));
+    }
+
+    @Override
+    public int logicToRealX(int x) {
+        return (int)(x*factorX);
+    }
+
+    @Override
+    public int logicToRealY(int y) {
+        return (int)(y*factorY);
+    }
+
+    @Override
+    public int realToScale(int s) {
+        return (int)(s*(factorScale));
     }
 
     @Override

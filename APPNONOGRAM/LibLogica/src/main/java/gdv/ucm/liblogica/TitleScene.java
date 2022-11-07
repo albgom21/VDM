@@ -24,11 +24,12 @@ public class TitleScene implements IState {
             engine.getAudio().newSoundAmbient("ambiente.wav");
             engine.getAudio().playSound("ambiente");
         }
-        this.font = this.gr.newFont("coolvetica.otf", 30 , false);
+        this.font = this.gr.newFont("coolvetica.otf", 25, false);
+        this.gr.setFont(this.font);
+
         this.logo = this.gr.newImage("logo.png");
 
-        this.gr.setFont(this.font);
-        this.bPlay = new ButtonPlay("jugar.png",engine, (this.gr.getWidth()/2)-(200/2),(this.gr.getHeight()/10)*6,200,75);
+        this.bPlay = new ButtonPlay("jugar.png",engine, (this.gr.getWidthLogic()/2),(this.gr.getHeightLogic()/10)*6,200,75);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class TitleScene implements IState {
     @Override
     public void render() {
         this.bPlay.render(this.gr);
-        this.gr.drawImage(this.logo,(this.gr.getWidth()/2)-(400/2),this.gr.getHeight()/10, 400, 150);
+        this.gr.drawImage(this.logo,(this.gr.getWidthLogic()/2),this.gr.getHeightLogic()/10, 365, 67);
     }
 
     @Override

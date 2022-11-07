@@ -51,67 +51,79 @@ public class EnginePC implements Runnable, IEngine {
     //bucle principal
     @Override
     public void run() {
-//        if (this.renderThread != Thread.currentThread()) {
-//            // Evita que cualquiera que no sea esta clase llame a este Runnable en un Thread
-//            // Programación defensiva
-//            throw new RuntimeException("run() should not be called directly");
-//        }
-//        //--------------------------------------------------------------------------------------------
-//        while(this.currentScene != null){
-//            //inputs
-//            this.currentScene.handleInputs(); //getInput().getlist
-//            //update
-//            this.currentScene.update(0.016);
-//            do{
-//                //render
-//                //preparar Fram
-//                this.graphics.prepareFrame();
-//                this.currentScene.render();
-//                //terminar Frame
-//                this.graphics.finishFrame();
-//            }
-//            while(!this.graphics.cambioBuffer());
-//
-//
-//        }
-        //--------------------------------------------------------------------------------------------
+        if (this.renderThread != Thread.currentThread()) {
+            // Evita que cualquiera que no sea esta clase llame a este Runnable en un Thread
+            // Programación defensiva
+            throw new RuntimeException("run() should not be called directly");
+        }
 
-        // Si el Thread se pone en marcha
-        // muy rápido, la vista podría todavía no estar inicializada.
         while(this.running && this.myView.getWidth() == 0);
-        // Espera activa. Sería más elegante al menos dormir un poco.
         long lastFrameTime = System.nanoTime();
-        long informePrevio = lastFrameTime; // Informes de FPS
-        int frames = 0;
 
-        // Bucle de juego principal.
-        while(this.running) {
+        //--------------------------------------------------------------------------------------------
+        while(this.currentScene != null){ //this.running
             long currentTime = System.nanoTime();
             long nanoElapsedTime = currentTime - lastFrameTime;
             lastFrameTime = currentTime;
 
-            //INPUT
-            this.handleInputs();
-            // Actualizamos
+            //inputs
+            this.handleInputs(); //            this.currentScene.handleInputs(); //getInput().getlist
+
+            //update
             double elapsedTime = (double) nanoElapsedTime / 1.0E9;
             this.update(elapsedTime);
 
-            // Pintamos el frame
-            do {
-                do {
-                    Graphics graphics = this.graphics.getbufferStrategy().getDrawGraphics();
-                    try {
-                        this.render();
-                        this.clearInputs();
-                    }
-                    finally {
-                        graphics.dispose(); //Elimina el contexto gráfico y libera recursos del sistema realacionado
-                    }
-                } while( this.graphics.getbufferStrategy().contentsRestored());
+            do{
+                //render
+                this.graphics.prepareFrame();
+                this.render();
+                this.clearInputs();
                 this.graphics.getbufferStrategy().show();
-            } while(this.graphics.getbufferStrategy().contentsLost());
 
+                //terminar Frame
+                this.graphics.finishFrame();
+            }
+            while(!this.graphics.cambioBuffer());
         }
+        //--------------------------------------------------------------------------------------------
+
+//        // Si el Thread se pone en marcha
+//        // muy rápido, la vista podría todavía no estar inicializada.
+//        while(this.running && this.myView.getWidth() == 0);
+//        // Espera activa. Sería más elegante al menos dormir un poco.
+//        long lastFrameTime = System.nanoTime();
+//        long informePrevio = lastFrameTime; // Informes de FPS
+//        int frames = 0;
+//
+//        // Bucle de juego principal.
+//        while(this.running) {
+//            long currentTime = System.nanoTime();
+//            long nanoElapsedTime = currentTime - lastFrameTime;
+//            lastFrameTime = currentTime;
+//
+//            //INPUT
+//            this.handleInputs();
+//            // Actualizamos
+//            double elapsedTime = (double) nanoElapsedTime / 1.0E9;
+//            this.update(elapsedTime);
+//
+//            // Pintamos el frame
+//            do {
+//                do {
+////                    this.graphics.prepareFrame();
+//                    Graphics graphics = this.graphics.getbufferStrategy().getDrawGraphics();
+//                    try {
+//                        this.render();
+//                        this.clearInputs();
+//                    }
+//                    finally {
+////                        this.graphics.finishFrame();
+//                        graphics.dispose(); //Elimina el contexto gráfico y libera recursos del sistema realacionado
+//                    }
+//                } while( this.graphics.getbufferStrategy().contentsRestored());
+//                this.graphics.getbufferStrategy().show();
+//            } while(this.graphics.getbufferStrategy().contentsLost());
+
     }
 
     protected void update(double deltaTime) {

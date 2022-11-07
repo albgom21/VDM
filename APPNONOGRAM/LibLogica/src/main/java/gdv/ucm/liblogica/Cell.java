@@ -26,8 +26,8 @@ public class Cell implements IInterface {
         this.y = y;
         this.side = 30;
         this.gr = graphics;
-        this.tr_x = this.gr.getWidth()/3 + (this.x*(this.side+10));
-        this.tr_y = this.gr.getHeight()/3 + (this.y*(this.side+10));
+        this.tr_x = 10 + (this.x*(this.side+10));
+        this.tr_y = 30 + (this.y*(this.side+10)); //BORDER_TOP = 30
         this.isSol = sol;
         this.state = state;
     }
@@ -86,11 +86,6 @@ public class Cell implements IInterface {
     }
 
     @Override
-    public void update(Double deltaTime) {
-
-    }
-
-    @Override
     public void handleEvent(IInput.Event e) {
         int mX = e.x;
         int mY = e.y;
@@ -106,4 +101,7 @@ public class Cell implements IInterface {
                 state = CellState.GRAY;
        }
     }
+
+    @Override
+    public void update(Double deltaTime) {}
 }

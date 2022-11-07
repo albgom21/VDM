@@ -8,10 +8,15 @@ public interface IGraphics {
     void translate(int x, int y);
     void scale(float x, float y);
 
+    void setOffsetX(int ofx);
+    void setOffsetY(int ofy);
+    int getOffsetX();
+    int getOffsetY();
+
     void save();
     void restore();
 
-    void drawImage(IImage image, int x, int y, int w, int h); // double rotate para rotación
+    void drawImage(IImage image, int x, int y, int w, int h);
     void drawImage(IImage image, int x, int y);
     void setColor(int color);
     void clear(int color);
@@ -19,10 +24,14 @@ public interface IGraphics {
     void fillSquare(int cx, int cy, int side);
     void drawSquare(int cx, int cy, int side);
     void drawLine(int initX, int initY, int endX, int endY);
-    void drawText(String text, int x, int y, int color); //IFont font, int tamaño
+    void drawText(String text, int x, int y, int color, IFont font); //IFont font, int tamaño
 
     int realToLogicX(int x);
     int realToLogicY(int y);
+
+    int logicToRealX(int x);
+    int logicToRealY(int y);
+    int realToScale(int s);
 
     int getWidthString(String text);
 

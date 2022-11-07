@@ -91,11 +91,11 @@ public class Hints implements IInterface {
         for (int i = y-1; i >= 0; --i) {
             for (int j = x-1; j >= 0; --j) {
                 if(verticalHints[i][j]!=0) {
-                    g.drawText(Integer.toString(verticalHints[i][j]), 170 - (dH1* 35), 230 + (i * 75), 0x000000);
+                    g.drawText(Integer.toString(verticalHints[i][j]), 170 - (dH1* 35), 230 + (i * 75), 0x000000, null);
                     dH1++;
                 }
                 if(horizontalHints[j][i]!=0) {
-                    g.drawText(Integer.toString(horizontalHints[j][i]), 220 + (j * 75),180 - (depth[j]*35), 0x000000);
+                    g.drawText(Integer.toString(horizontalHints[j][i]), 220 + (j * 75),180 - (depth[j]*35), 0x000000, null);
                     depth[j]++;
                 }
             }

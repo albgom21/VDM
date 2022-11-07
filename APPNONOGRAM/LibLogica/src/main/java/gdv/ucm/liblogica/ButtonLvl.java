@@ -8,6 +8,7 @@ import gdv.ucm.libengine.IInput;
 import gdv.ucm.libengine.IInterface;
 
 public class ButtonLvl implements IInterface {
+    private final IGraphics gr;
     private IImage img;
     private IEngine engine;
     private int x;
@@ -20,6 +21,7 @@ public class ButtonLvl implements IInterface {
 
     ButtonLvl(String filename, IEngine engine, int x, int y, int w, int h, int cols, int fils){
         this.engine = engine;
+        this.gr = engine.getGraphics();
         this.img = this.engine.getGraphics().newImage(filename);
         this.x = x;
         this.y = y;
@@ -44,8 +46,8 @@ public class ButtonLvl implements IInterface {
         int mX = e.x;
         int mY = e.y;
         if(e.type == IInput.InputTouchType.PRESSED && //click
-                e.index == 1 &&                            // boton izq
-                (mX >= x && mX <= w + x && mY >= y && mY <= h + y)){ // dentro del cuadrado
+           e.index == 1 &&                            // boton izq
+           (mX >= this.gr.logicToRealX(x) - (w/2) && mX <= w + this.gr.logicToRealX(x) - (w/2) && mY >= this.gr.logicToRealY(y) && mY <= h + this.gr.logicToRealY(y))){ // dentro del cuadrado
             this.audio.playSound("click");
             MainScene scene = new MainScene(engine, this.cols, this.fils);
             engine.setCurrentScene(scene);
