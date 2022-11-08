@@ -36,18 +36,18 @@ public class Board implements IInterface {
          for (int j = 0; j < height; ++j) {
             int valorEntero = (int)Math.floor(Math.random()*(1-0+1)+0);
             if(valorEntero==0)
-               board[i][j] = new Cell(i,j,false, CellState.GRAY, gr);
+               board[i][j] = new Cell(i,j,(float)width/2, (float)height/2,false, CellState.GRAY, gr);
             else{
-               board[i][j] = new Cell(i,j,true, CellState.GRAY, gr);
+               board[i][j] = new Cell(i,j,(float)width/2, (float)height/2,true, CellState.GRAY, gr);
                cont++;
             }
 
          }
       }
-      if(cont == 0 || cont == w*h){
+      if(cont == 0 || cont == w*h){ //Por si no hay ninguna celda sol, o son todas
          int i = (int)Math.floor(Math.random()*(width));
          int j = (int)Math.floor(Math.random()*(height));
-         board[i][j] = new Cell(i,j,cont == 0, CellState.GRAY, gr);
+         board[i][j] = new Cell(i,j,(float)width/2, (float)height/2,cont == 0, CellState.GRAY, gr);
       }
    }
 

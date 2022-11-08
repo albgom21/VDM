@@ -39,7 +39,7 @@ public class TitleScene implements IState {
     @Override
     public void render() {
         this.bPlay.render(this.gr);
-        this.gr.drawImage(this.logo,(this.gr.getWidthLogic()/2),this.gr.getHeightLogic()/10, 365, 67);
+        this.gr.drawImage(this.logo,(this.gr.getWidthLogic()/2),this.gr.getHeightLogic()/6, 365, 67);
     }
 
     @Override

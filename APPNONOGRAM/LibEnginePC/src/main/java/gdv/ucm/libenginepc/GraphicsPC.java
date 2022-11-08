@@ -63,10 +63,10 @@ public class GraphicsPC implements IGraphics {
         this.logicHeight = 600;
         setResolution(this.logicWidth,this.logicHeight);
 
-        this.factorX = getWidth()/ this.logicWidth;
-        this.factorY = getHeight()/ this.logicHeight;
+        this.factorX = (float)getWidth() / (float)this.logicWidth;
+        this.factorY = (float)getHeight() / (float)this.logicHeight;
         this.factorScale = Math.min(this.factorX, this.factorY);
-        this.borderTop = getHeight() - this.myView.getContentPane().getHeight();
+        this.borderTop = 35;
     }
 
     public BufferStrategy getbufferStrategy() {
@@ -92,8 +92,8 @@ public class GraphicsPC implements IGraphics {
     public void setResolution(int w, int h) {
         this.myView.setSize(w, h);
 
-        this.factorX = w / this.logicWidth;
-        this.factorY = h / this.logicHeight;
+        this.factorX = (float)w / (float)this.logicWidth;
+        this.factorY = (float)h / (float)this.logicHeight;
 
         this.factorScale = Math.min(this.factorX, this.factorY);
 //        this.borderTop = h - this.myView.getContentPane().getHeight();
@@ -208,8 +208,8 @@ public class GraphicsPC implements IGraphics {
     @Override
     public void drawImage(IImage image, int x, int y, int w, int h) {
         this.graphics2D.drawImage(((ImagePC) image).getImg(),
-                                logicToRealX(x) - (w/2),logicToRealY(y),
-                                   (w),(h),null);
+                                logicToRealX(x) - (scaleToReal(w)/2),logicToRealY(y)- (scaleToReal(h)/2),
+                                   (scaleToReal(w)),(scaleToReal(h)),null);
     }
 
     public void drawImage(IImage image, int x, int y) {
@@ -252,7 +252,7 @@ public class GraphicsPC implements IGraphics {
             setFont(this.font);
 
         this.graphics2D.setColor(new Color (color));
-        this.graphics2D.drawString(text, x, y);
+        this.graphics2D.drawString(text, logicToRealX(x) - (getWidthString(text)/2), logicToRealY(y));
     }
 
     @Override
@@ -266,18 +266,16 @@ public class GraphicsPC implements IGraphics {
     }
 
     @Override
-    public int logicToRealX(int x) {
-        return (int)(x*factorX);
-    }
+    public int logicToRealX(int x) { return (int)(x*(float)factorX); }
 
     @Override
     public int logicToRealY(int y) {
-        return (int)(y*factorY);
+        return (int)(y*(float)factorY);
     }
 
     @Override
-    public int realToScale(int s) {
-        return (int)(s*(factorScale));
+    public int scaleToReal(int s) {
+        return (int)(s*(float)(factorScale));
     }
 
     @Override

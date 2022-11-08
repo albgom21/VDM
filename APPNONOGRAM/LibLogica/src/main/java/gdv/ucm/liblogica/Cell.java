@@ -12,22 +12,28 @@ public class Cell implements IInterface {
     private int x; // x a nivel lógico, en la matriz del tablero
     private int y;
     private int side; // al ser cuadradas w == h
+    private float offsetX;
+    private float offsetY;
 
-    private int tr_x; // x a nivel render, pos en pixeles de la pantalla
-    private int tr_y;
+    private float tr_x; // x a nivel render, pos en pixeles de la pantalla
+    private float tr_y;
     private CellState state;
     IGraphics gr;
 
     private boolean isSol;
 
     // Default constructor
-    public Cell(int x, int y, boolean sol, CellState state, IGraphics graphics)  {
+    public Cell(int x, int y, float offsetX, float offsetY, boolean sol, CellState state, IGraphics graphics)  {
         this.x = x;
         this.y = y;
         this.side = 30;
         this.gr = graphics;
-        this.tr_x = 10 + (this.x*(this.side+10));
-        this.tr_y = 30 + (this.y*(this.side+10)); //BORDER_TOP = 30
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
+        this.tr_x = this.gr.getWidthLogic()/2 - this.offsetX*(this.gr.scaleToReal(this.side)+this.gr.scaleToReal(10))
+                    + (this.x*(this.gr.scaleToReal(this.side)+this.gr.scaleToReal(10)));
+        this.tr_y = this.gr.getHeightLogic()/2 - this.offsetY*(this.gr.scaleToReal(this.side)+this.gr.scaleToReal(10))
+                    + (this.y*(this.gr.scaleToReal(this.side)+this.gr.scaleToReal(10))); //BORDER_TOP = 30
         this.isSol = sol;
         this.state = state;
     }
@@ -64,6 +70,11 @@ public class Cell implements IInterface {
     public void render(IGraphics g){
         int color;
 
+        this.tr_x = this.gr.logicToRealX(this.gr.getWidthLogic()/2) - this.gr.logicToRealX((int)this.offsetX*(this.gr.scaleToReal(this.side)+this.gr.scaleToReal(10)))
+                + this.gr.logicToRealX(this.x*(this.gr.scaleToReal(this.side)+this.gr.scaleToReal(10)));
+        this.tr_y = this.gr.logicToRealY(this.gr.getHeightLogic()/2) - this.gr.logicToRealY((int)this.offsetY*(this.gr.scaleToReal(this.side)+this.gr.scaleToReal(10)))
+                + this.gr.logicToRealY(this.y*(this.gr.scaleToReal(this.side)+this.gr.scaleToReal(10))); //BORDER_TOP = 30
+
         if(state.equals(CellState.GRAY))
             color=0x7f7a7a;
         else if(state.equals(CellState.BLUE))
@@ -75,11 +86,11 @@ public class Cell implements IInterface {
         g.setColor(color);
 
         if(!state.equals(CellState.NORENDER)) {
-            g.fillSquare(tr_x, tr_y, this.side); //Espacio dependiendo de las columnas y filas
+            g.fillSquare((int)tr_x, (int)tr_y, this.gr.scaleToReal(this.side)); //Espacio dependiendo de las columnas y filas
             if (state.equals(CellState.WHITE)) {
                 g.setColor(0x000000);
-                g.drawSquare(tr_x, tr_y, this.side);
-                g.drawLine(tr_x, tr_y, tr_x + this.side, tr_y + this.side);
+                g.drawSquare((int)tr_x, (int)tr_y, this.side);
+                g.drawLine((int)tr_x, (int)tr_y, (int)tr_x + this.side, (int)tr_y + this.side);
             }
         }
         //bordes en PC

@@ -43,7 +43,8 @@ public class ButtonPlay implements IInterface {
         int mY = e.y;
         if(e.type == IInput.InputTouchType.PRESSED && //click
            e.index == 1 &&                            // boton izq
-           (mX >= this.gr.logicToRealX(x) - (w/2) && mX <= w + this.gr.logicToRealX(x) - (w/2) && mY >= this.gr.logicToRealY(y) && mY <= h + this.gr.logicToRealY(y))){ // dentro del cuadrado
+           (mX >= this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2) && mX <= this.gr.scaleToReal(w) + this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2)
+           && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2) && mY <= this.gr.scaleToReal(h) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2))){ // dentro del cuadrado
             this.audio.playSound("click");
             SelectLvlScene scene = new SelectLvlScene(engine);
             engine.setCurrentScene(scene);

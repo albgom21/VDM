@@ -32,8 +32,8 @@ public class MainScene implements IState {
         this.textoJugar = this.gr.newFont("coolvetica.otf", 20 , false);
         //this.imagen = this.gr.newImage("perroTriste.jpg");
         this.gr.setFont(this.textoJugar);
-        this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (this.gr.getWidth()/3)*2 - 100,this.gr.getBorderTop(),200/2,75/2);
-        this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (this.gr.getWidth()/3),this.gr.getBorderTop(),200/2,75/2);
+        this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (this.gr.getWidthLogic()/5)*4,this.gr.getBorderTop()+(75/2),200/2,75/2);
+        this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (this.gr.getWidthLogic()/5),this.gr.getBorderTop()+(75/2),200/2,75/2);
 
         //        this.audio = engine.getAudio();
         //this.audio.newSound("click.wav");

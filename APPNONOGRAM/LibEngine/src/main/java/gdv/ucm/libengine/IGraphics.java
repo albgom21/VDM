@@ -31,7 +31,7 @@ public interface IGraphics {
 
     int logicToRealX(int x);
     int logicToRealY(int y);
-    int realToScale(int s);
+    int scaleToReal(int s);
 
     int getWidthString(String text);
 

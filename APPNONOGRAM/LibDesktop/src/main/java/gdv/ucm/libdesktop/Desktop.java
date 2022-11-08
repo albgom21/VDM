@@ -15,7 +15,7 @@ public class Desktop {
     public static void main(String[] args) throws LineUnavailableException, IOException {
         JFrame renderView = new JFrame("NONOGRAM PC");
 
-//        renderView.setSize(1920, 1080);
+        renderView.setSize(1920, 1080);
         renderView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         renderView.setIgnoreRepaint(true);
         renderView.setVisible(true);
