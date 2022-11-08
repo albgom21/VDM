@@ -34,6 +34,7 @@ public interface IGraphics {
     int scaleToReal(int s);
 
     int getWidthString(String text);
+    int getHeightString(String text);
 
     //Getters
     int getWidth();

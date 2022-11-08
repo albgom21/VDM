@@ -94,7 +94,6 @@ public class GraphicsPC implements IGraphics {
 
         this.factorX = (float)w / (float)this.logicWidth;
         this.factorY = (float)h / (float)this.logicHeight;
-
         this.factorScale = Math.min(this.factorX, this.factorY);
 //        this.borderTop = h - this.myView.getContentPane().getHeight();
     }
@@ -252,7 +251,7 @@ public class GraphicsPC implements IGraphics {
             setFont(this.font);
 
         this.graphics2D.setColor(new Color (color));
-        this.graphics2D.drawString(text, logicToRealX(x) - (getWidthString(text)/2), logicToRealY(y));
+        this.graphics2D.drawString(text, x - (getWidthString(text)/2), y - (getHeightString(text)/2));
     }
 
     @Override
@@ -281,5 +280,10 @@ public class GraphicsPC implements IGraphics {
     @Override
     public int getWidthString(String text) {
         return (int)this.graphics2D.getFont().getStringBounds(text,this.graphics2D.getFontRenderContext()).getWidth();
+    }
+
+    @Override
+    public int getHeightString(String text) {
+        return (int)this.graphics2D.getFont().getStringBounds(text,this.graphics2D.getFontRenderContext()).getHeight();
     }
 }

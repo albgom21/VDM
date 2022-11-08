@@ -32,8 +32,8 @@ public class SelectLvlScene implements IState {
 
     @Override
     public void render() {
-        String s = "Selecciona el tamaño del puzzle";
-        this.gr.drawText(s,(this.gr.getWidthLogic()/2),this.gr.getHeightLogic()/5, 0x000000,null);
+        String s = "Selecciona el tamaño del puzzle"; //- (this.gr.getWidthString(s)/2)
+        this.gr.drawText(s,(this.gr.logicToRealX(this.gr.getWidthLogic()/2) ),this.gr.logicToRealY(this.gr.getHeightLogic()/4), 0x000000,null);
         for(int i = 0; i < 6; i++)
             this.bLvls[i].render(this.gr);
         this.bBack.render(this.gr);
