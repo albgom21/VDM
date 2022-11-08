@@ -32,8 +32,8 @@ public class MainScene implements IState {
         this.textoJugar = this.gr.newFont("coolvetica.otf", 20 , false);
         //this.imagen = this.gr.newImage("perroTriste.jpg");
         this.gr.setFont(this.textoJugar);
-        this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (this.gr.getWidthLogic()/5)*4,this.gr.getBorderTop()+(75/2),200/2,75/2);
-        this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (this.gr.getWidthLogic()/5),this.gr.getBorderTop()+(75/2),200/2,75/2);
+        this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (this.gr.getWidthLogic()/5)*4,(this.gr.getHeightLogic()/10)*9,200/2,75/2);
+        this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (this.gr.getWidthLogic()/5),(this.gr.getHeightLogic()/10)*9,200/2,75/2);
 
         //        this.audio = engine.getAudio();
         //this.audio.newSound("click.wav");
@@ -54,7 +54,7 @@ public class MainScene implements IState {
     }
 
     @Override
-    public void render() {
+    public void render() { //PASAR IGRAPHIS PARAM
         //this.gr.drawImage(this.imagen,100,100, 500, 500);
         //this.gr.drawText("JUGAR",500,500, 0x000000);
         this.board.render(this.gr);
@@ -68,7 +68,7 @@ public class MainScene implements IState {
     }
 
     @Override
-    public void handleInputs() {
+    public void handleInputs() { //PONER INPUT PARAMETRO
         for(int i = 0; i < this.input.getEvents().size(); i++){
             this.board.handleEvent(this.input.getEvents().get(i));
             this.bCheck.handleEvent(this.input.getEvents().get(i));

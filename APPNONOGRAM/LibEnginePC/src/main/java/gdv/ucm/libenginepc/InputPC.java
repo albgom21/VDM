@@ -14,7 +14,7 @@ public class InputPC implements IInput, MouseListener {
         eventos = new ArrayList<>();
     }
 
-    public void addEvent(MouseEvent evento){
+    public synchronized void addEvent(MouseEvent evento){
         InputTouchType tipo = null;
         if(evento.getID() == MouseEvent.MOUSE_MOVED) //MOUSE_DRAGGED
             tipo = InputTouchType.MOVE;
@@ -22,14 +22,16 @@ public class InputPC implements IInput, MouseListener {
             tipo = InputTouchType.PRESSED;
         else if(evento.getID() == MouseEvent.MOUSE_RELEASED)
             tipo = InputTouchType.RELEASED;
+        else
+            tipo = null;
 //        else if(evento.getID() == MouseEvent.MOUSE_DRAGGED)
 //            tipo = InputTouchType.MOVE;
-
-        eventos.add(new Event(evento.getX(),evento.getY(),evento.getButton(),tipo));
+        if(tipo!=null)
+            eventos.add(new Event(evento.getX(),evento.getY(),evento.getButton(),tipo));
     }
 
     @Override
-    public List<Event> getEvents() {
+    public synchronized List<Event> getEvents() { //PASAR UNA COPIA DE LA LISTA borrar de la original los ele que se usan
         return eventos;
     }
 

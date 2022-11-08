@@ -113,7 +113,7 @@ public class Hints implements IInterface {
                                     + this.gr.scaleToReal(cell.getSeparacion())))
                                     + this.gr.logicToRealY(this.gr.scaleToReal(cell.getSeparacion()*2))
                                     + (i * (cell.getSeparacion() + cell.getSide())),
-                            0x000000, null);
+                            0x442700, null);
                     dH1++;
                 }
                 if(horizontalHints[j][i]!=0) {
@@ -126,7 +126,7 @@ public class Hints implements IInterface {
                             this.gr.logicToRealY(this.gr.getHeightLogic()/2) //mitad de pantalla
                                     - this.gr.logicToRealY((int)((cell.getOffsetY()/2) * (this.gr.scaleToReal(cell.getSide()) + this.gr.scaleToReal(cell.getSeparacion()))))
 //                                    + this.gr.logicToRealY(this.gr.scaleToReal(cell.getSeparacion()*2))
-                                    - (depth[j]*35), 0x000000, null);
+                                    - (depth[j]*35), 0x442700, null);
                     depth[j]++;
                 }
             }

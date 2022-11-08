@@ -95,19 +95,26 @@ public class Cell implements IInterface {
     @Override
     public void render(IGraphics g){
         int color;
-        this.separacion = this.side/3;
-        this.separacionE = this.side/3;
+        int minWin = Math.min(this.gr.getWidth(), this.gr.getHeight());
+        int minOffset = (int) Math.max(this.offsetX, this.offsetY);
+        int tablero = (int)((minWin - (minWin/5)) / minOffset);
+        this.side = (int) (tablero-(minOffset*(tablero/(minOffset*3))));
 
+        this.separacion = this.side/5;
+        this.separacionE = this.side/5;
         if(this.offsetX % 2 != 0)
             this.separacionE /= 2;
+
         this.tr_x = this.gr.logicToRealX(this.gr.getWidthLogic()/2) //mitad de la pantalla
-                - this.gr.logicToRealX((int)((this.offsetX/2) * this.gr.scaleToReal(this.side))) // mitad casillas izq
-                - this.gr.logicToRealX(((int)((this.offsetX/2) - 1) * this.gr.scaleToReal(separacion))) // mitad offsets (uno menos que las casillas)
-                + this.gr.logicToRealX(this.gr.scaleToReal(separacionE)) // offset que se suma depende de si es par o impar
-                + this.gr.logicToRealX(this.x*(this.gr.scaleToReal(this.side)+this.gr.scaleToReal(separacion))); // pos de cada casilla
-        this.tr_y = this.gr.logicToRealY(this.gr.getHeightLogic()/2)
-                - this.gr.logicToRealY((int)(this.offsetY/2)*(this.gr.scaleToReal(this.side)+this.gr.scaleToReal(separacion)))
-                + this.gr.logicToRealY(this.y*(this.gr.scaleToReal(this.side)+this.gr.scaleToReal(separacion))); //BORDER_TOP = 30
+                - (((this.offsetX/2) * this.side)) // mitad casillas izq
+                - (((this.offsetX/2 - 1) * separacion)) // mitad offsets (uno menos que las casillas)
+                + ((separacionE)) // offset que se suma depende de si es par o impar
+                + (this.x*((this.side)+(separacion))); // pos de cada casilla
+
+        this.tr_y = this.gr.logicToRealY(this.gr.getHeightLogic()/2) //mitad pantalla
+                - ((int)(this.offsetY/2)*(this.side)
+                - (((this.offsetY/2 - 1) * separacion)))                 // mitad casillas arriba
+                + (this.y*(this.side+separacion)); // pos de cada casilla
 
         if(state.equals(CellState.GRAY))
             color=0x7f7a7a;
@@ -120,11 +127,11 @@ public class Cell implements IInterface {
         g.setColor(color);
 
         if(!state.equals(CellState.NORENDER)) {
-            g.fillSquare((int)tr_x - this.gr.scaleToReal(this.side)/2, (int)tr_y - this.gr.scaleToReal(this.side)/2 , this.gr.scaleToReal(this.side)); //Espacio dependiendo de las columnas y filas
+            g.fillSquare((int)tr_x - (this.side)/2, (int)tr_y - (this.side)/2 , (this.side)); //Espacio dependiendo de las columnas y filas
             if (state.equals(CellState.WHITE)) {
                 g.setColor(0x000000);
-                g.drawSquare((int)tr_x, (int)tr_y, this.side);
-                g.drawLine((int)tr_x, (int)tr_y, (int)tr_x + this.side, (int)tr_y + this.side);
+                g.drawSquare((int)tr_x - this.gr.scaleToReal(this.side)/2, (int)tr_y - this.gr.scaleToReal(this.side)/2, this.gr.scaleToReal(this.side));
+                g.drawLine((int)tr_x - this.gr.scaleToReal(this.side)/2, (int)tr_y - this.gr.scaleToReal(this.side)/2, (int)tr_x + this.gr.scaleToReal(this.side)/2, (int)tr_y + this.gr.scaleToReal(this.side)/2);
             }
         }
         //bordes en PC
@@ -137,8 +144,8 @@ public class Cell implements IInterface {
 
     if(e.type == IInput.InputTouchType.PRESSED && //click
        e.index == 1 &&                            // boton izq
-       (mX >= this.gr.logicToRealX(x) - (this.gr.scaleToReal(this.side)/2) && mX <= this.gr.scaleToReal(this.side) + this.gr.logicToRealX(x) - (this.gr.scaleToReal(this.side)/2)
-       && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(this.side)/2) && mY <= this.gr.scaleToReal(this.side) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(this.side)/2))){ // dentro del cuadrado
+       (mX >= tr_x - (this.gr.scaleToReal(this.side)/2) && mX <= this.gr.scaleToReal(this.side) + tr_x - (this.gr.scaleToReal(this.side)/2)
+       && mY >= tr_y - (this.gr.scaleToReal(this.side)/2) && mY <= this.gr.scaleToReal(this.side) + tr_y - (this.gr.scaleToReal(this.side)/2))){ // dentro del cuadrado
             if(state.equals(CellState.GRAY))
                 state = CellState.BLUE;
             else if(state.equals(CellState.BLUE))

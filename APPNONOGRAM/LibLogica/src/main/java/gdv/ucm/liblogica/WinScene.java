@@ -14,7 +14,7 @@ public class WinScene implements IState {
     public WinScene(IEngine engine, Board b) {
         this.gr = engine.getGraphics();
         this.input = engine.getInput();
-        this.bBack = new ButtonBack("back.png", engine,(this.gr.getWidth()/3), this.gr.getBorderTop(),200/2,75/2);
+        this.bBack = new ButtonBack("back.png", engine,this.gr.getWidthLogic()/2, (this.gr.getHeightLogic()/6)*5,200/2,75/2);
         this.b = b;
     }
 
@@ -24,8 +24,8 @@ public class WinScene implements IState {
 
     @Override
     public void render() {
-        String s = "Enhorabuena!";
-        this.gr.drawText(s,(this.gr.getWidth()/2) - this.gr.getWidthString(s)/2,this.gr.getHeight()/9, 0x000000, null);
+        String s = "¡ENHORABUENA!";
+        this.gr.drawText(s,this.gr.logicToRealX(this.gr.getWidthLogic()/2),this.gr.logicToRealY(this.gr.getHeightLogic()/4), 0x442700, null);
         this.b.render(this.gr);
         this.bBack.render(this.gr);
     }
