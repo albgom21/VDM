@@ -90,12 +90,12 @@ public class EngineA implements Runnable, IEngine {
         // Pintamos la escena
         this.currentScene.render();
 
-        this.graphics.setColor(0xFFFFFF);
-        this.graphics.fillRect(0,0,this.graphics.borderWidth,this.graphics.getHeight());
-        this.graphics.fillRect(this.graphics.getWidth()-this.graphics.borderWidth,0,this.graphics.borderWidth,this.graphics.getHeight());
-
-        this.graphics.fillRect(0,this.graphics.borderTop,this.graphics.getWidth(),this.graphics.borderHeight);
-        this.graphics.fillRect(0,this.graphics.getHeight(),this.graphics.getWidth(),-this.graphics.borderHeight);
+//        this.graphics.setColor(0xFFFFFF);
+//        this.graphics.fillRect(0,0,this.graphics.borderWidth,this.graphics.getHeight());
+//        this.graphics.fillRect(this.graphics.getWidth()-this.graphics.borderWidth,0,this.graphics.borderWidth,this.graphics.getHeight());
+//
+//        this.graphics.fillRect(0,this.graphics.borderTop,this.graphics.getWidth(),this.graphics.borderHeight);
+//        this.graphics.fillRect(0,this.graphics.getHeight(),this.graphics.getWidth(),-this.graphics.borderHeight);
 
     }
 

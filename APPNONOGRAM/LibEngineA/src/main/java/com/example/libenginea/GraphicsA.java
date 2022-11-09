@@ -177,7 +177,7 @@ public class GraphicsA implements IGraphics {
 
     @Override
     public void drawSquare(int cx, int cy, int side) {
-        Rect rect = new Rect(cx,cy,side,side);
+        Rect rect = new Rect(cx,cy,cx+side,cy+side);
         this.paint.setStyle(Paint.Style.STROKE);
         this.canvas.drawRect(rect, this.paint);
     }

@@ -110,7 +110,6 @@ public class Cell implements IInterface {
                 - (int)((this.offsetX/2) * (this.side)) // mitad casillas izq
                 - (int)((this.offsetX/2 - 1) * separacion) // mitad offsets (uno menos que las casillas)
                 + separacion*3
-                //+ (separacionE) // offset que se suma depende de si es par o impar
                 + (this.x*((this.side)+(separacion))); // pos de cada casilla
 
         this.tr_y = this.gr.logicToRealY(this.gr.getHeightLogic()/2) //mitad pantalla
@@ -131,7 +130,7 @@ public class Cell implements IInterface {
             g.fillSquare((int)tr_x - (this.side/2), (int)tr_y - (this.side/2), this.side); //Espacio dependiendo de las columnas y filas
             if (state.equals(CellState.WHITE)) {
                 g.setColor(0x000000);
-                g.drawSquare((int)tr_x - (this.side/2), (int)tr_y - (this.side/2), this.side);
+                g.drawSquare((int)tr_x - (int)((this.side/2)), (int)tr_y - (int)(this.side/2), this.side);
                 g.drawLine((int)tr_x - (this.side/2), (int)tr_y - (this.side/2), (int)tr_x + (this.side/2), (int)tr_y + (this.side/2));
             }
         }
