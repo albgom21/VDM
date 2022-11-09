@@ -3,22 +3,20 @@ package gdv.ucm.libengine;
 import java.util.List;
 
 public interface IInput {
+
+    // Tipos de eventos
     public static enum InputTouchType{
         PRESSED,
         RELEASED,
         MOVE
     }
-//    public static enum InputKeyType{
-//        KEY_DOWN,
-//        KEY_UP,
-//        KEY_LONG
-//    }
 
+    // Evento común
     public static class Event{
-        public int x;
-        public int y;
-        public InputTouchType type;
-        public int index;
+        public int x;               // Pos x
+        public int y;               // Pos y
+        public InputTouchType type; // Tipo de evento
+        public int index;           // Botón pulsado en PC / Nº de dedo en Android
 
         public Event(int x, int y, int index, InputTouchType type){
             this.x = x;
@@ -26,14 +24,9 @@ public interface IInput {
             this.index = index;
             this.type = type;
         }
-
-//        public Event(int x, int y,int index, InputKeyType type){}
     }
-    public List<Event> getEvents();
-    public void clearEvents();
-    public void clearIndexEvent(int i);
 
-//    class TouchEvent{};
-//    List<TouchEvent> getTouchEvents();
-
+    public List<Event> getEvents();     // Obtener la lista de eventos
+    public void clearEvents();          // Limpiar la lista de eventos
+    public void clearIndexEvent(int i); // Eliminar un evento de la lista
 }

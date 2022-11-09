@@ -23,13 +23,13 @@ public class GraphicsA implements IGraphics {
     private Canvas canvas;
     private AssetManager mgr;
 
-    public int logicWidth;
-    public int logicHeight;
+    private int logicWidth;
+    private int logicHeight;
 
-    public int borderWidth;
-    public int borderHeight;
+    private int borderWidth;
+    private int borderHeight;
 
-    public int borderTop;
+    private int borderTop;
 
     private int window;
 
@@ -40,14 +40,11 @@ public class GraphicsA implements IGraphics {
 
     GraphicsA(SurfaceView myView, Canvas canvas){
         this.myView = myView;
-//        this.holder = this.myView.getHolder();
         this.paint = new Paint();
-//        this.paint.setColor(0xFFFFFF);
         this.canvas = canvas;
 
         this.logicWidth = 400;
         this.logicHeight = 600;
-
 
         this.borderTop = 31;
     }
@@ -65,7 +62,7 @@ public class GraphicsA implements IGraphics {
 
     @Override
     public int getBorderTop() {
-        return this.borderTop; // IMPLEMENTAR---------------------------------------------------
+        return this.borderTop; // IMPLEMENTAR-----------------------------------------------------------------------------------------
     }
 
     @Override
@@ -74,8 +71,8 @@ public class GraphicsA implements IGraphics {
     }
 
     @Override
-    public void setResolution(int w, int h) { //NO DEBERIA LLAMARSE
-        this.myView.getHolder().setFixedSize(w,h); //No seguros si equivale a setSize
+    public void setResolution(int w, int h) { //NO DEBERIA LLAMARSE EN ANDROID
+        this.myView.getHolder().setFixedSize(w,h);
     }
 
     @Override
@@ -202,16 +199,6 @@ public class GraphicsA implements IGraphics {
         this.paint.setColor(color);
         this.paint.setTextSize(tam);
         this.canvas.drawText(text,x - (getWidthString(text)/2), y-(getHeightString(text)/2),this.paint);
-    }
-
-    @Override
-    public int realToLogicX(int x) {
-        return (int)(x*(getWidth()*this.logicWidth));
-    }
-
-    @Override
-    public int realToLogicY(int y) {
-        return (int)(y*(getHeight()*this.logicHeight));
     }
 
     @Override

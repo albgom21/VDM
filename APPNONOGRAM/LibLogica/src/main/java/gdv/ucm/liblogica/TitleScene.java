@@ -9,14 +9,11 @@ import gdv.ucm.libengine.IState;
 
 public class TitleScene implements IState {
     private IFont font;
-    private IGraphics gr;
     private ButtonPlay bPlay;
-    private IInput input;
     private IImage logo;
 
     public TitleScene(IEngine engine) {
-        this.gr = engine.getGraphics();
-        this.input = engine.getInput();
+        IGraphics gr = engine.getGraphics();
         //CARGA DE RECURSOS
         if(!engine.getAudio().isLoaded("click.wav"))
             engine.getAudio().newSound("click.wav", false);
@@ -24,12 +21,11 @@ public class TitleScene implements IState {
             engine.getAudio().newSoundAmbient("ambiente.wav");
             engine.getAudio().playSound("ambiente");
         }
-        this.font = this.gr.newFont("coolvetica.otf", 20, false);
-        this.gr.setFont(this.font);
+        this.font = gr.newFont("coolvetica.otf", 20, false);
+       gr.setFont(this.font);
 
-        this.logo = this.gr.newImage("logo.png");
-
-        this.bPlay = new ButtonPlay("jugar.png",engine, (this.gr.getWidthLogic()/2),(this.gr.getHeightLogic()/10)*6,200,75);
+        this.logo = gr.newImage("logo.png");
+        this.bPlay = new ButtonPlay("jugar.png",engine, (gr.getWidthLogic()/2),(gr.getHeightLogic()/10)*6,200,75);
     }
 
     @Override
@@ -37,9 +33,9 @@ public class TitleScene implements IState {
     }
 
     @Override
-    public void render() {
-        this.bPlay.render(this.gr);
-        this.gr.drawImage(this.logo,(this.gr.getWidthLogic()/2),this.gr.getHeightLogic()/6, 365, 67);
+    public void render(IGraphics graphics) {
+        this.bPlay.render(graphics);
+        graphics.drawImage(this.logo,(graphics.getWidthLogic()/2),graphics.getHeightLogic()/6, 365, 67);
     }
 
     @Override
@@ -49,5 +45,3 @@ public class TitleScene implements IState {
                 input.clearIndexEvent(i);
     }
 }
-
-

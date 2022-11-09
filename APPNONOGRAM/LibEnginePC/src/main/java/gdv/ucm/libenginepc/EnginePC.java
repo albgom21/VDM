@@ -23,29 +23,13 @@ public class EnginePC implements Runnable, IEngine {
         this.myView = myView;
         this.input = new InputPC();
         this.myView.addMouseListener(this.input);
-//        int intentos = 100;
-//        while(intentos-- > 0) {
-//            try {
-//                this.myView.createBufferStrategy(2);
-//                break;
-//            }
-//            catch(Exception e) {
-//            }
-//        } // while pidiendo la creación de la buffeStrategy
-//        if (intentos == 0) {
-//            System.err.println("No pude crear la BufferStrategy");
-//            return;
-//        }
-//
-//        this.bufferStrategy = this.myView.getBufferStrategy();
-//        this.graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
+
         this.graphics = new GraphicsPC(this.myView, this);
         this.audio = new AudioPC();
     }
 
-    //hasmap al crear una imagen nombre-IImage
 
-    //bucle principal
+    // Bucle principal
     @Override
     public void run() {
         if (this.renderThread != Thread.currentThread()) {
@@ -64,7 +48,7 @@ public class EnginePC implements Runnable, IEngine {
             lastFrameTime = currentTime;
 
             //inputs
-            this.handleInputs(); //            this.currentScene.handleInputs(); //getInput().getlist
+            this.handleInputs();
 
             //update
             double elapsedTime = (double) nanoElapsedTime / 1.0E9;
@@ -82,44 +66,6 @@ public class EnginePC implements Runnable, IEngine {
             }
             while(!this.graphics.cambioBuffer());
         }
-        //--------------------------------------------------------------------------------------------
-
-//        // Si el Thread se pone en marcha
-//        // muy rápido, la vista podría todavía no estar inicializada.
-//        while(this.running && this.myView.getWidth() == 0);
-//        // Espera activa. Sería más elegante al menos dormir un poco.
-//        long lastFrameTime = System.nanoTime();
-//        long informePrevio = lastFrameTime; // Informes de FPS
-//        int frames = 0;
-//
-//        // Bucle de juego principal.
-//        while(this.running) {
-//            long currentTime = System.nanoTime();
-//            long nanoElapsedTime = currentTime - lastFrameTime;
-//            lastFrameTime = currentTime;
-//
-//            //INPUT
-//            this.handleInputs();
-//            // Actualizamos
-//            double elapsedTime = (double) nanoElapsedTime / 1.0E9;
-//            this.update(elapsedTime);
-//
-//            // Pintamos el frame
-//            do {
-//                do {
-////                    this.graphics.prepareFrame();
-//                    Graphics graphics = this.graphics.getbufferStrategy().getDrawGraphics();
-//                    try {
-//                        this.render();
-//                        this.clearInputs();
-//                    }
-//                    finally {
-////                        this.graphics.finishFrame();
-//                        graphics.dispose(); //Elimina el contexto gráfico y libera recursos del sistema realacionado
-//                    }
-//                } while( this.graphics.getbufferStrategy().contentsRestored());
-//                this.graphics.getbufferStrategy().show();
-//            } while(this.graphics.getbufferStrategy().contentsLost());
 
     }
 
@@ -132,16 +78,16 @@ public class EnginePC implements Runnable, IEngine {
         this.graphics.clear(0xe7d6bd);
 
         // Pintamos la escena
-        this.currentScene.render();
+        this.currentScene.render(this.graphics);
 
         //Border
         this.graphics.setColor(0x000000);
 
-        //Lateral
+        // DIBUJAR BORDES LATERALES
         //this.graphics.fillRect(0,0,this.graphics.borderWidth,this.graphics.getHeight());
         //this.graphics.fillRect(this.graphics.getWidth()-this.graphics.borderWidth,0,this.graphics.borderWidth,this.graphics.getHeight());
 
-        //Up & Down
+        // DIBUJAR BORDES Up & Down
         //this.graphics.fillRect(0,this.graphics.borderTop,this.graphics.getWidth(),this.graphics.borderHeight);
         //this.graphics.fillRect(0,this.graphics.getHeight(),this.graphics.getWidth(),-this.graphics.borderHeight);
 
@@ -153,8 +99,6 @@ public class EnginePC implements Runnable, IEngine {
     protected void clearInputs() {
         this.input.clearEvents();
     }
-
-
 
     //Métodos sincronización (parar y reiniciar aplicación)
     public void resume() {

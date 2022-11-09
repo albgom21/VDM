@@ -1,12 +1,8 @@
 package gdv.ucm.libengine;
 
-import java.io.IOException;
-
-import javax.sound.sampled.LineUnavailableException;
-
 public interface IAudio {
-    ISound newSound(String file, boolean loop);
-    ISound newSoundAmbient(String file);
-    void playSound(String id);
-    boolean isLoaded(String id);
+    ISound newSound(String file, boolean loop); // Crear nuevo sonido
+    ISound newSoundAmbient(String file);        // Crear un nuevo sonido ambiente
+    void playSound(String id);                  // Reproducir un sonido
+    boolean isLoaded(String id);                // Saber si un sonido ya está cargado
 }

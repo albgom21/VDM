@@ -6,28 +6,32 @@ import gdv.ucm.libengine.IInput;
 import gdv.ucm.libengine.IState;
 
 public class WinScene implements IState {
-    private IGraphics gr;
+
     private IInput input;
     private Board b;
     private ButtonBack bBack;
 
     public WinScene(IEngine engine, Board b) {
-        this.gr = engine.getGraphics();
+        IGraphics gr = engine.getGraphics();
         this.input = engine.getInput();
-        this.bBack = new ButtonBack("back.png", engine,this.gr.getWidthLogic()/2, (this.gr.getHeightLogic()/6)*5,200/2,75/2);
+        this.bBack = new ButtonBack("back.png", engine,gr.getWidthLogic()/2, (gr.getHeightLogic()/6)*5,200/2,75/2);
         this.b = b;
+
+        if(!engine.getAudio().isLoaded("win.wav"))
+            engine.getAudio().newSound("win.wav", false);
+        engine.getAudio().playSound("win");
     }
 
     @Override
-    public void update(double deltaTime) {
-    }
+    public void update(double deltaTime) {}
 
     @Override
-    public void render() {
+    public void render(IGraphics graphics) {
         String s = "¡ENHORABUENA!";
-        this.gr.drawText(s,this.gr.logicToRealX(this.gr.getWidthLogic()/2),this.gr.logicToRealY(this.gr.getHeightLogic()/8), 0x442700, null, this.gr.scaleToReal(15));
-        this.b.render(this.gr);
-        this.bBack.render(this.gr);
+        graphics.drawText(s,graphics.logicToRealX(graphics.getWidthLogic()/2),graphics.logicToRealY(graphics.getHeightLogic()/8),
+                    0x06561e, null, graphics.scaleToReal(15));
+        this.b.render(graphics);
+        this.bBack.render(graphics);
     }
 
     @Override

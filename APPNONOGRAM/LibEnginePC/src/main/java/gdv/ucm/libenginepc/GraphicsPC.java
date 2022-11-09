@@ -26,13 +26,13 @@ public class GraphicsPC implements IGraphics {
     private FontPC font;
     private Graphics2D graphics2D;
 
-    public int logicWidth;
-    public int logicHeight;
+    private int logicWidth;
+    private int logicHeight;
 
-    public int borderWidth;
-    public int borderHeight;
+    private int borderWidth;
+    private int borderHeight;
 
-    public int borderTop;
+    private int borderTop;
 
     private int window;
 
@@ -255,16 +255,6 @@ public class GraphicsPC implements IGraphics {
     @Override
     public void drawRect(int x, int y, int width, int height) {
         this.graphics2D.drawRect(x,y, width,height);
-    }
-
-    @Override
-    public int realToLogicX(int x) {
-        return (int)(x*(getWidth()*this.logicWidth));
-    }
-
-    @Override
-    public int realToLogicY(int y) {
-        return (int)(y*(getHeight()*this.logicHeight));
     }
 
     @Override

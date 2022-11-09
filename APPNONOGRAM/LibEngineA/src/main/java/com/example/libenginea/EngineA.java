@@ -18,13 +18,11 @@ public class EngineA implements Runnable, IEngine {
     private Canvas canvas;
     private AssetManager mgr;
 
-//    private Paint paint;
-
     private Thread renderThread;
     private boolean running;
+
     private IState currentScene;
     private IInput input;
-
     private GraphicsA graphics;
     private AudioA audio;
 
@@ -34,11 +32,8 @@ public class EngineA implements Runnable, IEngine {
         this.myView.setOnTouchListener((View.OnTouchListener) this.input);
         this.mgr = myView.getContext().getAssets();
         this.holder = this.myView.getHolder();
-//        this.paint = new Paint();
-//        this.paint.setColor(0xFF0000);
         this.canvas = new Canvas();
-//        this.canvas = this.holder.lockCanvas();
-        this.graphics = new GraphicsA(this.myView, this.canvas); //Pasar Canvas?
+        this.graphics = new GraphicsA(this.myView, this.canvas);
         this.audio = new AudioA();
         this.graphics.setAssetManager(this.mgr);
         this.audio.setAssetManager(this.mgr);
@@ -56,7 +51,7 @@ public class EngineA implements Runnable, IEngine {
         while(this.running && this.myView.getWidth() == 0);
         long lastFrameTime = System.nanoTime();
 
-        // Bucle de juego principal.
+        // Bucle de juego principal
         while(running) {
             long currentTime = System.nanoTime();
             long nanoElapsedTime = currentTime - lastFrameTime;
@@ -88,7 +83,7 @@ public class EngineA implements Runnable, IEngine {
         this.getGraphics().clear(0xe7d6bd);
 
         // Pintamos la escena
-        this.currentScene.render();
+        this.currentScene.render(this.graphics);
 
 //        this.graphics.setColor(0xFFFFFF);
 //        this.graphics.fillRect(0,0,this.graphics.borderWidth,this.graphics.getHeight());
@@ -121,7 +116,7 @@ public class EngineA implements Runnable, IEngine {
     public void pause() {
         if (this.running) {
             this.running = false;
-            //this.audio.getmPlayer().pause();---------------------------------------------
+            this.audio.getmPlayer().pause();//PAUSAR EL SONIDO DE FONDO AL SALIR DE LA APP---------------------------------------------
             while (true) {
                 try {
                     this.renderThread.join();

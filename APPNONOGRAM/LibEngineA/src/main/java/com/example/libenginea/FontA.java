@@ -2,7 +2,6 @@ package com.example.libenginea;
 
 import android.graphics.Typeface;
 import android.os.Build;
-
 import gdv.ucm.libengine.IFont;
 
 public class FontA implements IFont {
@@ -13,11 +12,11 @@ public class FontA implements IFont {
     }
 
     public Typeface getFont(){return this.font;}
+
     @Override
     public int getSize() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
             return font.getWeight();
-        }
         return -1;
     }
 

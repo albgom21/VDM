@@ -9,13 +9,7 @@ import gdv.ucm.libengine.IInput;
 
 
 public class MainScene implements IState {
-    private IImage imagen;
-    private IFont textoJugar;
-    private IGraphics gr;
-    private IInput input;
     private IEngine engine;
-//    private IAudio audio;
-//    private ISound sonidoClick;
     private Board board;
     public Hints hints;
     private ButtonCheck bCheck;
@@ -24,23 +18,17 @@ public class MainScene implements IState {
 
     public MainScene(IEngine engine, int cols, int fils) {
         this.engine = engine;
-        this.gr = this.engine.getGraphics();
-        this.input = this.engine.getInput();
-        this.board = new Board(cols, fils, this.gr);
-        this.hints = new Hints(this.board, this.gr);
-        //this.bCheck = this.gr.newButton("perroTriste.jpg",(this.gr.getWidthLogic()/2) - 25,this.gr.getHeightLogic()/2,200,200);
-        //this.textoJugar = this.gr.newFont("coolvetica.otf", 15 , false);
-        //this.imagen = this.gr.newImage("perroTriste.jpg");
-        //this.gr.setFont(this.textoJugar);
-        this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (this.gr.getWidthLogic()/5)*4,(this.gr.getHeightLogic()/10)*9,200/2,75/2);
-        this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (this.gr.getWidthLogic()/5),(this.gr.getHeightLogic()/10)*9,200/2,75/2);
+        IGraphics gr = this.engine.getGraphics();
+        this.board = new Board(cols, fils, gr);
+        this.hints = new Hints(this.board, gr);
 
-        //        this.audio = engine.getAudio();
-        //this.audio.newSound("click.wav");
-        //this.audio.playsound("click");
-//        this.sonidoClick = this.audio.newSound("click.wav");
-        //this.audio.playSound("click"); // 2 formas de reproducir un sonido
-        //this.sonidoClick.play();
+        if(!engine.getAudio().isLoaded("cell.wav"))
+            engine.getAudio().newSound("cell.wav", false);
+        if(!engine.getAudio().isLoaded("check.wav"))
+            engine.getAudio().newSound("check.wav", false);
+
+        this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (gr.getWidthLogic()/5)*4,(gr.getHeightLogic()/10)*9,200/2,75/2);
+        this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (gr.getWidthLogic()/5),(gr.getHeightLogic()/10)*9,200/2,75/2);
     }
 
     @Override
@@ -54,13 +42,13 @@ public class MainScene implements IState {
     }
 
     @Override
-    public void render() { //PASAR IGRAPHIS PARAM
+    public void render(IGraphics graphics) { //PASAR IGRAPHIS PARAM
         //this.gr.drawImage(this.imagen,100,100, 500, 500);
         //this.gr.drawText("JUGAR",500,500, 0x000000);
-        this.board.render(this.gr);
-        this.hints.render(this.gr);
-        this.bCheck.render(this.gr);
-        this.bSurrender.render(this.gr);
+        this.board.render(graphics);
+        this.hints.render(graphics);
+        this.bCheck.render(graphics);
+        this.bSurrender.render(graphics);
 
         //Pair aux = this.hints.check();
         //String s = "Te falta "+ aux.getFirst()+" casilla Tienes mal "+ aux.getSecond()+" casillas";
@@ -70,7 +58,8 @@ public class MainScene implements IState {
     @Override
     public void handleInputs(IInput input) { //PONER INPUT PARAMETRO
         for(int i = 0; i < input.getEvents().size(); i++){
-            this.board.handleEvent(input.getEvents().get(i));
+            if(this.board.handleEvent(input.getEvents().get(i)))
+                this.engine.getAudio().playSound("cell");
             this.bCheck.handleEvent(input.getEvents().get(i));
             this.bSurrender.handleEvent(input.getEvents().get(i));
         }

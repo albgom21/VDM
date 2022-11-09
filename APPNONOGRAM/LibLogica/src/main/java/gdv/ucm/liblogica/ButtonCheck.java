@@ -68,7 +68,7 @@ public class ButtonCheck implements IInterface {
             this.s2 = "Tienes mal "+ aux.getSecond()+" casillas";
             this.timer = System.currentTimeMillis();
             this.check = true;
-            this.audio.playSound("click");
+            this.audio.playSound("check");
             return true;
         }
         return false;

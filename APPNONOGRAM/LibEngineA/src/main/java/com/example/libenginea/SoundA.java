@@ -1,7 +1,6 @@
 package com.example.libenginea;
 
 import android.media.SoundPool;
-
 import gdv.ucm.libengine.ISound;
 
 public class SoundA implements ISound {

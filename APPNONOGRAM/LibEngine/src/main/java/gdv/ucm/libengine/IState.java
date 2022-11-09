@@ -1,8 +1,7 @@
 package gdv.ucm.libengine;
 
 public interface IState {
-//    IEngine engine = null; poner en una clase y heredar
-    void update(double deltaTime);
-    void render();//IEngine engine;
-    void handleInputs(IInput inputs);
+    void update(double deltaTime);    // Actualizar elementos de la escena
+    void render(IGraphics graphics);  // Renderizar elementos de la escena
+    void handleInputs(IInput inputs); // Cada elemento de la escena maneja los eventos
 }

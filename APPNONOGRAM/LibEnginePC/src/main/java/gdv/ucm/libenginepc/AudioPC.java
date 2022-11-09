@@ -45,13 +45,8 @@ public class AudioPC implements IAudio {
 
         SoundPC sound = new SoundPC(clip);
         sounds.put(file,sound);
+
         return sound;
-//        clip.loop(Clip.LOOP_CONTINUOUSLY);
-//        clip.setPosition(0); //seg a partir del que se reproduce
-//        clip.start();
-//        if(clip.isRunning())
-//            clip.stop();
-//        return null;
     }
 
     @Override
@@ -79,7 +74,6 @@ public class AudioPC implements IAudio {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         SoundPC sound = new SoundPC(clip);
         sounds.put(file,sound);
 

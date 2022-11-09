@@ -18,14 +18,6 @@ public class Board implements IInterface {
    }
    public Cell getCell(int x, int y) { return board[x][y]; }
 
-   // Setters
-   public void setHeight(int height) {
-      this.height = height;
-   }
-   public void setWidth(int width) {
-      this.width = width;
-   }
-
    public Board(int w, int h, IGraphics gr) {
       width = w;
       height = h;
@@ -75,5 +67,4 @@ public class Board implements IInterface {
       }
       return false;
    }
-   //HACER CARGA DE RECURSOS EN EL MÓDULO DE LÓGICAS
 }
