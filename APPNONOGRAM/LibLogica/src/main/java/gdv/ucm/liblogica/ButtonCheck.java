@@ -42,8 +42,8 @@ public class ButtonCheck implements IInterface {
     public void render(IGraphics g) {
         g.drawImage(this.img,x,y,w,h);
         if(check) {
-            this.engine.getGraphics().drawText(s1, this.gr.logicToRealX(this.gr.getWidthLogic() / 2), this.gr.logicToRealY(this.gr.getHeightLogic() / 5), 0xac3232, null);
-            this.engine.getGraphics().drawText(s2, this.gr.logicToRealX(this.gr.getWidthLogic() / 2), this.gr.logicToRealY(this.gr.getHeightLogic() / 4), 0xac3232, null);
+            this.engine.getGraphics().drawText(s1, this.gr.logicToRealX(this.gr.getWidthLogic() / 2), this.gr.logicToRealY(this.gr.getHeightLogic() / 11)*10, 0xac3232, null, this.gr.scaleToReal(15));
+            this.engine.getGraphics().drawText(s2, this.gr.logicToRealX(this.gr.getWidthLogic() / 2), (int)(this.gr.logicToRealY(this.gr.getHeightLogic() / 11)*10.5), 0xac3232, null, this.gr.scaleToReal(15));
         }
     }
 

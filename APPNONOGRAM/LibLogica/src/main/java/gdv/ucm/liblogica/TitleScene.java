@@ -24,7 +24,7 @@ public class TitleScene implements IState {
             engine.getAudio().newSoundAmbient("ambiente.wav");
             engine.getAudio().playSound("ambiente");
         }
-        this.font = this.gr.newFont("coolvetica.otf", 25, false);
+        this.font = this.gr.newFont("coolvetica.otf", 20, false);
         this.gr.setFont(this.font);
 
         this.logo = this.gr.newImage("logo.png");
@@ -40,6 +40,9 @@ public class TitleScene implements IState {
     public void render() {
         this.bPlay.render(this.gr);
         this.gr.drawImage(this.logo,(this.gr.getWidthLogic()/2),this.gr.getHeightLogic()/6, 365, 67);
+        this.gr.setColor(0x000000);
+        this.gr.drawLine(this.gr.logicToRealX(10),0,this.gr.logicToRealX(10),this.gr.logicToRealY(600));
+        this.gr.drawLine(this.gr.logicToRealX(390),0,this.gr.logicToRealX(390),this.gr.logicToRealY(600));
     }
 
     @Override

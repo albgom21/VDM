@@ -24,11 +24,14 @@ public class GraphicsPC implements IGraphics {
     private EnginePC engine;
     private BufferStrategy bufferStrategy;
 
-    private IFont font;
+    private FontPC font;
     private Graphics2D graphics2D;
 
     public int logicWidth;
     public int logicHeight;
+
+    public int borderWidth;
+    public int borderHeight;
 
     private int borderTop;
 
@@ -66,6 +69,9 @@ public class GraphicsPC implements IGraphics {
         this.factorX = (float)getWidth() / (float)this.logicWidth;
         this.factorY = (float)getHeight() / (float)this.logicHeight;
         this.factorScale = Math.min(this.factorX, this.factorY);
+
+        this.borderWidth = (getWidth()-this.logicWidth)/2; //Bordes Laterales
+        this.borderHeight = (getHeight()-this.logicHeight)/2; //Bordes arriba y abajo
         this.borderTop = 35;
     }
 
@@ -95,12 +101,14 @@ public class GraphicsPC implements IGraphics {
         this.factorX = (float)w / (float)this.logicWidth;
         this.factorY = (float)h / (float)this.logicHeight;
         this.factorScale = Math.min(this.factorX, this.factorY);
+        this.borderWidth = (getWidth()-this.logicWidth)/2;
+        this.borderHeight = (getHeight()-this.logicHeight)/2;
 //        this.borderTop = h - this.myView.getContentPane().getHeight();
     }
 
     @Override
     public void setFont(IFont font) {
-        this.font = font;
+        this.font = (FontPC)font;
         this.graphics2D.setFont(((FontPC) font).getFont()); // REVISAR
     }
 
@@ -123,8 +131,6 @@ public class GraphicsPC implements IGraphics {
         }
         return !this.bufferStrategy.contentsLost();
     }
-
-
 
     @Override
     public int getWidthLogic() { return this.logicWidth; }
@@ -160,6 +166,7 @@ public class GraphicsPC implements IGraphics {
 
         font = font.deriveFont(font.getStyle(), size);
         FontPC fontPC= new FontPC(font);
+        this.font = fontPC;
 
         return fontPC;
     }
@@ -233,6 +240,11 @@ public class GraphicsPC implements IGraphics {
     }
 
     @Override
+    public void fillRect(int x, int y, int w, int h) {
+        this.graphics2D.fillRect(x,y,w,h);
+    }
+
+    @Override
     public void drawSquare(int cx, int cy, int side) {
         this.graphics2D.drawRect(cx,cy,side,side);
         this.graphics2D.setPaintMode();
@@ -244,14 +256,25 @@ public class GraphicsPC implements IGraphics {
     }
 
     @Override
-    public void drawText(String text, int x, int y, int color,IFont font) {
+    public void drawText(String text, int x, int y, int color,IFont font, float tam) {
+        FontPC f2 = null;
+        if(tam!=-1) {
+            Font f = this.font.getFont().deriveFont(tam);
+            f2 = new FontPC(f);
+        }
+
         if(font != null)
             setFont(font);
-        else
-            setFont(this.font);
+        else if(f2 != null)
+            setFont(f2);
 
         this.graphics2D.setColor(new Color (color));
         this.graphics2D.drawString(text, x - (getWidthString(text)/2), y - (getHeightString(text)/2));
+    }
+
+    @Override
+    public void drawRect(int x, int y, int width, int height) {
+        this.graphics2D.drawRect(x,y, width,height);
     }
 
     @Override

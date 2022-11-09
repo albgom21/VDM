@@ -104,29 +104,33 @@ public class Hints implements IInterface {
                 if(verticalHints[i][j]!=0) {
                     g.drawText(Integer.toString(verticalHints[i][j]),
                             this.gr.logicToRealX(this.gr.getWidthLogic()/2) //mitad de pantalla
-                                    - this.gr.logicToRealX((int)((cell.getOffsetX()/2) * this.gr.scaleToReal(cell.getSide())))
-                                    - this.gr.logicToRealX(((int)(cell.getOffsetX()/2) * this.gr.scaleToReal(cell.getSeparacion())))
-                                    - this.gr.logicToRealX(this.gr.scaleToReal(cell.getSide()/2))
-                                    - (dH1*cell.getSeparacion()*2),
+                                    - (int)((cell.getOffsetX()/2) * cell.getSide())
+                                    - (int)(((cell.getOffsetX()/2) - 1) * cell.getSeparacion())
+                                    - cell.getSide()
+                                    + cell.getSeparacionE()
+                                    - (dH1*(cell.getSide()/3)),
                             this.gr.logicToRealY(this.gr.getHeightLogic()/2) //mitad de pantalla
-                                    - this.gr.logicToRealY((int)(cell.getOffsetY()/2) * (this.gr.scaleToReal(cell.getSide())
-                                    + this.gr.scaleToReal(cell.getSeparacion())))
-                                    + this.gr.logicToRealY(this.gr.scaleToReal(cell.getSeparacion()*2))
+                                    - (int)((cell.getOffsetY()/2) * (cell.getSide()+cell.getSeparacion()))
+                                    //+ cell.getSeparacion()
+                                    + this.gr.scaleToReal(cell.getSeparacion())
                                     + (i * (cell.getSeparacion() + cell.getSide())),
-                            0x442700, null);
+                            0x442700, null, cell.getSide()/3);
                     dH1++;
                 }
                 if(horizontalHints[j][i]!=0) {
                     g.drawText(Integer.toString(horizontalHints[j][i]),
                             this.gr.logicToRealX(this.gr.getWidthLogic()/2)
-                                    - this.gr.logicToRealX((int)((cell.getOffsetX()/2) * this.gr.scaleToReal(cell.getSide())
-                                    + this.gr.scaleToReal(cell.getSeparacion())))
+                                    - (int)((cell.getOffsetX()/2) * cell.getSide())
+                                    - (int)((cell.getOffsetX()/2) * cell.getSeparacion())
+                                    + (cell.getSeparacion()*2)
 //                                    - this.gr.logicToRealX(((int)((cell.getOffsetX()/2) - 1) * this.gr.scaleToReal(cell.getSeparacion())))
                                     + (j * (cell.getSeparacion()+cell.getSide())),
                             this.gr.logicToRealY(this.gr.getHeightLogic()/2) //mitad de pantalla
-                                    - this.gr.logicToRealY((int)((cell.getOffsetY()/2) * (this.gr.scaleToReal(cell.getSide()) + this.gr.scaleToReal(cell.getSeparacion()))))
+                                    - (int)((cell.getOffsetY()/2) * (cell.getSide() + cell.getSeparacion()))
+                                    - (cell.getSide()/2)*3
+                                    + (cell.getSide()/6)*5
 //                                    + this.gr.logicToRealY(this.gr.scaleToReal(cell.getSeparacion()*2))
-                                    - (depth[j]*35), 0x442700, null);
+                                    - (depth[j]*(cell.getSide()/2)), 0x442700, null, cell.getSide()/3);
                     depth[j]++;
                 }
             }

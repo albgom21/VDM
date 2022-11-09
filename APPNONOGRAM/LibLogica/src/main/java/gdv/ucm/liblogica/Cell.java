@@ -97,7 +97,7 @@ public class Cell implements IInterface {
         int color;
         int minWin = Math.min(this.gr.getWidth(), this.gr.getHeight());
         int minOffset = (int) Math.max(this.offsetX, this.offsetY);
-        int tablero = (int)((minWin - (minWin/5)) / minOffset);
+        int tablero = (int)((minWin - (minWin/4)) / minOffset);
         this.side = (int) (tablero-(minOffset*(tablero/(minOffset*3))));
 
         this.separacion = this.side/5;
@@ -112,8 +112,7 @@ public class Cell implements IInterface {
                 + (this.x*((this.side)+(separacion))); // pos de cada casilla
 
         this.tr_y = this.gr.logicToRealY(this.gr.getHeightLogic()/2) //mitad pantalla
-                - ((int)(this.offsetY/2)*(this.side)
-                - (((this.offsetY/2 - 1) * separacion)))                 // mitad casillas arriba
+                - ((int)((this.offsetY/2)*(this.side + separacion))) // mitad casillas arriba
                 + (this.y*(this.side+separacion)); // pos de cada casilla
 
         if(state.equals(CellState.GRAY))

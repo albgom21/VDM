@@ -22,9 +22,11 @@ public interface IGraphics {
     void clear(int color);
 
     void fillSquare(int cx, int cy, int side);
+    void fillRect(int x, int y, int w, int h);
     void drawSquare(int cx, int cy, int side);
     void drawLine(int initX, int initY, int endX, int endY);
-    void drawText(String text, int x, int y, int color, IFont font); //IFont font, int tamaño
+    void drawText(String text, int x, int y, int color, IFont font, float tam); //IFont font, int tamaño
+    void drawRect(int x, int y, int width, int height);
 
     int realToLogicX(int x);
     int realToLogicY(int y);

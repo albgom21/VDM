@@ -25,7 +25,7 @@ public class WinScene implements IState {
     @Override
     public void render() {
         String s = "¡ENHORABUENA!";
-        this.gr.drawText(s,this.gr.logicToRealX(this.gr.getWidthLogic()/2),this.gr.logicToRealY(this.gr.getHeightLogic()/4), 0x442700, null);
+        this.gr.drawText(s,this.gr.logicToRealX(this.gr.getWidthLogic()/2),this.gr.logicToRealY(this.gr.getHeightLogic()/4), 0x442700, null, this.gr.scaleToReal(5));
         this.b.render(this.gr);
         this.bBack.render(this.gr);
     }

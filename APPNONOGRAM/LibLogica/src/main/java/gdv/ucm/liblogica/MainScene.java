@@ -29,9 +29,9 @@ public class MainScene implements IState {
         this.board = new Board(cols, fils, this.gr);
         this.hints = new Hints(this.board, this.gr);
         //this.bCheck = this.gr.newButton("perroTriste.jpg",(this.gr.getWidthLogic()/2) - 25,this.gr.getHeightLogic()/2,200,200);
-        this.textoJugar = this.gr.newFont("coolvetica.otf", 20 , false);
+        //this.textoJugar = this.gr.newFont("coolvetica.otf", 15 , false);
         //this.imagen = this.gr.newImage("perroTriste.jpg");
-        this.gr.setFont(this.textoJugar);
+        //this.gr.setFont(this.textoJugar);
         this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (this.gr.getWidthLogic()/5)*4,(this.gr.getHeightLogic()/10)*9,200/2,75/2);
         this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (this.gr.getWidthLogic()/5),(this.gr.getHeightLogic()/10)*9,200/2,75/2);
 

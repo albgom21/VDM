@@ -199,7 +199,7 @@ public class GraphicsA implements IGraphics {
     }
 
     @Override
-    public void drawText(String text, int x, int y, int color) {
+    public void drawText(String text, int x, int y, int color, IFont font, int tam) {
         color += 0xFF000000;
         int colorARGB = color + 0xFF000000;
         this.paint.setColor(colorARGB);

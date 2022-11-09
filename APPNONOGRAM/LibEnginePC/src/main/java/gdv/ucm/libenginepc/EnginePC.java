@@ -132,9 +132,17 @@ public class EnginePC implements Runnable, IEngine {
 
     protected void render() {
         // "Borramos" el fondo.
-        this.getGraphics().clear(0xe7d6bd);
+        this.graphics.clear(0xe7d6bd);
+
         // Pintamos la escena
         this.currentScene.render();
+
+        //Border
+        this.graphics.setColor(0x000000);
+        this.graphics.fillRect(0,0,this.graphics.borderWidth,this.graphics.getHeight());
+
+        this.graphics.fillRect(this.graphics.borderWidth+this.graphics.logicWidth,0,this.graphics.borderWidth,this.graphics.getHeight());
+
     }
 
     protected void handleInputs() {
