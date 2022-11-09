@@ -40,9 +40,6 @@ public class TitleScene implements IState {
     public void render() {
         this.bPlay.render(this.gr);
         this.gr.drawImage(this.logo,(this.gr.getWidthLogic()/2),this.gr.getHeightLogic()/6, 365, 67);
-        this.gr.setColor(0x000000);
-        this.gr.drawLine(this.gr.logicToRealX(10),0,this.gr.logicToRealX(10),this.gr.logicToRealY(600));
-        this.gr.drawLine(this.gr.logicToRealX(390),0,this.gr.logicToRealX(390),this.gr.logicToRealY(600));
     }
 
     @Override

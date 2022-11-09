@@ -44,6 +44,7 @@ public interface IGraphics {
     int getHeight();
     int getHeightLogic();
     int getBorderTop();
+    int getWindow();
 
     //Setters
     void setResolution(int w, int h);

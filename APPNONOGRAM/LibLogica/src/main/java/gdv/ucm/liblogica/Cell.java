@@ -96,19 +96,20 @@ public class Cell implements IInterface {
     public void render(IGraphics g){
         int color;
         int minWin = Math.min(this.gr.getWidth(), this.gr.getHeight());
-        int minOffset = (int) Math.max(this.offsetX, this.offsetY);
-        int tablero = (int)((minWin - (minWin/4)) / minOffset);
-        this.side = (int) (tablero-(minOffset*(tablero/(minOffset*3))));
+        int maxOffset = (int) Math.max(this.offsetX, this.offsetY);
+        float media = (offsetX+offsetY)/2;
+        this.side = (int)(((this.gr.getWindow()/3)*2)/media);
 
-        this.separacion = this.side/5;
-        this.separacionE = this.side/5;
+        this.separacion = this.side/8;
+        this.separacionE = this.side/8;
         if(this.offsetX % 2 != 0)
             this.separacionE /= 2;
 
         this.tr_x = this.gr.logicToRealX(this.gr.getWidthLogic()/2) //mitad de la pantalla
-                - (((this.offsetX/2) * this.side)) // mitad casillas izq
-                - (((this.offsetX/2 - 1) * separacion)) // mitad offsets (uno menos que las casillas)
-                + ((separacionE)) // offset que se suma depende de si es par o impar
+                - (int)((this.offsetX/2) * (this.side)) // mitad casillas izq
+                - (int)((this.offsetX/2 - 1) * separacion) // mitad offsets (uno menos que las casillas)
+                + separacion*3
+                //+ (separacionE) // offset que se suma depende de si es par o impar
                 + (this.x*((this.side)+(separacion))); // pos de cada casilla
 
         this.tr_y = this.gr.logicToRealY(this.gr.getHeightLogic()/2) //mitad pantalla

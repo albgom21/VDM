@@ -3,7 +3,6 @@ package gdv.ucm.libenginepc;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferStrategy;
@@ -33,7 +32,14 @@ public class GraphicsPC implements IGraphics {
     public int borderWidth;
     public int borderHeight;
 
-    private int borderTop;
+    public int borderTop;
+
+    @Override
+    public int getWindow() {
+        return window;
+    }
+
+    private int window;
 
     private float factorScale;
     private float factorX;
@@ -70,9 +76,18 @@ public class GraphicsPC implements IGraphics {
         this.factorY = (float)getHeight() / (float)this.logicHeight;
         this.factorScale = Math.min(this.factorX, this.factorY);
 
-        this.borderWidth = (getWidth()-this.logicWidth)/2; //Bordes Laterales
-        this.borderHeight = (getHeight()-this.logicHeight)/2; //Bordes arriba y abajo
-        this.borderTop = 35;
+        if(((float)getWidth()/(float)getHeight())<((float)2/(float)3))
+        {
+            this.window = (int)(this.logicHeight * this.factorX);
+            int a = (int) ((getHeight() - this.window) / 2);
+            this.borderHeight = a; //Bordes arriba y abajo
+        }
+        else {
+            this.window = (int)(this.logicWidth*this.factorY);
+            int a = (int) ((getWidth() - this.window) / 2);
+            this.borderWidth = a; //Bordes Laterales
+        }
+        this.borderTop = 31;
     }
 
     public BufferStrategy getbufferStrategy() {
@@ -101,8 +116,21 @@ public class GraphicsPC implements IGraphics {
         this.factorX = (float)w / (float)this.logicWidth;
         this.factorY = (float)h / (float)this.logicHeight;
         this.factorScale = Math.min(this.factorX, this.factorY);
-        this.borderWidth = (getWidth()-this.logicWidth)/2;
-        this.borderHeight = (getHeight()-this.logicHeight)/2;
+
+        if(((float)getWidth()/(float)getHeight())<((float)2/(float)3))
+        {
+            this.window = (int)(this.logicWidth * this.factorX);
+            int a = (int) ((getHeight() - (this.logicHeight * this.factorX)) / 2);
+            this.borderHeight = a; //Bordes arriba y abajo
+            this.borderWidth=0;
+        }
+        else {
+            this.window = (int)(this.logicWidth*this.factorY);
+            int a = (int) ((getWidth() - (this.logicWidth * this.factorY)) / 2);
+            this.borderWidth = a; //Bordes Laterales
+            this.borderHeight=0;
+        }
+
 //        this.borderTop = h - this.myView.getContentPane().getHeight();
     }
 
@@ -288,11 +316,11 @@ public class GraphicsPC implements IGraphics {
     }
 
     @Override
-    public int logicToRealX(int x) { return (int)(x*(float)factorX); }
+    public int logicToRealX(int x) { return (int)(x*(float)factorScale + borderWidth); }
 
     @Override
     public int logicToRealY(int y) {
-        return (int)(y*(float)factorY);
+        return (int)(y*(float)factorScale + borderHeight);
     }
 
     @Override

@@ -106,31 +106,30 @@ public class Hints implements IInterface {
                             this.gr.logicToRealX(this.gr.getWidthLogic()/2) //mitad de pantalla
                                     - (int)((cell.getOffsetX()/2) * cell.getSide())
                                     - (int)(((cell.getOffsetX()/2) - 1) * cell.getSeparacion())
-                                    - cell.getSide()
-                                    + cell.getSeparacionE()
-                                    - (dH1*(cell.getSide()/3)),
+                                    - ((cell.getSeparacion()/2)*5)
+                                    - (dH1*(cell.getSide()/4)),
                             this.gr.logicToRealY(this.gr.getHeightLogic()/2) //mitad de pantalla
                                     - (int)((cell.getOffsetY()/2) * (cell.getSide()+cell.getSeparacion()))
                                     //+ cell.getSeparacion()
                                     + this.gr.scaleToReal(cell.getSeparacion())
                                     + (i * (cell.getSeparacion() + cell.getSide())),
-                            0x442700, null, cell.getSide()/3);
+                            0x442700, null, cell.getSide()/4);
                     dH1++;
                 }
                 if(horizontalHints[j][i]!=0) {
                     g.drawText(Integer.toString(horizontalHints[j][i]),
                             this.gr.logicToRealX(this.gr.getWidthLogic()/2)
                                     - (int)((cell.getOffsetX()/2) * cell.getSide())
-                                    - (int)((cell.getOffsetX()/2) * cell.getSeparacion())
+                                    - (int)((cell.getOffsetX()/2 - 1) * cell.getSeparacion())
                                     + (cell.getSeparacion()*2)
 //                                    - this.gr.logicToRealX(((int)((cell.getOffsetX()/2) - 1) * this.gr.scaleToReal(cell.getSeparacion())))
                                     + (j * (cell.getSeparacion()+cell.getSide())),
                             this.gr.logicToRealY(this.gr.getHeightLogic()/2) //mitad de pantalla
                                     - (int)((cell.getOffsetY()/2) * (cell.getSide() + cell.getSeparacion()))
                                     - (cell.getSide()/2)*3
-                                    + (cell.getSide()/6)*5
+                                    + cell.getSide()
 //                                    + this.gr.logicToRealY(this.gr.scaleToReal(cell.getSeparacion()*2))
-                                    - (depth[j]*(cell.getSide()/2)), 0x442700, null, cell.getSide()/3);
+                                    - (depth[j]*(cell.getSide()/3)), 0x442700, null, cell.getSide()/4);
                     depth[j]++;
                 }
             }

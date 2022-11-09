@@ -139,9 +139,14 @@ public class EnginePC implements Runnable, IEngine {
 
         //Border
         this.graphics.setColor(0x000000);
-        this.graphics.fillRect(0,0,this.graphics.borderWidth,this.graphics.getHeight());
 
-        this.graphics.fillRect(this.graphics.borderWidth+this.graphics.logicWidth,0,this.graphics.borderWidth,this.graphics.getHeight());
+        //Lateral
+        //this.graphics.fillRect(0,0,this.graphics.borderWidth,this.graphics.getHeight());
+        //this.graphics.fillRect(this.graphics.getWidth()-this.graphics.borderWidth,0,this.graphics.borderWidth,this.graphics.getHeight());
+
+        //Up & Down
+        //this.graphics.fillRect(0,this.graphics.borderTop,this.graphics.getWidth(),this.graphics.borderHeight);
+        //this.graphics.fillRect(0,this.graphics.getHeight(),this.graphics.getWidth(),-this.graphics.borderHeight);
 
     }
 
