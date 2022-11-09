@@ -42,7 +42,7 @@ public class ButtonLvl implements IInterface {
     }
 
     @Override
-    public void handleEvent(IInput.Event e) {
+    public boolean handleEvent(IInput.Event e) {
         int mX = e.x;
         int mY = e.y;
         if(e.type == IInput.InputTouchType.PRESSED && //click
@@ -52,6 +52,8 @@ public class ButtonLvl implements IInterface {
             this.audio.playSound("click");
             MainScene scene = new MainScene(engine, this.cols, this.fils);
             engine.setCurrentScene(scene);
+            return true;
         }
+        return false;
     }
 }

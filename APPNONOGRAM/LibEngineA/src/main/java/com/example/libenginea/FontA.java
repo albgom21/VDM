@@ -1,6 +1,7 @@
 package com.example.libenginea;
 
 import android.graphics.Typeface;
+import android.os.Build;
 
 import gdv.ucm.libengine.IFont;
 
@@ -14,10 +15,10 @@ public class FontA implements IFont {
     public Typeface getFont(){return this.font;}
     @Override
     public int getSize() {
-
-        //TextView myTextView = (TextView) findViewById(yourTextViewId);
-        //return this.font.getSize();
-        return 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            return font.getWeight();
+        }
+        return -1;
     }
 
     @Override

@@ -1,8 +1,6 @@
 package gdv.ucm.libenginepc;
 
-import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-
 import javax.swing.JFrame;
 
 import gdv.ucm.libengine.IAudio;
@@ -43,7 +41,6 @@ public class EnginePC implements Runnable, IEngine {
 //        this.graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
         this.graphics = new GraphicsPC(this.myView, this);
         this.audio = new AudioPC();
-
     }
 
     //hasmap al crear una imagen nombre-IImage
@@ -151,7 +148,7 @@ public class EnginePC implements Runnable, IEngine {
     }
 
     protected void handleInputs() {
-        this.currentScene.handleInputs();
+        this.currentScene.handleInputs(this.input);
     }
     protected void clearInputs() {
         this.input.clearEvents();
@@ -185,7 +182,6 @@ public class EnginePC implements Runnable, IEngine {
             }
         }
     }
-    public JFrame getCanvas() {return this.myView;}
     @Override
     public IGraphics getGraphics() {
         return this.graphics;
@@ -209,8 +205,5 @@ public class EnginePC implements Runnable, IEngine {
     @Override
     public void setCurrentScene(IState currentScene) {
         this.currentScene = currentScene;
-    }
-    public IState getCurrentScene() {
-        return currentScene;
     }
 }

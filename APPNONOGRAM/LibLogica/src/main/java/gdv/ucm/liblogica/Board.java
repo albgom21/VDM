@@ -66,12 +66,14 @@ public class Board implements IInterface {
    }
 
    @Override
-   public void handleEvent(IInput.Event e) {
+   public boolean handleEvent(IInput.Event e) {
       for (int i = 0; i < width; ++i) {
          for (int j = 0; j < height; ++j) {
-            board[i][j].handleEvent(e);
+            if(board[i][j].handleEvent(e))
+               return true;
          }
       }
+      return false;
    }
    //HACER CARGA DE RECURSOS EN EL MÓDULO DE LÓGICAS
 }

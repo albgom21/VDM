@@ -16,7 +16,9 @@ public class InputA implements IInput, View.OnTouchListener{
 
     @Override
     public List<Event> getEvents() {
-        return eventos;
+        List<Event> aux = new ArrayList<>(eventos);
+//        eventos.clear();
+        return aux;
     }
 
     @Override
@@ -24,15 +26,21 @@ public class InputA implements IInput, View.OnTouchListener{
         eventos.clear();
     }
 
-    public void addEvent(MotionEvent event){
+    @Override
+    public void clearIndexEvent(int i) {
+        eventos.remove(i);
+    }
+
+    public synchronized void addEvent(MotionEvent event){
         InputTouchType tipo = null;
-        if(event.getAction() == MotionEvent.ACTION_DOWN) //MOUSE_DRAGGED
+        if(event.getAction() == MotionEvent.ACTION_DOWN)
             tipo = InputTouchType.PRESSED;
         else if(event.getAction() == MotionEvent.ACTION_UP)
             tipo = InputTouchType.RELEASED;
-        else if(event.getAction() == MotionEvent.ACTION_MOVE)
-            tipo = InputTouchType.MOVE;
-        eventos.add(new Event((int)event.getX(0),(int)event.getY(0),event.getPointerCount(),tipo));
+//        else if(event.getAction() == MotionEvent.ACTION_MOVE)
+//            tipo = InputTouchType.MOVE;
+        if(tipo!=null)
+            eventos.add(new Event((int)event.getX(0),(int)event.getY(0),event.getPointerCount(),tipo));
     }
 
     @Override

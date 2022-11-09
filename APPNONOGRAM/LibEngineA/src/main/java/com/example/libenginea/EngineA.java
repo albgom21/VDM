@@ -2,12 +2,9 @@ package com.example.libenginea;
 
 import android.content.res.AssetManager;
 import android.graphics.Canvas;
-import android.os.Build;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-
-import androidx.annotation.RequiresApi;
 
 import gdv.ucm.libengine.IAudio;
 import gdv.ucm.libengine.IEngine;
@@ -56,15 +53,8 @@ public class EngineA implements Runnable, IEngine {
             throw new RuntimeException("run() should not be called directly");
         }
 
-        // Si el Thread se pone en marcha
-        // muy rápido, la vista podría todavía no estar inicializada.
         while(this.running && this.myView.getWidth() == 0);
-        // Espera activa. Sería más elegante al menos dormir un poco.
-
         long lastFrameTime = System.nanoTime();
-
-        long informePrevio = lastFrameTime; // Informes de FPS
-        int frames = 0;
 
         // Bucle de juego principal.
         while(running) {
@@ -72,27 +62,20 @@ public class EngineA implements Runnable, IEngine {
             long nanoElapsedTime = currentTime - lastFrameTime;
             lastFrameTime = currentTime;
 
-            // Informe de FPS
-            double elapsedTime = (double) nanoElapsedTime / 1.0E9;
-            //INPUT
+            //inputs
             this.handleInputs();
-            //UPDATE
+
+            //update
+            double elapsedTime = (double) nanoElapsedTime / 1.0E9;
             this.update(elapsedTime);
-            if (currentTime - informePrevio > 1000000000l) {
-                long fps = frames * 1000000000l / (currentTime - informePrevio);
-                System.out.println("" + fps + " fps");
-                frames = 0;
-                informePrevio = currentTime;
-            }
-            ++frames;
 
             // Pintamos el frame
             while (!this.holder.getSurface().isValid());
             this.graphics.lockCanvas();
+            this.graphics.prepareFrame();
             this.render();
             this.clearInputs();
             this.graphics.unlockCanvas();
-
         }
     }
 
@@ -104,12 +87,20 @@ public class EngineA implements Runnable, IEngine {
         // "Borramos" el fondo.
         this.getGraphics().clear(0xe7d6bd);
 
-        //this.canvas.drawColor(0xFFFFFFFF); // ARGB
+        // Pintamos la escena
         this.currentScene.render();
+
+        this.graphics.setColor(0xFFFFFF);
+        this.graphics.fillRect(0,0,this.graphics.borderWidth,this.graphics.getHeight());
+        this.graphics.fillRect(this.graphics.getWidth()-this.graphics.borderWidth,0,this.graphics.borderWidth,this.graphics.getHeight());
+
+        this.graphics.fillRect(0,this.graphics.borderTop,this.graphics.getWidth(),this.graphics.borderHeight);
+        this.graphics.fillRect(0,this.graphics.getHeight(),this.graphics.getWidth(),-this.graphics.borderHeight);
+
     }
 
     protected void handleInputs() {
-        this.currentScene.handleInputs();
+        this.currentScene.handleInputs(this.input);
     }
     protected void clearInputs() {
         this.input.clearEvents();

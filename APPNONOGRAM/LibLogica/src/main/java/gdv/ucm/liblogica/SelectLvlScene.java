@@ -33,6 +33,7 @@ public class SelectLvlScene implements IState {
     @Override
     public void render() {
         String s = "Selecciona el tamaño del puzzle"; //- (this.gr.getWidthString(s)/2)
+        System.out.println(this.gr.logicToRealY(this.gr.getHeightLogic()/4));
         this.gr.drawText(s,this.gr.logicToRealX(this.gr.getWidthLogic()/2),this.gr.logicToRealY(this.gr.getHeightLogic()/4), 0x442700,null, this.gr.scaleToReal(15));
         for(int i = 0; i < 6; i++)
             this.bLvls[i].render(this.gr);
@@ -41,11 +42,11 @@ public class SelectLvlScene implements IState {
     }
 
     @Override
-    public void handleInputs(/*List<Events> eventos*/) {
-        for(int i = 0; i < this.input.getEvents().size(); i++) {
+    public void handleInputs(IInput input) {
+        for(int i = 0; i < input.getEvents().size(); i++) {
             for (int j = 0; j < 6; j++)
-                this.bLvls[j].handleEvent(this.input.getEvents().get(i));
-            this.bBack.handleEvent(this.input.getEvents().get(i));
+                this.bLvls[j].handleEvent(input.getEvents().get(i));
+            this.bBack.handleEvent(input.getEvents().get(i));
         }
     }
 }

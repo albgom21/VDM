@@ -16,23 +16,24 @@ public class InputPC implements IInput, MouseListener {
 
     public synchronized void addEvent(MouseEvent evento){
         InputTouchType tipo = null;
-        if(evento.getID() == MouseEvent.MOUSE_MOVED) //MOUSE_DRAGGED
-            tipo = InputTouchType.MOVE;
-        else if(evento.getID() == MouseEvent.MOUSE_PRESSED)
+
+        if(evento.getID() == MouseEvent.MOUSE_PRESSED)
             tipo = InputTouchType.PRESSED;
         else if(evento.getID() == MouseEvent.MOUSE_RELEASED)
             tipo = InputTouchType.RELEASED;
-        else
-            tipo = null;
-//        else if(evento.getID() == MouseEvent.MOUSE_DRAGGED)
+//        else if(evento.getID() == MouseEvent.MOUSE_MOVED) //MOUSE_DRAGGED
 //            tipo = InputTouchType.MOVE;
+
+
         if(tipo!=null)
             eventos.add(new Event(evento.getX(),evento.getY(),evento.getButton(),tipo));
     }
 
     @Override
     public synchronized List<Event> getEvents() { //PASAR UNA COPIA DE LA LISTA borrar de la original los ele que se usan
-        return eventos;
+        List<Event> aux = new ArrayList<>(eventos);
+//        eventos.clear();
+        return aux;
     }
 
     @Override
@@ -41,8 +42,8 @@ public class InputPC implements IInput, MouseListener {
     }
 
     @Override
-    public void mouseClicked(MouseEvent mouseEvent) {
-        addEvent(mouseEvent);  //Añadir a la lista
+    public void clearIndexEvent(int i) {
+        eventos.remove(i);
     }
 
     @Override
@@ -56,8 +57,10 @@ public class InputPC implements IInput, MouseListener {
     }
 
     @Override
-    public void mouseEntered(MouseEvent mouseEvent) {  }
+    public void mouseClicked(MouseEvent mouseEvent) {}
+    @Override
+    public void mouseEntered(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseExited(MouseEvent mouseEvent) { }
+    public void mouseExited(MouseEvent mouseEvent) {}
 }

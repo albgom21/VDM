@@ -39,8 +39,4 @@ public class FontPC implements IFont {
         return this.font.isBold();
     }
 
-    @Override
-    public void setSize(float tam) {
-        this.font.deriveFont(this.font.getStyle(),tam);
-    }
 }

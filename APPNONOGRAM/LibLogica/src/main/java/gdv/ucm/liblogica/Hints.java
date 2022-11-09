@@ -147,7 +147,8 @@ public class Hints implements IInterface {
     }
 
     @Override
-    public void handleEvent(IInput.Event e) {
+    public boolean handleEvent(IInput.Event e) {
+        return true;
     }
 
     public void clearWrongs() {

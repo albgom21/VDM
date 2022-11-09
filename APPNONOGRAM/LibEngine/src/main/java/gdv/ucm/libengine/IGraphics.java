@@ -5,17 +5,6 @@ public interface IGraphics {
     IImage newImage(String ruta);
     IFont newFont(String filename, int size, boolean isBold);
 
-    void translate(int x, int y);
-    void scale(float x, float y);
-
-    void setOffsetX(int ofx);
-    void setOffsetY(int ofy);
-    int getOffsetX();
-    int getOffsetY();
-
-    void save();
-    void restore();
-
     void drawImage(IImage image, int x, int y, int w, int h);
     void drawImage(IImage image, int x, int y);
     void setColor(int color);

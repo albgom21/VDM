@@ -34,19 +34,11 @@ public class GraphicsPC implements IGraphics {
 
     public int borderTop;
 
-    @Override
-    public int getWindow() {
-        return window;
-    }
-
     private int window;
 
     private float factorScale;
     private float factorX;
     private float factorY;
-
-    private int ofx;
-    private int ofy;
 
     GraphicsPC(JFrame myView, EnginePC engine){
         this.myView = myView;
@@ -78,7 +70,7 @@ public class GraphicsPC implements IGraphics {
 
         if(((float)getWidth()/(float)getHeight())<((float)2/(float)3))
         {
-            this.window = (int)(this.logicHeight * this.factorX);
+            this.window = (int)(this.logicWidth * this.factorX);
             int a = (int) ((getHeight() - this.window) / 2);
             this.borderHeight = a; //Bordes arriba y abajo
         }
@@ -200,46 +192,6 @@ public class GraphicsPC implements IGraphics {
     }
 
     @Override
-    public void translate(int x, int y) {
-        this.graphics2D.translate(x,y); //REVISAR
-    }
-
-    @Override
-    public void scale(float x, float y) {
-        this.graphics2D.scale(x,y); //REVISAR
-    }
-
-    @Override
-    public void setOffsetX(int ofx) {
-        this.ofx = ofx;
-    }
-
-    @Override
-    public void setOffsetY(int ofy) {
-        this.ofy = ofy;
-    }
-
-    @Override
-    public int getOffsetX() {
-        return this.ofx;
-    }
-
-    @Override
-    public int getOffsetY() {
-        return this.ofy;
-    }
-
-    @Override
-    public void save() {
-        //COMPLETAR
-    }
-
-    @Override
-    public void restore() {
-        //COMPLETAR
-    }
-
-    @Override
     public void drawImage(IImage image, int x, int y, int w, int h) {
         this.graphics2D.drawImage(((ImagePC) image).getImg(),
                                 logicToRealX(x) - (scaleToReal(w)/2),logicToRealY(y)- (scaleToReal(h)/2),
@@ -336,5 +288,10 @@ public class GraphicsPC implements IGraphics {
     @Override
     public int getHeightString(String text) {
         return (int)this.graphics2D.getFont().getStringBounds(text,this.graphics2D.getFontRenderContext()).getHeight();
+    }
+
+    @Override
+    public int getWindow() {
+        return window;
     }
 }

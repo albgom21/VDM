@@ -31,6 +31,7 @@ public interface IInput {
     }
     public List<Event> getEvents();
     public void clearEvents();
+    public void clearIndexEvent(int i);
 
 //    class TouchEvent{};
 //    List<TouchEvent> getTouchEvents();

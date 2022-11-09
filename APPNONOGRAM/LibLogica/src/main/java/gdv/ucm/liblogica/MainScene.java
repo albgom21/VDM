@@ -68,11 +68,11 @@ public class MainScene implements IState {
     }
 
     @Override
-    public void handleInputs() { //PONER INPUT PARAMETRO
-        for(int i = 0; i < this.input.getEvents().size(); i++){
-            this.board.handleEvent(this.input.getEvents().get(i));
-            this.bCheck.handleEvent(this.input.getEvents().get(i));
-            this.bSurrender.handleEvent(this.input.getEvents().get(i));
+    public void handleInputs(IInput input) { //PONER INPUT PARAMETRO
+        for(int i = 0; i < input.getEvents().size(); i++){
+            this.board.handleEvent(input.getEvents().get(i));
+            this.bCheck.handleEvent(input.getEvents().get(i));
+            this.bSurrender.handleEvent(input.getEvents().get(i));
         }
     }
 }

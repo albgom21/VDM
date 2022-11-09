@@ -31,8 +31,9 @@ public class WinScene implements IState {
     }
 
     @Override
-    public void handleInputs() {
-        for(int i = 0; i < this.input.getEvents().size(); i++)
-            this.bBack.handleEvent(this.input.getEvents().get(i));
+    public void handleInputs(IInput input) {
+        for(int i = 0; i < input.getEvents().size(); i++)
+            if(this.bBack.handleEvent(input.getEvents().get(i)))
+                input.clearIndexEvent(i);
     }
 }

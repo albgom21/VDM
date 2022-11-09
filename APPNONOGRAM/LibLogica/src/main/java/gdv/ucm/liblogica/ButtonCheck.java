@@ -56,7 +56,7 @@ public class ButtonCheck implements IInterface {
     }
 
     @Override
-    public void handleEvent(IInput.Event e) {
+    public boolean handleEvent(IInput.Event e) {
         int mX = e.x;
         int mY = e.y;
         if(e.type == IInput.InputTouchType.PRESSED && //click
@@ -69,6 +69,8 @@ public class ButtonCheck implements IInterface {
             this.timer = System.currentTimeMillis();
             this.check = true;
             this.audio.playSound("click");
+            return true;
         }
+        return false;
     }
 }
