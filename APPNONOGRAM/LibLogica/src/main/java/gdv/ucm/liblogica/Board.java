@@ -5,7 +5,7 @@ import gdv.ucm.libengine.IInput;
 import gdv.ucm.libengine.IInterface;
 
 public class Board implements IInterface {
-   // Attributes
+   // Atributos
    private int width, height;
    private Cell [] [] board;
 
@@ -18,19 +18,19 @@ public class Board implements IInterface {
    }
    public Cell getCell(int x, int y) { return board[x][y]; }
 
-   public Board(int w, int h, IGraphics gr) {
+   public Board(int w, int h) {
       width = w;
       height = h;
       int cont = 0;
-      // Initialization of the board
+      // Inicialización del tablero
       board = new Cell [width][height];
       for (int i = 0; i < width; ++i) {
          for (int j = 0; j < height; ++j) {
-            int valorEntero = (int)Math.floor(Math.random()*(1-0+1)+0);
+            int valorEntero = (int)Math.floor(Math.random()*(1-0+1)+0); // Poner de forma aleatoria si es o no sol
             if(valorEntero==0)
-               board[i][j] = new Cell(i,j,width, height,false, CellState.GRAY, gr);
+               board[i][j] = new Cell(i,j,width, height,false, CellState.GRAY);
             else{
-               board[i][j] = new Cell(i,j,width, height,true, CellState.GRAY, gr);
+               board[i][j] = new Cell(i,j,width, height,true, CellState.GRAY);
                cont++;
             }
 
@@ -39,22 +39,8 @@ public class Board implements IInterface {
       if(cont == 0 || cont == w*h){ //Por si no hay ninguna celda sol, o son todas
          int i = (int)Math.floor(Math.random()*(width));
          int j = (int)Math.floor(Math.random()*(height));
-         board[i][j] = new Cell(i,j,width, height,cont == 0, CellState.GRAY, gr);
+         board[i][j] = new Cell(i,j,width, height,cont == 0, CellState.GRAY);
       }
-   }
-
-   @Override
-   public void render(IGraphics g){
-      for (int i = 0; i < width; ++i) {
-         for (int j = 0; j < height; ++j) {
-            board[i][j].render(g);
-         }
-      }
-   }
-
-   @Override
-   public void update(Double deltaTime) {
-
    }
 
    @Override
@@ -67,4 +53,9 @@ public class Board implements IInterface {
       }
       return false;
    }
+   @Override
+   public void render(IGraphics g){ }
+
+   @Override
+   public void update(Double deltaTime) { }
 }

@@ -9,6 +9,7 @@ public class WinScene implements IState {
 
     private IInput input;
     private Board b;
+    private RenderBoard renderBoard;
     private ButtonBack bBack;
 
     public WinScene(IEngine engine, Board b) {
@@ -16,6 +17,7 @@ public class WinScene implements IState {
         this.input = engine.getInput();
         this.bBack = new ButtonBack("back.png", engine,gr.getWidthLogic()/2, (gr.getHeightLogic()/6)*5,200/2,75/2);
         this.b = b;
+        this.renderBoard = new RenderBoard(this.b);
 
         if(!engine.getAudio().isLoaded("win.wav"))
             engine.getAudio().newSound("win.wav", false);
@@ -29,8 +31,8 @@ public class WinScene implements IState {
     public void render(IGraphics graphics) {
         String s = "¡ENHORABUENA!";
         graphics.drawText(s,graphics.logicToRealX(graphics.getWidthLogic()/2),graphics.logicToRealY(graphics.getHeightLogic()/8),
-                    0x06561e, null, graphics.scaleToReal(15));
-        this.b.render(graphics);
+                    0x06561e, null, graphics.scaleToReal(20));
+        this.renderBoard.render(graphics);
         this.bBack.render(graphics);
     }
 

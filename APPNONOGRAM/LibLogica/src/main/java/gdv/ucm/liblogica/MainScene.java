@@ -11,7 +11,9 @@ import gdv.ucm.libengine.IInput;
 public class MainScene implements IState {
     private IEngine engine;
     private Board board;
-    public Hints hints;
+    private Hints hints;
+    private RenderBoard renderBoard;
+    private RenderHints renderHints;
     private ButtonCheck bCheck;
     private ButtonSurrender bSurrender;
 
@@ -19,8 +21,10 @@ public class MainScene implements IState {
     public MainScene(IEngine engine, int cols, int fils) {
         this.engine = engine;
         IGraphics gr = this.engine.getGraphics();
-        this.board = new Board(cols, fils, gr);
-        this.hints = new Hints(this.board, gr);
+        this.board = new Board(cols, fils);
+        this.hints = new Hints(this.board);
+        this.renderHints = new RenderHints(this.hints);
+        this.renderBoard = new RenderBoard(this.board);
 
         if(!engine.getAudio().isLoaded("cell.wav"))
             engine.getAudio().newSound("cell.wav", false);
@@ -42,17 +46,12 @@ public class MainScene implements IState {
     }
 
     @Override
-    public void render(IGraphics graphics) { //PASAR IGRAPHIS PARAM
-        //this.gr.drawImage(this.imagen,100,100, 500, 500);
-        //this.gr.drawText("JUGAR",500,500, 0x000000);
+    public void render(IGraphics graphics) {
         this.board.render(graphics);
-        this.hints.render(graphics);
+        this.renderBoard.render(graphics);
+        this.renderHints.render(graphics);
         this.bCheck.render(graphics);
         this.bSurrender.render(graphics);
-
-        //Pair aux = this.hints.check();
-        //String s = "Te falta "+ aux.getFirst()+" casilla Tienes mal "+ aux.getSecond()+" casillas";
-        //this.gr.drawText(s,600,600,0xFF0000);
     }
 
     @Override
