@@ -1,20 +1,20 @@
 package gdv.ucm.liblogica;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IInput;
 import gdv.ucm.libengine.IState;
 
 public class WinScene implements IState {
-
-    private IInput input;
     private Board b;
     private RenderBoard renderBoard;
     private ButtonBack bBack;
 
     public WinScene(IEngine engine, Board b) {
         IGraphics gr = engine.getGraphics();
-        this.input = engine.getInput();
         this.bBack = new ButtonBack("back.png", engine,gr.getWidthLogic()/2, (gr.getHeightLogic()/6)*5,200/2,75/2);
         this.b = b;
         this.renderBoard = new RenderBoard(this.b);
@@ -38,8 +38,14 @@ public class WinScene implements IState {
 
     @Override
     public void handleInputs(IInput input) {
-        for(int i = 0; i < input.getEvents().size(); i++)
-            if(this.bBack.handleEvent(input.getEvents().get(i)))
-                input.clearIndexEvent(i);
+        ArrayList<IInput.Event> eventList =  new ArrayList<>();
+        eventList.addAll(input.getEvents());
+
+        Iterator<IInput.Event> it = eventList.iterator();
+        while (it.hasNext()) {
+            IInput.Event event = it.next();
+            this.bBack.handleEvent(event);
+        }
+        input.clearEvents();
     }
 }

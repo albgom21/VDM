@@ -1,5 +1,8 @@
 package gdv.ucm.liblogica;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IFont;
 import gdv.ucm.libengine.IGraphics;
@@ -55,12 +58,18 @@ public class MainScene implements IState {
     }
 
     @Override
-    public void handleInputs(IInput input) { //PONER INPUT PARAMETRO
-        for(int i = 0; i < input.getEvents().size(); i++){
-            if(this.board.handleEvent(input.getEvents().get(i)))
+    public void handleInputs(IInput input) {
+        ArrayList<IInput.Event> eventList =  new ArrayList<>();
+        eventList.addAll(input.getEvents());
+
+        Iterator<IInput.Event> it = eventList.iterator();
+        while (it.hasNext()) {
+            IInput.Event event = it.next();
+            if(this.board.handleEvent(event))
                 this.engine.getAudio().playSound("cell");
-            this.bCheck.handleEvent(input.getEvents().get(i));
-            this.bSurrender.handleEvent(input.getEvents().get(i));
+            this.bCheck.handleEvent(event);
+            this.bSurrender.handleEvent(event);
         }
+        input.clearEvents();
     }
 }

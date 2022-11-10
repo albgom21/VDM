@@ -19,7 +19,7 @@ public class RenderHints {
                             gr.logicToRealX(gr.getWidthLogic()/2) //mitad de pantalla
                                     - (int)((cell.getOffsetX()/2) * cell.getSide())
                                     - (int)(((cell.getOffsetX()/2) - 1) * cell.getSeparacion())
-                                    - 22 // Separación con el tablero
+                                    - ((cell.getSeparacion()/2)*8) // Separación con el tablero
                                     - (dH1*(cell.getSide()/4)),
                             gr.logicToRealY(gr.getHeightLogic()/2) //mitad de pantalla
                                     - (int)((cell.getOffsetY()/2) * (cell.getSide()+cell.getSeparacion()))

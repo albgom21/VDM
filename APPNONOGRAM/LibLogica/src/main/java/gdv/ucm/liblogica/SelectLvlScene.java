@@ -1,5 +1,8 @@
 package gdv.ucm.liblogica;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IGraphics;
 import gdv.ucm.libengine.IInput;
@@ -41,10 +44,16 @@ public class SelectLvlScene implements IState {
 
     @Override
     public void handleInputs(IInput input) {
-        for(int i = 0; i < input.getEvents().size(); i++) {
+        ArrayList<IInput.Event> eventList =  new ArrayList<>();
+        eventList.addAll(input.getEvents());
+
+        Iterator<IInput.Event> it = eventList.iterator();
+        while (it.hasNext()) {
+            IInput.Event event = it.next();
             for (int j = 0; j < 6; j++)
-                this.bLvls[j].handleEvent(input.getEvents().get(i));
-            this.bBack.handleEvent(input.getEvents().get(i));
+                this.bLvls[j].handleEvent(event);
+            this.bBack.handleEvent(event);
         }
+        input.clearEvents();
     }
 }

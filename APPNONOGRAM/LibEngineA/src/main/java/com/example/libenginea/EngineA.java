@@ -69,7 +69,6 @@ public class EngineA implements Runnable, IEngine {
             this.graphics.lockCanvas();
             this.graphics.prepareFrame();
             this.render();
-            this.clearInputs();
             this.graphics.unlockCanvas();
         }
     }

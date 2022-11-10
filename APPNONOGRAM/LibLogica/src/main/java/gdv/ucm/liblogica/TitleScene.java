@@ -1,5 +1,8 @@
 package gdv.ucm.liblogica;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import gdv.ucm.libengine.IEngine;
 import gdv.ucm.libengine.IFont;
 import gdv.ucm.libengine.IGraphics;
@@ -40,8 +43,15 @@ public class TitleScene implements IState {
 
     @Override
     public void handleInputs(IInput input) {
-        for(int i = 0; i < input.getEvents().size(); i++)
-            if(this.bPlay.handleEvent(input.getEvents().get(i)))
-                input.clearIndexEvent(i);
+        ArrayList<IInput.Event> eventList =  new ArrayList<>();
+        eventList.addAll(input.getEvents());
+
+        Iterator<IInput.Event> it = eventList.iterator();
+        while (it.hasNext()) {
+            IInput.Event event = it.next();
+            this.bPlay.handleEvent(event);
+        }
+
+        input.clearEvents();
     }
 }

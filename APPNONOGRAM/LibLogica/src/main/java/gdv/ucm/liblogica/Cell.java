@@ -164,22 +164,22 @@ public class Cell implements IInterface {
         int mX = e.x;
         int mY = e.y;
 
-    if(e.type == IInput.InputTouchType.PRESSED && //click
-       e.index == 1 &&                            // boton izq
-       (mX >= tr_x - (this.side/2) && mX <= this.side + tr_x - (this.side/2)
-       && mY >= tr_y - (this.side/2) && mY <= this.side + tr_y - (this.side/2))){ // dentro del cuadrado
-            if(state.equals(CellState.GRAY))
-                state = CellState.BLUE;
-            else if(state.equals(CellState.BLUE))
-                state = CellState.WHITE;
-            else if(state.equals(CellState.WHITE))
-                state = CellState.GRAY;
-            else if(state.equals(CellState.RED))
-                state = CellState.GRAY;
+        if(e.type == IInput.InputTouchType.PRESSED && //click
+           e.index == 1 &&                            // boton izq
+           (mX >= tr_x - (this.side/2) && mX <= this.side + tr_x - (this.side/2)
+           && mY >= tr_y - (this.side/2) && mY <= this.side + tr_y - (this.side/2))){ // dentro del cuadrado
+                if(state.equals(CellState.GRAY))
+                    state = CellState.BLUE;
+                else if(state.equals(CellState.BLUE))
+                    state = CellState.WHITE;
+                else if(state.equals(CellState.WHITE))
+                    state = CellState.GRAY;
+                else if(state.equals(CellState.RED))
+                    state = CellState.GRAY;
 
-            return true;
-       }
-    return false;
+                return true;
+           }
+        return false;
     }
 
     @Override

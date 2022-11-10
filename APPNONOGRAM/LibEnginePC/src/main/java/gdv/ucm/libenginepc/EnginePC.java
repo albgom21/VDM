@@ -58,15 +58,12 @@ public class EnginePC implements Runnable, IEngine {
                 //render
                 this.graphics.prepareFrame();
                 this.render();
-                this.clearInputs();
                 this.graphics.getbufferStrategy().show();
-
                 //terminar Frame
                 this.graphics.finishFrame();
             }
             while(!this.graphics.cambioBuffer());
         }
-
     }
 
     protected void update(double deltaTime) {
