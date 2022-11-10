@@ -56,20 +56,6 @@ public class Cell implements IInterface {
         this.separacion = this.side/3;
 
         this.media = (offsetX+offsetY)/2;
-//        this.side = (int)(((this.gr.getWindow()/3)*2)/media);
-//
-//        this.separacion = this.side/8;
-//
-//        this.tr_x = this.gr.logicToRealX(this.gr.getWidthLogic()/2) //mitad de la pantalla
-//                - (int)((this.offsetX/2) * (this.side)) // mitad casillas izq
-//                - (int)((this.offsetX/2 - 1) * separacion) // mitad offsets (uno menos que las casillas)
-//                + separacion*3
-//                //+ (separacionE) // offset que se suma depende de si es par o impar
-//                + (this.x*((this.side)+(separacion))); // pos de cada casilla
-//
-//        this.tr_y = this.gr.logicToRealY(this.gr.getHeightLogic()/2) //mitad pantalla
-//                - ((int)((this.offsetY/2)*(this.side + separacion))) // mitad casillas arriba
-//                + (this.y*(this.side+separacion)); // pos de cada casilla
 
         this.isSol = sol;
         this.state = state;
@@ -122,41 +108,7 @@ public class Cell implements IInterface {
 
     @Override
     public void render(IGraphics g){
-//        int color;
-//        float media = (offsetX+offsetY)/2;
-//        this.side = (int)(((g.getWindow()/3)*2)/media);
-//
-//        this.separacion = this.side/8;
-//
-//        this.tr_x = g.logicToRealX(g.getWidthLogic()/2) //mitad de la pantalla
-//                - (int)((this.offsetX/2) * (this.side)) // mitad casillas izq
-//                - (int)((this.offsetX/2 - 1) * separacion) // mitad offsets (uno menos que las casillas)
-//                + separacion*3
-//                + (this.x*((this.side)+(separacion))); // pos de cada casilla
-//
-//        this.tr_y = g.logicToRealY(g.getHeightLogic()/2) //mitad pantalla
-//                - ((int)((this.offsetY/2)*(this.side + separacion))) // mitad casillas arriba
-//                + (this.y*(this.side+separacion)); // pos de cada casilla
 
-//
-//        if(state.equals(CellState.GRAY))
-//            color=0x7f7a7a;
-//        else if(state.equals(CellState.BLUE))
-//            color=0x5b6ee1;
-//        else if(state.equals(CellState.RED))
-//            color=0xac3232;
-//        else //WHITE
-//            color=0xececec;
-//        g.setColor(color);
-//
-//        if(!state.equals(CellState.NORENDER)) {
-//            g.fillSquare((int)tr_x - (this.side/2), (int)tr_y - (this.side/2), this.side); //Espacio dependiendo de las columnas y filas
-//            if (state.equals(CellState.WHITE)) {
-//                g.setColor(0x000000);
-//                g.drawSquare((int)tr_x - (int)((this.side/2)), (int)tr_y - (int)(this.side/2), this.side);
-//                g.drawLine((int)tr_x - (this.side/2), (int)tr_y - (this.side/2), (int)tr_x + (this.side/2), (int)tr_y + (this.side/2));
-//            }
-//        }
     }
 
     @Override

@@ -33,7 +33,8 @@ public class MainScene implements IState {
             engine.getAudio().newSound("cell.wav", false);
         if(!engine.getAudio().isLoaded("check.wav"))
             engine.getAudio().newSound("check.wav", false);
-
+        if(!engine.getAudio().isLoaded("win.wav"))
+            engine.getAudio().newSound("win.wav", false);
         this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (gr.getWidthLogic()/5)*4,(gr.getHeightLogic()/10)*9,200/2,75/2);
         this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (gr.getWidthLogic()/5),(gr.getHeightLogic()/10)*9,200/2,75/2);
     }
@@ -43,6 +44,7 @@ public class MainScene implements IState {
         this.bCheck.update(deltaTime);
         this.hints.update(deltaTime);
         if(this.hints.getEnd()) {
+            this.engine.getAudio().playSound("win");
             WinScene scene = new WinScene(this.engine, this.board);
             this.engine.setCurrentScene(scene);
         }

@@ -109,13 +109,14 @@ public class EngineA implements Runnable, IEngine {
             // Lanzamos la ejecución de nuestro método run() en un nuevo Thread.
             this.renderThread = new Thread(this);
             this.renderThread.start();
+            this.audio.getmPlayer().start();
         }
     }
 
     public void pause() {
         if (this.running) {
             this.running = false;
-            this.audio.getmPlayer().pause();//PAUSAR EL SONIDO DE FONDO AL SALIR DE LA APP---------------------------------------------
+            this.audio.getmPlayer().pause();
             while (true) {
                 try {
                     this.renderThread.join();

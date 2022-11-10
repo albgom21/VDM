@@ -19,9 +19,7 @@ public class WinScene implements IState {
         this.b = b;
         this.renderBoard = new RenderBoard(this.b);
 
-        if(!engine.getAudio().isLoaded("win.wav"))
-            engine.getAudio().newSound("win.wav", false);
-        engine.getAudio().playSound("win");
+
     }
 
     @Override
