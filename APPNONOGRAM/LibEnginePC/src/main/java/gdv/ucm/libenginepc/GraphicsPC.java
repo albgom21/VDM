@@ -122,23 +122,17 @@ public class GraphicsPC implements IGraphics {
             this.borderWidth = a; //Bordes Laterales
             this.borderHeight=0;
         }
-
-//        this.borderTop = h - this.myView.getContentPane().getHeight();
     }
 
     @Override
     public void setFont(IFont font) {
         this.font = (FontPC)font;
-        this.graphics2D.setFont(((FontPC) font).getFont()); // REVISAR
+        this.graphics2D.setFont(((FontPC) font).getFont());
     }
 
     public void prepareFrame() {
         setResolution(getWidth(),getHeight());
-
         this.graphics2D = (Graphics2D)this.bufferStrategy.getDrawGraphics();
-//        this.myView.scale();
-//        this.myView.translate();
-        //this.clear(0xFFFFFF);
     }
 
     public void finishFrame() {
@@ -199,7 +193,7 @@ public class GraphicsPC implements IGraphics {
     }
 
     public void drawImage(IImage image, int x, int y) {
-        this.graphics2D.drawImage(((ImagePC) image).getImg(),logicToRealX(x),logicToRealY(y),null); //(int) w, (int)h
+        this.graphics2D.drawImage(((ImagePC) image).getImg(),logicToRealX(x),logicToRealY(y),null);
     }
 
     @Override
@@ -258,16 +252,16 @@ public class GraphicsPC implements IGraphics {
     }
 
     @Override
-    public int logicToRealX(int x) { return (int)(x*(float)factorScale + borderWidth); }
+    public int logicToRealX(int x) { return (int)(x*factorScale + borderWidth); }
 
     @Override
     public int logicToRealY(int y) {
-        return (int)(y*(float)factorScale + borderHeight);
+        return (int)(y*factorScale + borderHeight);
     }
 
     @Override
     public int scaleToReal(int s) {
-        return (int)(s*(float)(factorScale));
+        return (int)(s*(factorScale));
     }
 
     @Override

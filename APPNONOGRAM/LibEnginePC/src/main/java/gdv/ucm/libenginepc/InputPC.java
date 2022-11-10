@@ -48,7 +48,6 @@ public class InputPC implements IInput, MouseListener {
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {addEvent(mouseEvent);} // Añadir a la lista
 
-
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {}
     @Override

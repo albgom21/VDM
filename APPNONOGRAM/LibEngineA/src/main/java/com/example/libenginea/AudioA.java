@@ -17,12 +17,10 @@ public class AudioA implements IAudio {
     private SoundPool soundPool;
     HashMap<String,SoundA> sounds = new HashMap<>();
     private MediaPlayer mPlayer;
-//    BackgroundSoundService backSound;
     AudioA(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             this.soundPool = new SoundPool.Builder().setMaxStreams(10).build();
         }
-//        this.backSound = new BackgroundSoundService(mgr);
         mPlayer = new MediaPlayer();
         mPlayer.reset();
     }
@@ -44,7 +42,6 @@ public class AudioA implements IAudio {
 
     @Override
     public ISound newSoundAmbient(String file) {
-//        this.backSound.setFile(file);
         try {
             AssetFileDescriptor afd = mgr.openFd(file);
             mPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());

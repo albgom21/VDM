@@ -34,8 +34,7 @@ public class ButtonSurrender implements IInterface {
     }
 
     @Override
-    public void update(Double deltaTime) {
-    }
+    public void update(Double deltaTime) {}
 
     @Override
     public boolean handleEvent(IInput.Event e) {

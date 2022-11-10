@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.mgr = getAssets(); // ver si se puede quitar---------------------------------------------------------------------
+        this.mgr = getAssets();
 
         //Crear el SurfaceView que "contendrá" la escena
         this.renderView = new SurfaceView(this);
@@ -27,10 +27,6 @@ public class MainActivity extends AppCompatActivity {
         engine.setCurrentScene(scene);
         engine.resume();
     }
-//    public void PlayBackgroundSound() {
-//        Intent intent = new Intent(MainActivity.this, BackgroundSoundService.class);
-//        startService(intent);
-//    }
 
     @Override
     protected void onResume() {

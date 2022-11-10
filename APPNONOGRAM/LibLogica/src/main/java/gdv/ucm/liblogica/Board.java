@@ -9,15 +9,6 @@ public class Board implements IInterface {
    private int width, height;
    private Cell [] [] board;
 
-   // Getters
-   public int getWidth() {
-      return width;
-   }
-   public int getHeight() {
-      return height;
-   }
-   public Cell getCell(int x, int y) { return board[x][y]; }
-
    public Board(int w, int h) {
       width = w;
       height = h;
@@ -53,9 +44,20 @@ public class Board implements IInterface {
       }
       return false;
    }
+
+   // Getters
+   public int getWidth() {
+      return width;
+   }
+   public int getHeight() {
+      return height;
+   }
+   public Cell getCell(int x, int y) { return board[x][y]; }
+
+
    @Override
    public void render(IGraphics g){ }
 
    @Override
-   public void update(Double deltaTime) { }
+   public void update(Double deltaTime) {}
 }

@@ -8,17 +8,15 @@ import java.util.List;
 import gdv.ucm.libengine.IInput;
 
 public class InputA implements IInput, View.OnTouchListener{
-    public List<Event> eventos;
+    public ArrayList<Event> eventos;
 
     InputA(){
         eventos = new ArrayList<>();
     }
 
     @Override
-    public List<Event> getEvents() {
-        List<Event> aux = new ArrayList<>(eventos);
-//        eventos.clear();
-        return aux;
+    public ArrayList<Event>getEvents() {
+        return eventos;
     }
 
     @Override
@@ -37,8 +35,8 @@ public class InputA implements IInput, View.OnTouchListener{
             tipo = InputTouchType.PRESSED;
         else if(event.getAction() == MotionEvent.ACTION_UP)
             tipo = InputTouchType.RELEASED;
-//        else if(event.getAction() == MotionEvent.ACTION_MOVE)
-//            tipo = InputTouchType.MOVE;
+        else if(event.getAction() == MotionEvent.ACTION_MOVE)
+            tipo = InputTouchType.MOVE;
         if(tipo!=null)
             eventos.add(new Event((int)event.getX(0),(int)event.getY(0),event.getPointerCount(),tipo));
     }

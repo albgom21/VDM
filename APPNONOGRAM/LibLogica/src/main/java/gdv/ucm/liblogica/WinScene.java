@@ -18,8 +18,6 @@ public class WinScene implements IState {
         this.bBack = new ButtonBack("back.png", engine,gr.getWidthLogic()/2, (gr.getHeightLogic()/6)*5,200/2,75/2);
         this.b = b;
         this.renderBoard = new RenderBoard(this.b);
-
-
     }
 
     @Override

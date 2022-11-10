@@ -5,36 +5,13 @@ import gdv.ucm.libengine.IInput;
 import gdv.ucm.libengine.IInterface;
 
 public class Hints implements IInterface {
-    // Attributes
-    private int horizontalHints[][];
-    private int verticalHints[][];
-    private int depthCounter [];
-    private boolean ant[];
-    private boolean end;
+    // Atributos
+    private int horizontalHints[][]; // Pistas superiores
+    private int verticalHints[][];   // Pistas laterales
+    private int depthCounter [];     // Profundidad de pistas en una columna (horizontalHints)
+    private boolean ant[];           // Saber si la celda anterior (la de arriba) era sol o no
+    private boolean end;             // Saber si hemos acabado
 
-    public int[][] getHorizontalHints() {
-        return horizontalHints;
-    }
-
-    public int[][] getVerticalHints() {
-        return verticalHints;
-    }
-
-    public int[] getDepthCounter() {
-        return depthCounter;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public Board getB() {
-        return b;
-    }
 
     private int x;
     private int y;
@@ -47,15 +24,15 @@ public class Hints implements IInterface {
         this.b = b;
         this.end = false;
 
-        //Vectors
+        // Vectores
         this.horizontalHints = new int[x][y];
         this.verticalHints = new int[y][x];
         this.ant = new boolean[x];
         this.depthCounter = new int[x];
 
-
-        //Counter
+        // Contador
         int depthx = 0;
+        // Rellenar las pistas a partir de un tablero
         for (int i = 0; i < this.y; ++i) {
             depthx = 0;
             for (int j = 0; j < this.x; ++j) {
@@ -65,8 +42,7 @@ public class Hints implements IInterface {
                     this.ant[j] = true;
                     this.horizontalHints[j][this.depthCounter[j]]++;
                 }
-                else // !Sol
-                {
+                else {
                     if(this.verticalHints[i][depthx] >= 1)
                         depthx++;
                     if (this.ant[j])
@@ -78,24 +54,21 @@ public class Hints implements IInterface {
         }
     }
 
-    public Pair check()
-    {
-        int counterBlue = 0;
-        int counterRed = 0;
+    public Pair check() {
+        int counterBlue = 0; // Celdas sol sin marcar
+        int counterRed = 0;  // Celdas marcadas que no son sol
 
         for (int i = 0; i < y; ++i) {
             for (int j = 0; j < x; ++j) {
                 boolean sol = b.getCell(j,i).getisSol();
                 Cell cell = b.getCell(j,i);
-                if(sol)
-                {
+                if(sol) {
                     if (cell.getState() == CellState.GRAY || cell.getState() == CellState.WHITE)
                         counterBlue++;
                 }
-                else // !Sol
-                {
+                else {
                     if(cell.getState() == CellState.BLUE) {
-                        cell.setState(CellState.RED); //No estamos seguros (Preguntar)
+                        cell.setState(CellState.RED);
                         counterRed++;
                     }
                 }
@@ -107,50 +80,12 @@ public class Hints implements IInterface {
     }
 
     @Override
-    public void render(IGraphics g) {
-//        int depth[] = new int[x];
-//        int dH1=0;
-//        Cell cell = this.b.getCell(0,0);
-//        for (int i = y-1; i >= 0; --i) {
-//            for (int j = x-1; j >= 0; --j) {
-//                if(verticalHints[i][j]!=0) {
-//                    g.drawText(Integer.toString(verticalHints[i][j]),
-//                            this.gr.logicToRealX(this.gr.getWidthLogic()/2) //mitad de pantalla
-//                                    - (int)((cell.getOffsetX()/2) * cell.getSide())
-//                                    - (int)(((cell.getOffsetX()/2) - 1) * cell.getSeparacion())
-////                                    - ((cell.getSeparacion()/2)*5)
-//                                    -22
-//                                    - (dH1*(cell.getSide()/4)),
-//                            this.gr.logicToRealY(this.gr.getHeightLogic()/2) //mitad de pantalla
-//                                    - (int)((cell.getOffsetY()/2) * (cell.getSide()+cell.getSeparacion()))
-//                                    + this.gr.scaleToReal(cell.getSeparacion())
-//                                    + (i * (cell.getSeparacion() + cell.getSide())),
-//                            0x442700, null, cell.getSide()/4);
-//                    dH1++;
-//                }
-//                if(horizontalHints[j][i]!=0) {
-//                    g.drawText(Integer.toString(horizontalHints[j][i]),
-//                            this.gr.logicToRealX(this.gr.getWidthLogic()/2)
-//                                    - (int)((cell.getOffsetX()/2) * cell.getSide())
-//                                    - (int)((cell.getOffsetX()/2 - 1) * cell.getSeparacion())
-//                                    + (cell.getSeparacion()*2)
-//                                    + (j * (cell.getSeparacion()+cell.getSide())),
-//                            this.gr.logicToRealY(this.gr.getHeightLogic()/2) //mitad de pantalla
-//                                    - (int)((cell.getOffsetY()/2) * (cell.getSide() + cell.getSeparacion()))
-//                                    - (cell.getSide()/2)*3
-//                                    + cell.getSide()
-//                                    - (depth[j]*(cell.getSide()/3)), 0x442700, null, cell.getSide()/4);
-//                    depth[j]++;
-//                }
-//            }
-//            dH1=0;
-//        }
-    }
+    public void render(IGraphics g) {}
 
     @Override
     public void update(Double deltaTime) {
-        Pair a = isSol();
-        if(a.getFirst()==0 && a.getSecond()==0) {
+        Pair a = isSol(); // Comprobar si se ha completado el nivel
+        if(a.getFirst()==0 && a.getSecond()==0) { // Todas las sol marcadas y sin fallos = win
             endGame();
             this.end = true;
         }
@@ -161,7 +96,7 @@ public class Hints implements IInterface {
         return true;
     }
 
-    public void clearWrongs() {
+    public void clearWrongs() { // Volver al estado anterior de pulsar comprobar
         for (int i = 0; i < y; ++i) {
             for (int j = 0; j < x; ++j) {
                 Cell cell = b.getCell(j,i);
@@ -171,10 +106,8 @@ public class Hints implements IInterface {
         }
     }
 
-    public boolean getEnd() { return this.end; }
 
-    private void endGame()
-    {
+    private void endGame() { // Mostrar solo celdas solución
         for (int i = 0; i < y; ++i) {
             for (int j = 0; j < x; ++j) {
                 Cell cell = b.getCell(j,i);
@@ -184,7 +117,7 @@ public class Hints implements IInterface {
         }
     }
 
-    private Pair isSol()  {
+    private Pair isSol() { // Check pero sin cambiar las celdas de color
         int counterBlue = 0;
         int counterRed = 0;
 
@@ -206,4 +139,26 @@ public class Hints implements IInterface {
         Pair a = new Pair(counterBlue,counterRed);
         return a;
     }
+
+    public int[][] getHorizontalHints() {
+        return horizontalHints;
+    }
+
+    public int[][] getVerticalHints() {
+        return verticalHints;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public Board getB() {
+        return b;
+    }
+
+    public boolean getEnd() { return this.end; }
 }

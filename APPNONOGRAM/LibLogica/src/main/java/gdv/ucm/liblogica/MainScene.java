@@ -10,7 +10,6 @@ import gdv.ucm.libengine.IImage;
 import gdv.ucm.libengine.IState;
 import gdv.ucm.libengine.IInput;
 
-
 public class MainScene implements IState {
     private IEngine engine;
     private Board board;

@@ -32,8 +32,7 @@ public class TitleScene implements IState {
     }
 
     @Override
-    public void update(double deltaTime) {
-    }
+    public void update(double deltaTime) {}
 
     @Override
     public void render(IGraphics graphics) {

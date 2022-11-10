@@ -28,7 +28,6 @@ public class EnginePC implements Runnable, IEngine {
         this.audio = new AudioPC();
     }
 
-
     // Bucle principal
     @Override
     public void run() {
@@ -41,7 +40,6 @@ public class EnginePC implements Runnable, IEngine {
         while(this.running && this.myView.getWidth() == 0);
         long lastFrameTime = System.nanoTime();
 
-        //--------------------------------------------------------------------------------------------
         while(this.currentScene != null){ //this.running
             long currentTime = System.nanoTime();
             long nanoElapsedTime = currentTime - lastFrameTime;

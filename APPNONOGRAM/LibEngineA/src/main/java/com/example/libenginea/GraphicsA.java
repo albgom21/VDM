@@ -62,7 +62,7 @@ public class GraphicsA implements IGraphics {
 
     @Override
     public int getBorderTop() {
-        return this.borderTop; // IMPLEMENTAR-----------------------------------------------------------------------------------------
+        return this.borderTop;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class GraphicsA implements IGraphics {
     }
 
     @Override
-    public void setResolution(int w, int h) { //NO DEBERIA LLAMARSE EN ANDROID
+    public void setResolution(int w, int h) { //no deberia llamarse en Android
         this.myView.getHolder().setFixedSize(w,h);
     }
 
@@ -79,7 +79,6 @@ public class GraphicsA implements IGraphics {
     public void setFont(IFont font) {
         this.paint.setTypeface(((FontA)font).getFont());
     }
-
 
     @Override
     public int getWidth() {
