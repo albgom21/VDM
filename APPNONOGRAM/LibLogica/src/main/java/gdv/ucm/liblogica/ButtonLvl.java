@@ -49,7 +49,7 @@ public class ButtonLvl implements IInterface {
           (mX >= this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2) && mX <= this.gr.scaleToReal(w) + this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2)
           && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2) && mY <= this.gr.scaleToReal(h) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2))){ // dentro del cuadrado
             this.audio.playSound("click");
-            MainScene scene = new MainScene(engine, this.cols, this.fils);
+            MainSceneRandom scene = new MainSceneRandom(engine, this.cols, this.fils);
             engine.setCurrentScene(scene);
             return true;
         }

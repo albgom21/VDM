@@ -21,6 +21,7 @@ public class GraphicsA implements IGraphics {
     private SurfaceView myView;
     private Paint paint;
     private Canvas canvas;
+
     private AssetManager mgr;
 
     private int logicWidth;
