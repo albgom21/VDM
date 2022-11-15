@@ -26,6 +26,12 @@ public class EngineA implements Runnable, IEngine {
     private GraphicsA graphics;
     private AudioA audio;
 
+    public ReadA getRead() {
+        return read;
+    }
+
+    private ReadA read;
+
     public EngineA(SurfaceView myView){
         this.myView = myView;
         this.input = new InputA();
@@ -37,6 +43,7 @@ public class EngineA implements Runnable, IEngine {
         this.audio = new AudioA();
         this.graphics.setAssetManager(this.mgr);
         this.audio.setAssetManager(this.mgr);
+        this.read = new ReadA(this.mgr);
     }
 
     //bucle principal

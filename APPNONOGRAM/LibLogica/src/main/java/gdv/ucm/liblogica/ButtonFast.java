@@ -7,17 +7,17 @@ import gdv.ucm.libengine.IImage;
 import gdv.ucm.libengine.IInput;
 import gdv.ucm.libengine.IInterface;
 
-public class ButtonBack implements IInterface {
-    private final IGraphics gr;
+public class ButtonFast implements IInterface {
+    private final IAudio audio;
     private IImage img;
     private IEngine engine;
+    private IGraphics gr;
     private int x;
     private int y;
     private int w;
     private int h;
-    private IAudio audio;
 
-    ButtonBack(String filename, IEngine engine, int x, int y, int w, int h){
+    ButtonFast(String filename, IEngine engine, int x, int y, int w, int h ){
         this.engine = engine;
         this.gr = engine.getGraphics();
         this.img = this.engine.getGraphics().newImage(filename);
@@ -41,11 +41,11 @@ public class ButtonBack implements IInterface {
         int mX = e.x;
         int mY = e.y;
         if(e.type == IInput.InputTouchType.PRESSED && //click
-          e.index == 1 &&                            // boton izq
-          (mX >= this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2) && mX <= this.gr.scaleToReal(w) + this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2)
-          && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2) && mY <= this.gr.scaleToReal(h) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2))){ // dentro del cuadrado
-            this.audio.playSound("back");
-            SelectGamemodeScene scene = new SelectGamemodeScene(engine);
+                e.index == 1 &&                            // boton izq
+                (mX >= this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2) && mX <= this.gr.scaleToReal(w) + this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2)
+                        && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2) && mY <= this.gr.scaleToReal(h) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2))){ // dentro del cuadrado
+            this.audio.playSound("click");
+            SelectLvlScene scene = new SelectLvlScene(engine);
             engine.setCurrentScene(scene);
             return true;
         }

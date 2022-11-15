@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import gdv.ucm.libengine.IEngine;
-import gdv.ucm.libengine.IFont;
 import gdv.ucm.libengine.IGraphics;
-import gdv.ucm.libengine.IImage;
 import gdv.ucm.libengine.IState;
 import gdv.ucm.libengine.IInput;
 
-public class MainScene implements IState {
+public class MainSceneRandom implements IState {
     private IEngine engine;
     private Board board;
     private Hints hints;
@@ -20,7 +18,7 @@ public class MainScene implements IState {
     private ButtonSurrender bSurrender;
 
 
-    public MainScene(IEngine engine, int cols, int fils) {
+    public MainSceneRandom(IEngine engine, int cols, int fils) {
         this.engine = engine;
         IGraphics gr = this.engine.getGraphics();
         this.board = new Board(cols, fils);

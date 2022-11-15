@@ -5,6 +5,7 @@ public interface IEngine {
       IAudio getAudio();       // Obtener el módulo del audio
       IState getState();       // Obtener la escena actual
       IInput getInput();       // Obtener el módulo del input
+      IRead getRead();
 
       void setCurrentScene(IState currentScene);
 }
