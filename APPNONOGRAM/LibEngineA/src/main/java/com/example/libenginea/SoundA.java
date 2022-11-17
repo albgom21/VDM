@@ -1,9 +1,8 @@
 package com.example.libenginea;
 
 import android.media.SoundPool;
-import gdv.ucm.libengine.ISound;
 
-public class SoundA implements ISound {
+public class SoundA {
     private int id;
     private int loop;
     private SoundPool soundPool;
@@ -22,12 +21,9 @@ public class SoundA implements ISound {
     public int getId(){
         return this.id;
     }
-    @Override
     public void play() {
         soundPool.play(this.id, 1, 1,1, this.loop, 1);
     }
-
-    @Override
     public void stop() {
         soundPool.stop(id);
     }

@@ -5,26 +5,43 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import gdv.ucm.libengine.IInput;
+public class InputA implements View.OnTouchListener{
+    // Tipos de eventos
+    public static enum InputTouchType{
+        PRESSED,
+        RELEASED,
+        MOVE
+    }
 
-public class InputA implements IInput, View.OnTouchListener{
+    // Evento común
+    public static class Event{
+        public int x;               // Pos x
+        public int y;               // Pos y
+        public InputTouchType type; // Tipo de evento
+        public int index;           // Botón pulsado en PC / Nº de dedo en Android
+
+        public Event(int x, int y, int index, InputTouchType type){
+            this.x = x;
+            this.y = y;
+            this.index = index;
+            this.type = type;
+        }
+    }
+
     public ArrayList<Event> eventos;
 
     InputA(){
         eventos = new ArrayList<>();
     }
 
-    @Override
     public ArrayList<Event>getEvents() {
         return eventos;
     }
 
-    @Override
     public void clearEvents() {
         eventos.clear();
     }
 
-    @Override
     public void clearIndexEvent(int i) {
         eventos.remove(i);
     }

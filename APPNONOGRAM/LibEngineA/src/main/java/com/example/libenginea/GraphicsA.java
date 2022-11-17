@@ -13,11 +13,7 @@ import android.view.SurfaceView;
 import java.io.IOException;
 import java.io.InputStream;
 
-import gdv.ucm.libengine.IFont;
-import gdv.ucm.libengine.IGraphics;
-import gdv.ucm.libengine.IImage;
-
-public class GraphicsA implements IGraphics {
+public class GraphicsA {
     private SurfaceView myView;
     private Paint paint;
     private Canvas canvas;
@@ -54,49 +50,39 @@ public class GraphicsA implements IGraphics {
         this.mgr = mgr;
     }
 
-    @Override
     public int getHeight() {
         return this.myView.getHeight();
     }
 
 
-
-    @Override
     public int getBorderTop() {
         return this.borderTop;
     }
 
-    @Override
     public int getWindow() {
         return this.window;
     }
-
-    @Override
     public void setResolution(int w, int h) { //no deberia llamarse en Android
         this.myView.getHolder().setFixedSize(w,h);
     }
 
-    @Override
-    public void setFont(IFont font) {
-        this.paint.setTypeface(((FontA)font).getFont());
+    public void setFont(FontA font) {
+        this.paint.setTypeface(font.getFont());
     }
 
-    @Override
     public int getWidth() {
         return this.myView.getWidth();
     }
 
-    @Override
     public int getWidthLogic() {
         return this.logicWidth;
     }
-    @Override
+
     public int getHeightLogic() {
         return this.logicHeight;
     }
 
-    @Override
-    public IImage newImage(String name) {
+    public ImageA newImage(String name) {
         Bitmap bitmap = null;
         try {
             InputStream is = this.mgr.open(name);
@@ -108,8 +94,7 @@ public class GraphicsA implements IGraphics {
         return imgA;
     }
 
-    @Override
-    public IFont newFont(String filename, int size, boolean isBold) {
+    public FontA newFont(String filename, int size, boolean isBold) {
         Typeface tface = Typeface.createFromAsset(mgr, filename);
         this.paint.setTypeface(tface);
         this.paint.setTextSize(size);
@@ -132,67 +117,57 @@ public class GraphicsA implements IGraphics {
         return resizedBitmap;
     }
 
-    @Override
-    public void drawImage(IImage image, int x, int y, int w, int h) {
+    public void drawImage(ImageA image, int x, int y, int w, int h) {
         float newW = (scaleToReal(w));
         float newH = (scaleToReal(h));
-        Bitmap aux = getResizedBitmap(((ImageA)image).getImg(),newW ,newH);
+        Bitmap aux = getResizedBitmap(image.getImg(),newW ,newH);
         this.canvas.drawBitmap(aux,logicToRealX(x) - (aux.getWidth()/2),logicToRealY(y)- (aux.getHeight()/2),this.paint);
     }
 
-    @Override
-    public void drawImage(IImage image, int x, int y) {
-        this.canvas.drawBitmap(((ImageA)image).getImg(),logicToRealX(x) - (scaleToReal(((ImageA)image).getImg().getWidth())/2),logicToRealX(x) - (scaleToReal(((ImageA)image).getImg().getHeight())/2),this.paint); //CAMBIAR----------------------------
+    public void drawImage(ImageA image, int x, int y) {
+        this.canvas.drawBitmap(image.getImg(),logicToRealX(x) - (scaleToReal(((ImageA)image).getImg().getWidth())/2),logicToRealX(x) - (scaleToReal(((ImageA)image).getImg().getHeight())/2),this.paint); //CAMBIAR----------------------------
     }
 
-    @Override
     public void setColor(int colorRGB) {
         colorRGB += 0xFF000000;
         int colorARGB = colorRGB + 0xFF000000;
         this.paint.setColor(colorARGB);
     }
 
-    @Override
     public void clear(int color) {
         color+= 0xFF000000;
         this.canvas.drawColor(color);
     }
 
-    @Override
     public void fillSquare(int cx, int cy, int side) {
         Rect rect = new Rect(cx,cy,cx+side,cy+side);
         this.paint.setStyle(Paint.Style.FILL);
         this.canvas.drawRect(rect, this.paint);
     }
 
-    @Override
     public void fillRect(int x, int y, int w, int h) {
         Rect rect = new Rect(x,y,x+w,y+h);
         this.paint.setStyle(Paint.Style.FILL);
         this.canvas.drawRect(rect, this.paint);
     }
 
-    @Override
     public void drawSquare(int cx, int cy, int side) {
         Rect rect = new Rect(cx,cy,cx+side,cy+side);
         this.paint.setStyle(Paint.Style.STROKE);
         this.canvas.drawRect(rect, this.paint);
     }
 
-    @Override
     public void drawLine(int initX, int initY, int endX, int endY) {
         this.canvas.drawLine(initX,initY,endX,endY, this.paint);
     }
 
-    @Override
     public void drawRect(int x, int y, int width, int height) {
         Rect rect = new Rect(x,y,x+width,y+height);
         this.paint.setStyle(Paint.Style.STROKE);
         this.canvas.drawRect(rect, this.paint);
     }
 
-    @Override
-    public void drawText(String text, int x, int y, int color, IFont font, float tam) {
+    public void drawText(String text, int x, int y, int color, FontA font, float tam) {
         color += 0xFF000000;
         if(font != null)
             setFont(font);
@@ -201,25 +176,20 @@ public class GraphicsA implements IGraphics {
         this.canvas.drawText(text,x - (getWidthString(text)/2), y-(getHeightString(text)/2),this.paint);
     }
 
-    @Override
     public int logicToRealX(int x) { return (int)(x*(float)factorScale + borderWidth); }
 
-    @Override
     public int logicToRealY(int y) {
         return (int)(y*(float)factorScale + borderHeight);
     }
 
-    @Override
     public int scaleToReal(int s) {
         return (int)(s*(factorScale));
     }
 
-    @Override
     public int getWidthString(String text) {
        return (int)this.paint.measureText(text,0,text.length());
     }
 
-    @Override
     public int getHeightString(String text) {
         Rect bounds = new Rect();
         this.paint.getTextBounds(text,0,text.length(), bounds);

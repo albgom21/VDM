@@ -6,13 +6,9 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
-import gdv.ucm.libengine.IAudio;
-import gdv.ucm.libengine.IEngine;
-import gdv.ucm.libengine.IGraphics;
-import gdv.ucm.libengine.IInput;
-import gdv.ucm.libengine.IState;
 
-public class EngineA implements Runnable, IEngine {
+
+public class EngineA implements Runnable {
     private SurfaceView myView;
     private SurfaceHolder holder;
     private Canvas canvas;
@@ -21,8 +17,8 @@ public class EngineA implements Runnable, IEngine {
     private Thread renderThread;
     private boolean running;
 
-    private IState currentScene;
-    private IInput input;
+    private StateA currentScene;
+    private InputA input;
     private GraphicsA graphics;
     private AudioA audio;
 
@@ -128,28 +124,23 @@ public class EngineA implements Runnable, IEngine {
         }
     }
 
-    @Override
-    public IGraphics getGraphics() {
+    public GraphicsA getGraphics() {
         return this.graphics;
     }
 
-    @Override
-    public IAudio getAudio() {
+    public AudioA getAudio() {
         return this.audio;
     }
 
-    @Override
-    public IState getState() {
+    public StateA getState() {
         return this.currentScene;
     }
 
-    @Override
-    public IInput getInput() {
+    public InputA getInput() {
         return this.input;
     }
 
-    @Override
-    public void setCurrentScene(IState currentScene) {
+    public void setCurrentScene(StateA currentScene) {
         this.currentScene = currentScene;
     }
 }

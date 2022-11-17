@@ -1,6 +1,5 @@
 package com.example.libenginea;
 
-import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 
@@ -10,18 +9,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import gdv.ucm.libengine.IRead;
-import gdv.ucm.liblogica.Cell;
-import gdv.ucm.liblogica.CellState;
 
-public class ReadA implements IRead {
+public class ReadA {
     AssetManager mgr;
     ReadA(AssetManager mgr)
     {
         this.mgr = mgr;
     }
 
-    @Override
     public int[][] newBoard(String file) {
         int[][] board = null;
         try {

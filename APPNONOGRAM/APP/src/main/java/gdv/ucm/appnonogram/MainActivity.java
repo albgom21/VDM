@@ -5,7 +5,6 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.SurfaceView;
 import com.example.libenginea.EngineA;
-import gdv.ucm.liblogica.TitleScene;
 
 public class MainActivity extends AppCompatActivity {
     private EngineA engine;          // Motor de Android

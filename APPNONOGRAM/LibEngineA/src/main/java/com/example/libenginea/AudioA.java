@@ -9,10 +9,7 @@ import android.os.Build;
 import java.io.IOException;
 import java.util.HashMap;
 
-import gdv.ucm.libengine.IAudio;
-import gdv.ucm.libengine.ISound;
-
-public class AudioA implements IAudio {
+public class AudioA {
     private AssetManager mgr;
     private SoundPool soundPool;
     HashMap<String,SoundA> sounds = new HashMap<>();
@@ -24,8 +21,8 @@ public class AudioA implements IAudio {
         mPlayer = new MediaPlayer();
         mPlayer.reset();
     }
-    @Override
-    public ISound newSound(String file, boolean loop) {
+
+    public SoundA newSound(String file, boolean loop) {
         int soundId = -1;
         try {
             AssetFileDescriptor assetDescriptor = mgr.openFd(file);
@@ -40,8 +37,8 @@ public class AudioA implements IAudio {
         return sound;
     }
 
-    @Override
-    public ISound newSoundAmbient(String file) {
+
+    public SoundA newSoundAmbient(String file) {
         try {
             AssetFileDescriptor afd = mgr.openFd(file);
             mPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
@@ -59,12 +56,11 @@ public class AudioA implements IAudio {
         return sound;
     }
 
-    @Override
     public void playSound(String id) {
         soundPool.play(sounds.get(id+".wav").getId(), 1, 1,1, sounds.get(id+".wav").getLoop(), 1);
     }
 
-    @Override
+
     public boolean isLoaded(String id) {
         return sounds.containsKey(id);
     }
