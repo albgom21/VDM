@@ -3,12 +3,12 @@ package gdv.ucm.appnonogram;
 import com.example.libenginea.AudioA;
 import com.example.libenginea.EngineA;
 import com.example.libenginea.GraphicsA;
-import com.example.libenginea.InterfaceA;
 import com.example.libenginea.ImageA;
 import com.example.libenginea.InputA;
+import com.example.libenginea.InterfaceA;
 
-public class ButtonLore implements InterfaceA {
-    private final AudioA audio;
+public class ButtonLvlLore implements InterfaceA {
+    private AudioA audio;
     private ImageA img;
     private EngineA engine;
     private GraphicsA gr;
@@ -17,7 +17,7 @@ public class ButtonLore implements InterfaceA {
     private int w;
     private int h;
 
-    ButtonLore(String filename, EngineA engine, int x, int y, int w, int h ){
+    ButtonLvlLore(String filename, EngineA engine, int x, int y, int w, int h){
         this.engine = engine;
         this.gr = engine.getGraphics();
         this.img = this.engine.getGraphics().newImage(filename);
@@ -34,7 +34,7 @@ public class ButtonLore implements InterfaceA {
     }
 
     @Override
-    public void update(Double deltaTime) { }
+    public void update(Double deltaTime) {}
 
     @Override
     public boolean handleEvent(InputA.Event e) {
@@ -45,7 +45,7 @@ public class ButtonLore implements InterfaceA {
                 (mX >= this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2) && mX <= this.gr.scaleToReal(w) + this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2)
                         && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2) && mY <= this.gr.scaleToReal(h) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2))){ // dentro del cuadrado
             this.audio.playSound("click");
-            SelectThemeScene scene = new SelectThemeScene(engine);
+            LvlTheme1Scene scene = new LvlTheme1Scene(engine);
             engine.setCurrentScene(scene);
             return true;
         }

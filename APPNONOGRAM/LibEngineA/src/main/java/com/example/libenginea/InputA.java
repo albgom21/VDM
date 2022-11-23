@@ -5,12 +5,22 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InputA implements View.OnTouchListener{
+public class InputA implements View.OnTouchListener, View.OnLongClickListener{
+    private boolean longClicked = false;
+
+    @Override
+    public boolean onLongClick(View view) {
+        System.out.println("long");
+        longClicked = true;
+        return true;
+    }
+
     // Tipos de eventos
     public static enum InputTouchType{
         PRESSED,
         RELEASED,
-        MOVE
+        MOVE,
+        LONG_PRESSED
     }
 
     // Evento común
@@ -48,12 +58,20 @@ public class InputA implements View.OnTouchListener{
 
     public synchronized void addEvent(MotionEvent event){
         InputTouchType tipo = null;
-        if(event.getAction() == MotionEvent.ACTION_DOWN)
+        System.out.println("longClicked = " + longClicked);
+        if(longClicked) {
+            tipo = InputTouchType.LONG_PRESSED;
+            System.out.println("AH");
+        }
+        else if(event.getAction() == MotionEvent.ACTION_DOWN) {
             tipo = InputTouchType.PRESSED;
+            System.out.println("AH2");
+        }
         else if(event.getAction() == MotionEvent.ACTION_UP)
             tipo = InputTouchType.RELEASED;
         else if(event.getAction() == MotionEvent.ACTION_MOVE)
             tipo = InputTouchType.MOVE;
+
         if(tipo!=null)
             eventos.add(new Event((int)event.getX(0),(int)event.getY(0),event.getPointerCount(),tipo));
     }
@@ -61,6 +79,8 @@ public class InputA implements View.OnTouchListener{
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         addEvent(event);
+        if(longClicked)
+            longClicked = false;
         return true;
     }
 }

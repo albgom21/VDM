@@ -3,21 +3,22 @@ package gdv.ucm.appnonogram;
 import com.example.libenginea.AudioA;
 import com.example.libenginea.EngineA;
 import com.example.libenginea.GraphicsA;
-import com.example.libenginea.InterfaceA;
 import com.example.libenginea.ImageA;
 import com.example.libenginea.InputA;
+import com.example.libenginea.InterfaceA;
 
-public class ButtonLore implements InterfaceA {
+public class ButtonRead implements InterfaceA {
     private final AudioA audio;
     private ImageA img;
     private EngineA engine;
     private GraphicsA gr;
+    private String file;
     private int x;
     private int y;
     private int w;
     private int h;
 
-    ButtonLore(String filename, EngineA engine, int x, int y, int w, int h ){
+    ButtonRead(String filename, EngineA engine, int x, int y, int w, int h, String file){
         this.engine = engine;
         this.gr = engine.getGraphics();
         this.img = this.engine.getGraphics().newImage(filename);
@@ -25,6 +26,7 @@ public class ButtonLore implements InterfaceA {
         this.y = y;
         this.w = w;
         this.h = h;
+        this.file = file;
         this.audio = this.engine.getAudio();
     }
 
@@ -45,7 +47,7 @@ public class ButtonLore implements InterfaceA {
                 (mX >= this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2) && mX <= this.gr.scaleToReal(w) + this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2)
                         && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2) && mY <= this.gr.scaleToReal(h) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2))){ // dentro del cuadrado
             this.audio.playSound("click");
-            SelectThemeScene scene = new SelectThemeScene(engine);
+            MainSceneRead scene = new MainSceneRead(engine, file + ".txt");
             engine.setCurrentScene(scene);
             return true;
         }

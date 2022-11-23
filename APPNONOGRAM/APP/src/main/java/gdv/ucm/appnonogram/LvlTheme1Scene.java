@@ -1,0 +1,61 @@
+package gdv.ucm.appnonogram;
+
+import com.example.libenginea.EngineA;
+import com.example.libenginea.GraphicsA;
+import com.example.libenginea.InputA;
+import com.example.libenginea.StateA;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class LvlTheme1Scene implements StateA {
+    private ButtonRead [] bLvls;
+    private ButtonBack bBack;
+
+    public LvlTheme1Scene(EngineA engine) {
+        GraphicsA gr = engine.getGraphics();
+        this.bLvls = new ButtonRead[20];
+        int y = 0;
+        int x = 0;
+        for(int i = 1; i <= 20; i++) {
+            if(x>=4) {
+                y++;
+                x = 0;
+            }
+            this.bLvls[i - 1] = new ButtonRead(i + ".png", engine, ((gr.getWidthLogic() / 11) * (x + (x - 1))) + 125, ((gr.getHeightLogic() / 14) * (int)(y+(y-1))) + 200, 50, 50, "Lvl" + i + "a");
+            x++;
+        }
+
+        this.bBack = new ButtonBack("back.png",engine,(gr.getWidthLogic()/5),gr.getBorderTop(),200/2,75/2);
+
+        if(!engine.getAudio().isLoaded("back.wav"))
+            engine.getAudio().newSound("back.wav", false);
+    }
+
+    @Override
+    public void update(double deltaTime) {}
+
+    @Override
+    public void render(GraphicsA graphics) {
+        String s = "Selecciona el tamaño del puzzle";
+        graphics.drawText(s,graphics.logicToRealX(graphics.getWidthLogic()/2),graphics.logicToRealY(graphics.getHeightLogic()/6), 0x442700,null, graphics.scaleToReal(15));
+        for(int i = 0; i < 20; i++)
+            this.bLvls[i].render(graphics);
+        this.bBack.render(graphics);
+    }
+
+    @Override
+    public void handleInputs(InputA input) {
+        ArrayList<InputA.Event> eventList =  new ArrayList<>();
+        eventList.addAll(input.getEvents());
+
+        Iterator<InputA.Event> it = eventList.iterator();
+        while (it.hasNext()) {
+            InputA.Event event = it.next();
+            for (int j = 0; j < 20; j++)
+                this.bLvls[j].handleEvent(event);
+            this.bBack.handleEvent(event);
+        }
+        input.clearEvents();
+    }
+}

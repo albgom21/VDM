@@ -15,7 +15,7 @@ public class RenderHints {
         Cell cell = h.getB().getCell(0,0);
         for (int i = h.getY()-1; i >= 0; --i) {
             for (int j = h.getX()-1; j >= 0; --j) {
-                if(h.getVerticalHints()[i][j]!=0) {
+                if(h.getVerticalHints()[i][j]!=0 || j == 0) {
                     gr.drawText(Integer.toString(h.getVerticalHints()[i][j]),
                             gr.logicToRealX(gr.getWidthLogic()/2)                          // mitad de la pantalla
                                     - (int)((cell.getOffsetX()/2) * cell.getSide())              // mitad casillas izq
@@ -29,7 +29,7 @@ public class RenderHints {
                             0x442700, null, cell.getSide()/4);
                     dH1++;
                 }
-                if(h.getHorizontalHints()[j][i]!=0) {
+                if(h.getHorizontalHints()[j][i]!=0 || i == 0) {
                     gr.drawText(Integer.toString(h.getHorizontalHints()[j][i]),
                             gr.logicToRealX(gr.getWidthLogic()/2)                           // mitad de la pantalla
                                     - (int)((cell.getOffsetX()/2) * cell.getSide())               // mitad casillas izq
