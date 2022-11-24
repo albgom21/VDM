@@ -18,10 +18,10 @@ public class SelectThemeScene implements StateA {
     public SelectThemeScene(EngineA engine) {
         GraphicsA gr = engine.getGraphics();
 
-        this.bTheme1 = new ButtonLvlLore("bosque.png",engine, gr.getWidthLogic()/4  ,(gr.getHeightLogic()/5)*2,150,150);
-        this.bTheme2 = new ButtonLvlLore("comida.png",engine,(gr.getWidthLogic()/4)*3,(gr.getHeightLogic()/5)*2,  150,150);
-        this.bTheme3 = new ButtonLvlLore("navidad.png",engine, gr.getWidthLogic()/4  ,(int)((gr.getHeightLogic()/5)*3.5),150,150);
-        this.bTheme4 = new ButtonLvlLore("emoji.png",engine,(gr.getWidthLogic()/4)*3,(int)((gr.getHeightLogic()/5)*3.5),  150,150);
+        this.bTheme1 = new ButtonLvlLore("bosque.png",engine, gr.getWidthLogic()/4  ,(gr.getHeightLogic()/5)*2,150,150, "a");
+        this.bTheme2 = new ButtonLvlLore("emoji.png",engine,(gr.getWidthLogic()/4)*3,(gr.getHeightLogic()/5)*2,  150,150, "b");
+        this.bTheme3 = new ButtonLvlLore("comida.png",engine, gr.getWidthLogic()/4  ,(int)((gr.getHeightLogic()/5)*3.5),150,150, "c");
+        this.bTheme4 = new ButtonLvlLore("navidad.png",engine,(gr.getWidthLogic()/4)*3,(int)((gr.getHeightLogic()/5)*3.5),  150,150, "d");
 
         if(!engine.getAudio().isLoaded("back.wav"))
             engine.getAudio().newSound("back.wav", false);

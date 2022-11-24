@@ -8,11 +8,11 @@ import com.example.libenginea.StateA;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class LvlTheme1Scene implements StateA {
+public class LvlThemeScene implements StateA {
     private ButtonRead [] bLvls;
     private ButtonBack bBack;
 
-    public LvlTheme1Scene(EngineA engine) {
+    public LvlThemeScene(EngineA engine, String type) {
         GraphicsA gr = engine.getGraphics();
         this.bLvls = new ButtonRead[20];
         int y = 0;
@@ -22,7 +22,7 @@ public class LvlTheme1Scene implements StateA {
                 y++;
                 x = 0;
             }
-            this.bLvls[i - 1] = new ButtonRead(i + ".png", engine, ((gr.getWidthLogic() / 11) * (x + (x - 1))) + 125, ((gr.getHeightLogic() / 14) * (int)(y+(y-1))) + 200, 50, 50, "Lvl" + i + "a");
+            this.bLvls[i - 1] = new ButtonRead(i + ".png", engine, ((gr.getWidthLogic() / 11) * (x + (x - 1))) + 125, ((gr.getHeightLogic() / 14) * (int)(y+(y-1))) + 200, 50, 50, "Lvl" + i + type);
             x++;
         }
 

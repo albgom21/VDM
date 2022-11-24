@@ -12,12 +12,13 @@ public class ButtonLvlLore implements InterfaceA {
     private ImageA img;
     private EngineA engine;
     private GraphicsA gr;
+    private String type;
     private int x;
     private int y;
     private int w;
     private int h;
 
-    ButtonLvlLore(String filename, EngineA engine, int x, int y, int w, int h){
+    ButtonLvlLore(String filename, EngineA engine, int x, int y, int w, int h, String type){
         this.engine = engine;
         this.gr = engine.getGraphics();
         this.img = this.engine.getGraphics().newImage(filename);
@@ -25,6 +26,7 @@ public class ButtonLvlLore implements InterfaceA {
         this.y = y;
         this.w = w;
         this.h = h;
+        this.type = type;
         this.audio = this.engine.getAudio();
     }
 
@@ -45,7 +47,7 @@ public class ButtonLvlLore implements InterfaceA {
                 (mX >= this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2) && mX <= this.gr.scaleToReal(w) + this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2)
                         && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2) && mY <= this.gr.scaleToReal(h) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2))){ // dentro del cuadrado
             this.audio.playSound("click");
-            LvlTheme1Scene scene = new LvlTheme1Scene(engine);
+            LvlThemeScene scene = new LvlThemeScene(engine, this.type);
             engine.setCurrentScene(scene);
             return true;
         }

@@ -42,7 +42,6 @@ public class MainSceneRead implements StateA {
     @Override
     public void update(double deltaTime) {
         this.bCheck.update(deltaTime);
-        this.hints.update(deltaTime);
         if(this.hints.getEnd()) {
             this.engine.getAudio().playSound("win");
             WinScene scene = new WinScene(this.engine, this.board);

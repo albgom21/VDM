@@ -27,13 +27,31 @@ public class ReadA {
 
                 //Leemos char y saltamos espacio
                 char width = (char)bufferedReader.read(); //cols
-                bufferedReader.read();
+                char width2 = (char)bufferedReader.read();
+                int d = Integer.parseInt(String.valueOf(width));
+
+                if(width2 != ' ')
+                {
+                    bufferedReader.read();
+                    int u = Integer.parseInt(String.valueOf(width2));
+                    d *= 10;
+                    d += u;
+                }
+
                 char height = (char)bufferedReader.read(); //fils
-                bufferedReader.read();
+                char height2 = (char)bufferedReader.read();
+                int d2 = Integer.parseInt(String.valueOf(height));
+
+                if(height2 != '\r') {
+                    bufferedReader.read();
+                    int u2 = Integer.parseInt(String.valueOf(height2));
+                    d2 *= 10;
+                    d2 += u2;
+                }
                 bufferedReader.read();
 
-                int w=Integer.parseInt(String.valueOf(width));
-                int h=Integer.parseInt(String.valueOf(height));
+                int w = d;
+                int h = d2;
                 board = new int[w][h];
                 int i = 0;
                 int j = 0;
