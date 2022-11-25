@@ -1,5 +1,7 @@
 package gdv.ucm.appnonogram;
 
+import com.example.libenginea.AudioA;
+import com.example.libenginea.EngineA;
 import com.example.libenginea.GraphicsA;
 import com.example.libenginea.InterfaceA;
 import com.example.libenginea.InputA;
@@ -23,19 +25,26 @@ public class Cell implements InterfaceA {
     private float media;
     private CellState state;
     private boolean isSol;
+    private boolean loselife;
 
-    public Cell(int x, int y, float offsetX, float offsetY, boolean sol, CellState state)  {
+    private AudioA audio;
+    private EngineA engine;
+
+    public Cell(int x, int y, float offsetX, float offsetY, boolean sol, CellState state, EngineA engine)  {
         this.x = x;
         this.y = y;
+        this.engine = engine;
         this.side = 30;
         this.offsetX = offsetX; // Cantidad de celdas en x
         this.offsetY = offsetY; // Cantidad de celdas en y
         this.separacion = this.side/3;
+        this.loselife = false;
 
         this.media = (offsetX+offsetY)/2;
 
         this.isSol = sol;
         this.state = state;
+        this.audio = engine.getAudio();
     }
 
     @Override
@@ -43,21 +52,48 @@ public class Cell implements InterfaceA {
         int mX = e.x;
         int mY = e.y;
 
-        if(e.type == InputA.InputTouchType.PRESSED && //click
+        if(e.type == InputA.InputTouchType.NORMAL_PRESSED && //click
            e.index == 1 &&                            // boton izq
            (mX >= tr_x - (this.side/2) && mX <= this.side + tr_x - (this.side/2)
            && mY >= tr_y - (this.side/2) && mY <= this.side + tr_y - (this.side/2))){ // dentro del cuadrado
-                if(state.equals(CellState.GRAY))
+
+                if(state.equals(CellState.GRAY) && !this.isSol) {
+                    state = CellState.RED;
+                    this.audio.playSound("wrong");
+                    this.loselife = true;
+                }
+                else if(state.equals(CellState.GRAY))
                     state = CellState.BLUE;
                 else if(state.equals(CellState.BLUE))
-                    state = CellState.WHITE;
+                    state = CellState.GRAY;
                 else if(state.equals(CellState.WHITE))
                     state = CellState.GRAY;
-                else if(state.equals(CellState.RED))
+                //No poder cambiar de rojo a nada, esperar a que el color rojo se vaya
+                else if(state.equals(CellState.RED)) //Preguntar si desactivar esto
                     state = CellState.GRAY;
 
                 return true;
            }
+        else if(e.type == InputA.InputTouchType.LONG_PRESSED && //click
+                e.index == 1 &&                            // boton izq
+                (mX >= tr_x - (this.side/2) && mX <= this.side + tr_x - (this.side/2)
+                        && mY >= tr_y - (this.side/2) && mY <= this.side + tr_y - (this.side/2))){ // dentro del cuadrado
+            if(state.equals(CellState.GRAY))
+                state = CellState.WHITE;
+            else if(state.equals(CellState.BLUE))
+                state = CellState.WHITE;
+
+            return true;
+        }
+        return false;
+    }
+
+    public boolean loseLife()
+    {
+        if(this.loselife) {
+            this.loselife = false;
+            return true;
+        }
         return false;
     }
 

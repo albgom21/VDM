@@ -50,7 +50,7 @@ public class ButtonCheck implements InterfaceA {
 
     @Override
     public void update(Double deltaTime) {
-        if(System.currentTimeMillis()>this.timer+this.onScreen) {
+        if(System.currentTimeMillis()>this.timer+this.onScreen && this.check) {
             check = false;
             this.hints.clearWrongs();
         }
@@ -60,7 +60,7 @@ public class ButtonCheck implements InterfaceA {
     public boolean handleEvent(InputA.Event e) {
         int mX = e.x;
         int mY = e.y;
-        if(e.type == InputA.InputTouchType.PRESSED && //click
+        if(e.type == InputA.InputTouchType.NORMAL_PRESSED && //click
           e.index == 1 &&                            // boton izq
           (mX >= this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2) && mX <= this.gr.scaleToReal(w) + this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2)
           && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2) && mY <= this.gr.scaleToReal(h) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2))){ // dentro del cuadrado

@@ -22,6 +22,7 @@ public class SelectThemeScene implements StateA {
         this.bTheme2 = new ButtonLvlLore("emoji.png",engine,(gr.getWidthLogic()/4)*3,(gr.getHeightLogic()/5)*2,  150,150, "b");
         this.bTheme3 = new ButtonLvlLore("comida.png",engine, gr.getWidthLogic()/4  ,(int)((gr.getHeightLogic()/5)*3.5),150,150, "c");
         this.bTheme4 = new ButtonLvlLore("navidad.png",engine,(gr.getWidthLogic()/4)*3,(int)((gr.getHeightLogic()/5)*3.5),  150,150, "d");
+        this.bBack = new ButtonBack("back.png",engine,(gr.getWidthLogic()/5),gr.getBorderTop(),200/2,75/2);
 
         if(!engine.getAudio().isLoaded("back.wav"))
             engine.getAudio().newSound("back.wav", false);
@@ -33,11 +34,12 @@ public class SelectThemeScene implements StateA {
     @Override
     public void render(GraphicsA graphics) {
         String s = "Elige la categoria en la que quieras jugar";
-        graphics.drawText(s,graphics.logicToRealX(graphics.getWidthLogic()/2),graphics.logicToRealY(graphics.getHeightLogic()/6), 0x442700,null, graphics.scaleToReal(20));
+        graphics.drawText(s,graphics.logicToRealX(graphics.getWidthLogic()/2),graphics.logicToRealY(graphics.getHeightLogic()/5), 0x442700,null, graphics.scaleToReal(20));
         this.bTheme1.render(graphics);
         this.bTheme2.render(graphics);
         this.bTheme3.render(graphics);
         this.bTheme4.render(graphics);
+        this.bBack.render(graphics);
     }
 
     @Override
@@ -52,6 +54,7 @@ public class SelectThemeScene implements StateA {
             this.bTheme2.handleEvent(event);
             this.bTheme3.handleEvent(event);
             this.bTheme4.handleEvent(event);
+            this.bBack.handleEvent(event);
         }
         input.clearEvents();
     }

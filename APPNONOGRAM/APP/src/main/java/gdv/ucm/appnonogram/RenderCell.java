@@ -7,7 +7,7 @@ public class RenderCell {
 
     public void render(GraphicsA gr, Cell c) {
         int side = (int)(((gr.getWindow()/3)*2)/c.getMedia());
-        int sep = side/8;
+        int sep = side/10;
 
         int tr_x = gr.logicToRealX(gr.getWidthLogic()/2) // mitad de la pantalla
                 - (int)((c.getOffsetX()/2) * (side))        // mitad casillas izq

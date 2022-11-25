@@ -17,14 +17,14 @@ public class SelectLvlScene implements StateA {
         GraphicsA gr = engine.getGraphics();
         this.bLvls = new ButtonLvl[6];
 
-        this.bLvls[0] = new ButtonLvl("4x4.png",engine, (gr.getWidthLogic()/3)  ,(gr.getHeightLogic()/5)*2,50,50, 4, 4);
-        this.bLvls[1] = new ButtonLvl("5x5.png",engine,(gr.getWidthLogic()/2),(gr.getHeightLogic()/5)*2,  50,50, 5, 5);
-        this.bLvls[2] = new ButtonLvl("5x10.png",engine,(gr.getWidthLogic()/3)*2,(gr.getHeightLogic()/5)*2, 50,50, 5, 10);
-        this.bLvls[3] = new ButtonLvl("8x8.png",engine,(gr.getWidthLogic()/3),(gr.getHeightLogic()/5)*3,  50,50, 8, 8);
-        this.bLvls[4] = new ButtonLvl("10x10.png",engine,(gr.getWidthLogic()/2) ,(gr.getHeightLogic()/5)*3,50,50, 10 , 10);
-        this.bLvls[5] = new ButtonLvl("10x15.png",engine,(gr.getWidthLogic()/3)*2 ,(gr.getHeightLogic()/5)*3,50,50, 10, 15);
+        this.bLvls[0] = new ButtonLvl("4x4.png",engine, (gr.getWidthLogic()/4)  ,(gr.getHeightLogic()/5)*2,75,75, 4, 4);
+        this.bLvls[1] = new ButtonLvl("5x5.png",engine,(gr.getWidthLogic()/2),(gr.getHeightLogic()/5)*2,  75,75, 5, 5);
+        this.bLvls[2] = new ButtonLvl("5x10.png",engine,(gr.getWidthLogic()/4)*3,(gr.getHeightLogic()/5)*2, 75,75, 5, 10);
+        this.bLvls[3] = new ButtonLvl("8x8.png",engine,(gr.getWidthLogic()/4),(gr.getHeightLogic()/5)*3,  75,75, 8, 8);
+        this.bLvls[4] = new ButtonLvl("10x10.png",engine,(gr.getWidthLogic()/2) ,(gr.getHeightLogic()/5)*3,75,75, 10 , 10);
+        this.bLvls[5] = new ButtonLvl("10x15.png",engine,(gr.getWidthLogic()/4)*3 ,(gr.getHeightLogic()/5)*3,75,75, 10, 15);
 
-        this.bBack = new ButtonBack("back.png",engine,(gr.getWidthLogic()/5),gr.getBorderTop()+(75/2),200/2,75/2);
+        this.bBack = new ButtonBack("back.png",engine,(gr.getWidthLogic()/5),gr.getBorderTop(),200/2,75/2);
 
         if(!engine.getAudio().isLoaded("back.wav"))
             engine.getAudio().newSound("back.wav", false);
@@ -36,7 +36,7 @@ public class SelectLvlScene implements StateA {
     @Override
     public void render(GraphicsA graphics) {
         String s = "Selecciona el tamaño del puzzle";
-        graphics.drawText(s,graphics.logicToRealX(graphics.getWidthLogic()/2),graphics.logicToRealY(graphics.getHeightLogic()/4), 0x442700,null, graphics.scaleToReal(15));
+        graphics.drawText(s,graphics.logicToRealX(graphics.getWidthLogic()/2),graphics.logicToRealY((int)(graphics.getHeightLogic()/4.5)), 0x442700,null, graphics.scaleToReal(20));
         for(int i = 0; i < 6; i++)
             this.bLvls[i].render(graphics);
         this.bBack.render(graphics);

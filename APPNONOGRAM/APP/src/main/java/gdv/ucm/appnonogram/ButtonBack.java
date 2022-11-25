@@ -41,7 +41,7 @@ public class ButtonBack implements InterfaceA {
     public boolean handleEvent(InputA.Event e) {
         int mX = e.x;
         int mY = e.y;
-        if(e.type == InputA.InputTouchType.PRESSED && //click
+        if(e.type == InputA.InputTouchType.NORMAL_PRESSED && //click
           e.index == 1 &&                            // boton izq
           (mX >= this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2) && mX <= this.gr.scaleToReal(w) + this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2)
           && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2) && mY <= this.gr.scaleToReal(h) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2))){ // dentro del cuadrado

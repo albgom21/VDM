@@ -5,22 +5,17 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InputA implements View.OnTouchListener, View.OnLongClickListener{
-    private boolean longClicked = false;
-
-    @Override
-    public boolean onLongClick(View view) {
-        System.out.println("long");
-        longClicked = true;
-        return true;
-    }
+public class InputA implements View.OnTouchListener{
+    private long startTime = 0;
+    private long endTime = 0;
 
     // Tipos de eventos
     public static enum InputTouchType{
         PRESSED,
         RELEASED,
         MOVE,
-        LONG_PRESSED
+        LONG_PRESSED,
+        NORMAL_PRESSED
     }
 
     // Evento común
@@ -58,19 +53,21 @@ public class InputA implements View.OnTouchListener, View.OnLongClickListener{
 
     public synchronized void addEvent(MotionEvent event){
         InputTouchType tipo = null;
-        System.out.println("longClicked = " + longClicked);
-        if(longClicked) {
-            tipo = InputTouchType.LONG_PRESSED;
-            System.out.println("AH");
-        }
-        else if(event.getAction() == MotionEvent.ACTION_DOWN) {
+        if(event.getAction() == MotionEvent.ACTION_DOWN) {
             tipo = InputTouchType.PRESSED;
-            System.out.println("AH2");
+            startTime = event.getEventTime();
         }
-        else if(event.getAction() == MotionEvent.ACTION_UP)
+        else if(event.getAction() == MotionEvent.ACTION_UP) {
             tipo = InputTouchType.RELEASED;
+            endTime = event.getEventTime();
+        }
         else if(event.getAction() == MotionEvent.ACTION_MOVE)
             tipo = InputTouchType.MOVE;
+
+        if(endTime-startTime > 500) //500ms => 0.5s
+            tipo = InputTouchType.LONG_PRESSED;
+        else if(tipo == InputTouchType.RELEASED)
+            tipo = InputTouchType.NORMAL_PRESSED; //Ojo nos estamos comiendo el MOVE
 
         if(tipo!=null)
             eventos.add(new Event((int)event.getX(0),(int)event.getY(0),event.getPointerCount(),tipo));
@@ -79,8 +76,6 @@ public class InputA implements View.OnTouchListener, View.OnLongClickListener{
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         addEvent(event);
-        if(longClicked)
-            longClicked = false;
         return true;
     }
 }

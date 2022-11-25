@@ -18,13 +18,15 @@ public class MainSceneRead implements StateA {
     private RenderHints renderHints;
     private ButtonCheck bCheck;
     private ButtonSurrender bSurrender;
+    private String filename;
 
 
     public MainSceneRead(EngineA engine, String filename) {
         this.engine = engine;
+        this.filename = filename;
         GraphicsA gr = this.engine.getGraphics();
         ReadA rd = this.engine.getRead();
-        this.board = new Board(filename, rd);
+        this.board = new Board(filename, rd, this.engine);
         this.hints = new Hints(this.board);
         this.renderHints = new RenderHints(this.hints);
         this.renderBoard = new RenderBoard(this.board);
@@ -35,6 +37,8 @@ public class MainSceneRead implements StateA {
             engine.getAudio().newSound("check.wav", false);
         if(!engine.getAudio().isLoaded("win.wav"))
             engine.getAudio().newSound("win.wav", false);
+        if(!engine.getAudio().isLoaded("wrong.wav"))
+            engine.getAudio().newSound("wrong.wav", false);
         this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (gr.getWidthLogic()/5)*4,(gr.getHeightLogic()/10)*9,200/2,75/2);
         this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (gr.getWidthLogic()/5),(gr.getHeightLogic()/10)*9,200/2,75/2);
     }
@@ -42,6 +46,11 @@ public class MainSceneRead implements StateA {
     @Override
     public void update(double deltaTime) {
         this.bCheck.update(deltaTime);
+        if(this.board.getLifes() <= 0) //Perdimos
+        {
+            LoseScene scene = new LoseScene(this.engine,this.filename,0,0);
+            this.engine.setCurrentScene(scene);
+        }
         if(this.hints.getEnd()) {
             this.engine.getAudio().playSound("win");
             WinScene scene = new WinScene(this.engine, this.board);
@@ -53,6 +62,7 @@ public class MainSceneRead implements StateA {
     public void render(GraphicsA graphics) {
         this.board.render(graphics);
         this.renderBoard.render(graphics);
+        this.renderBoard.renderLifes(graphics);
         this.renderHints.render(graphics);
         this.bCheck.render(graphics);
         this.bSurrender.render(graphics);

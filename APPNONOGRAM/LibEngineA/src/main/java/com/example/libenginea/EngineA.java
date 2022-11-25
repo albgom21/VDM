@@ -31,7 +31,6 @@ public class EngineA implements Runnable {
     public EngineA(SurfaceView myView){
         this.myView = myView;
         this.input = new InputA();
-        this.myView.setOnLongClickListener((View.OnLongClickListener) this.input);
         this.myView.setOnTouchListener((View.OnTouchListener) this.input);
         this.mgr = myView.getContext().getAssets();
         this.holder = this.myView.getHolder();
