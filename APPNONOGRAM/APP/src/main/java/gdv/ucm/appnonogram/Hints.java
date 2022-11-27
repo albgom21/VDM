@@ -68,7 +68,7 @@ public class Hints implements InterfaceA {
                 }
                 else {
                     if(cell.getState() == CellState.BLUE) {
-                        cell.setState(CellState.RED);
+//                        cell.setState(CellState.RED);
                         counterRed++;
                     }
                 }

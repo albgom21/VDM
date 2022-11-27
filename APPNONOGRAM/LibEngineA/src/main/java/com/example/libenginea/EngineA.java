@@ -82,7 +82,10 @@ public class EngineA implements Runnable {
 
     protected void render() {
         // "Borramos" el fondo.
-        this.getGraphics().clear(0xe7d6bd);
+//        this.getGraphics().clear(0xe7d6bd); //paleta normal
+//        this.getGraphics().clear(0xc1d8e2); //paleta 1
+//        this.getGraphics().clear(0xb06c92); //paleta 2
+        this.getGraphics().clear(0x9bbdaa); //paleta 3
 
         // Pintamos la escena
         this.currentScene.render(this.graphics);
