@@ -42,7 +42,7 @@ public class RenderCell {
             color=0x6f003f;  //paleta 3
         else //WHITE
 //            color=0xececec;  //paleta normal
-//            color=0xd0f0ff;  //paleta 1
+//            color=0xffffff;  //paleta 1
 //            color=0xffddf1;  //paleta 2
             color=0xd0ffe8;  //paleta 3
         gr.setColor(color);
