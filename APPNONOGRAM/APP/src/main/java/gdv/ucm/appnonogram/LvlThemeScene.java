@@ -22,7 +22,14 @@ public class LvlThemeScene implements StateA {
                 y++;
                 x = 0;
             }
-            this.bLvls[i - 1] = new ButtonRead(i + ".png", engine, ((gr.getWidthLogic() / 11) * (x + (x - 1))) + 125, ((gr.getHeightLogic() / 14) * (int)(y+(y-1))) + 200, 50, 50, "Lvl" + i + type);
+            //Si no está bloqueado
+            if((type == "a" && engine.getStats().getBosque()[i-1]) ||
+            (type == "b" && engine.getStats().getEmoji()[i-1]) ||
+            (type == "c" && engine.getStats().getComida()[i-1]) ||
+            (type == "d" && engine.getStats().getNavidad()[i-1]))
+                this.bLvls[i - 1] = new ButtonRead(i + ".png", engine, ((gr.getWidthLogic() / 11) * (x + (x - 1))) + 125, ((gr.getHeightLogic() / 14) * (int)(y+(y-1))) + 200, 50, 50, i, type, false);
+            else
+                this.bLvls[i - 1] = new ButtonRead(i + "b.png", engine, ((gr.getWidthLogic() / 11) * (x + (x - 1))) + 125, ((gr.getHeightLogic() / 14) * (int)(y+(y-1))) + 200, 50, 50, i, type, true);
             x++;
         }
 

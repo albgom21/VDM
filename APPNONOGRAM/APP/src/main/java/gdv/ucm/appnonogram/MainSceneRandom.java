@@ -49,12 +49,12 @@ public class MainSceneRandom implements StateA {
         this.hints.update(deltaTime);
         if(this.board.getLifes() <= 0) //Perdimos
         {
-            LoseScene scene = new LoseScene(this.engine,"",this.cols,this.fils);
+            LoseScene scene = new LoseScene(this.engine,this.cols,this.fils,0,"");
             this.engine.setCurrentScene(scene);
         }
         if(this.hints.getEnd()) {
             this.engine.getAudio().playSound("win");
-            WinScene scene = new WinScene(this.engine, this.board);
+            WinScene scene = new WinScene(this.engine, this.board,true,0,"");
             this.engine.setCurrentScene(scene);
         }
     }

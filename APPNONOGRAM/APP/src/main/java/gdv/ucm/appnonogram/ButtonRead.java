@@ -12,13 +12,15 @@ public class ButtonRead implements InterfaceA {
     private ImageA img;
     private EngineA engine;
     private GraphicsA gr;
-    private String file;
+    private String type;
+    private int lvl;
+    private boolean bloqueado;
     private int x;
     private int y;
     private int w;
     private int h;
 
-    ButtonRead(String filename, EngineA engine, int x, int y, int w, int h, String file){
+    ButtonRead(String filename, EngineA engine, int x, int y, int w, int h,int lvl, String type, boolean bloqueado){
         this.engine = engine;
         this.gr = engine.getGraphics();
         this.img = this.engine.getGraphics().newImage(filename);
@@ -26,8 +28,10 @@ public class ButtonRead implements InterfaceA {
         this.y = y;
         this.w = w;
         this.h = h;
-        this.file = file;
+        this.type = type;
+        this.lvl = lvl;
         this.audio = this.engine.getAudio();
+        this.bloqueado = bloqueado;
     }
 
     @Override
@@ -47,8 +51,10 @@ public class ButtonRead implements InterfaceA {
                 (mX >= this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2) && mX <= this.gr.scaleToReal(w) + this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2)
                         && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2) && mY <= this.gr.scaleToReal(h) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2))){ // dentro del cuadrado
             this.audio.playSound("click");
-            MainSceneRead scene = new MainSceneRead(engine, file + ".txt");
-            engine.setCurrentScene(scene);
+            if(!bloqueado){
+                MainSceneRead scene = new MainSceneRead(engine, "Lvl"+Integer.toString(lvl)+type+".txt", type, lvl);
+                engine.setCurrentScene(scene);
+            }
             return true;
         }
         return false;

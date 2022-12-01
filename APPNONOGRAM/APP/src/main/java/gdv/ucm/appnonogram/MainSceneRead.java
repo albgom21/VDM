@@ -19,9 +19,13 @@ public class MainSceneRead implements StateA {
     private ButtonCheck bCheck;
     private ButtonSurrender bSurrender;
     private String filename;
+    private String type;
+    private int lvl;
 
 
-    public MainSceneRead(EngineA engine, String filename) {
+    public MainSceneRead(EngineA engine, String filename, String type, int lvl) {
+        this.type = type;
+        this.lvl = lvl;
         this.engine = engine;
         this.filename = filename;
         GraphicsA gr = this.engine.getGraphics();
@@ -49,12 +53,20 @@ public class MainSceneRead implements StateA {
         this.hints.update(deltaTime);
         if(this.board.getLifes() <= 0) //Perdimos
         {
-            LoseScene scene = new LoseScene(this.engine,this.filename,0,0);
+            LoseScene scene = new LoseScene(this.engine,0,0, this.lvl, this.type);
             this.engine.setCurrentScene(scene);
         }
         if(this.hints.getEnd()) {
+            if(this.type == "a")
+                this.engine.getStats().setBosqueDesbloqueado(this.lvl);
+            else if(this.type == "b")
+                this.engine.getStats().setEmojiDesbloqueado(this.lvl);
+            else if(this.type == "c")
+                this.engine.getStats().setComidaDesbloqueado(this.lvl);
+            else if(this.type == "d")
+                this.engine.getStats().setNavidadDesbloqueado(this.lvl);
             this.engine.getAudio().playSound("win");
-            WinScene scene = new WinScene(this.engine, this.board);
+            WinScene scene = new WinScene(this.engine, this.board,false,this.lvl+1,this.type);
             this.engine.setCurrentScene(scene);
         }
     }
