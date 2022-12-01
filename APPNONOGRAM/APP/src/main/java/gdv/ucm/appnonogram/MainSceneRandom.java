@@ -65,7 +65,8 @@ public class MainSceneRandom implements StateA {
 
     @Override
     public void render(GraphicsA graphics) {
-        graphics.drawImage(this.coins,(graphics.getWidthLogic()/5)*4,graphics.getHeightLogic()/15, 30, 30);
+        graphics.drawText(Integer.toString(engine.getStats().getMonedas()),graphics.logicToRealX(((graphics.getWidthLogic()/5)*4)-35),graphics.logicToRealY(graphics.getHeightLogic()/11), 0x442700,null, graphics.scaleToReal(20));
+        graphics.drawImage(this.coins,(graphics.getWidthLogic()/5)*4,graphics.getHeightLogic()/15, 20, 20);
         this.board.render(graphics);
         this.renderBoard.render(graphics,engine);
         this.renderBoard.renderLifes(graphics);

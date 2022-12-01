@@ -14,6 +14,7 @@ public class StatsA {
         emoji[0] = true;
         comida[0] = true;
         navidad[0] = true;
+        monedas = 10;
     }
 
     public void setPaleta(int p){

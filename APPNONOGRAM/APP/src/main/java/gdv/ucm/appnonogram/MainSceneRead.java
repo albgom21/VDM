@@ -2,6 +2,7 @@ package gdv.ucm.appnonogram;
 
 import com.example.libenginea.EngineA;
 import com.example.libenginea.GraphicsA;
+import com.example.libenginea.ImageA;
 import com.example.libenginea.InputA;
 import com.example.libenginea.ReadA;
 import com.example.libenginea.StateA;
@@ -21,6 +22,7 @@ public class MainSceneRead implements StateA {
     private String filename;
     private String type;
     private int lvl;
+    private ImageA coins;
 
 
     public MainSceneRead(EngineA engine, String filename, String type, int lvl) {
@@ -45,6 +47,7 @@ public class MainSceneRead implements StateA {
             engine.getAudio().newSound("wrong.wav", false);
         this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (gr.getWidthLogic()/5)*4,(gr.getHeightLogic()/10)*9,200/2,75/2);
         this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (gr.getWidthLogic()/5),(gr.getHeightLogic()/10)*9,200/2,75/2);
+        this.coins = gr.newImage("moneda.png");
     }
 
     @Override
@@ -73,6 +76,8 @@ public class MainSceneRead implements StateA {
 
     @Override
     public void render(GraphicsA graphics) {
+        graphics.drawImage(this.coins,(graphics.getWidthLogic()/5)*4,graphics.getHeightLogic()/15, 20, 20);
+        graphics.drawText(Integer.toString(engine.getStats().getMonedas()),graphics.logicToRealX(((graphics.getWidthLogic()/5)*4)-35),graphics.logicToRealY(graphics.getHeightLogic()/11), 0x442700,null, graphics.scaleToReal(20));
         this.board.render(graphics);
         this.renderBoard.render(graphics, engine);
         this.renderBoard.renderLifes(graphics);

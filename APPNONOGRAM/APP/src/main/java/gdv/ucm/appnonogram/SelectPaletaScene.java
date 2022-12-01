@@ -2,6 +2,7 @@ package gdv.ucm.appnonogram;
 
 import com.example.libenginea.EngineA;
 import com.example.libenginea.GraphicsA;
+import com.example.libenginea.ImageA;
 import com.example.libenginea.InputA;
 import com.example.libenginea.StateA;
 
@@ -14,9 +15,12 @@ public class SelectPaletaScene implements StateA {
     private ButtonColorPaleta b2;
     private ButtonColorPaleta b3;
     private ButtonBackTitle bBack;
+    private EngineA engine;
+    private ImageA coins;
 
     public SelectPaletaScene(EngineA engine) {
         GraphicsA gr = engine.getGraphics();
+        this.engine = engine;
 
         if(!engine.getAudio().isLoaded("click.wav"))
             engine.getAudio().newSound("click.wav", false);
@@ -26,6 +30,7 @@ public class SelectPaletaScene implements StateA {
         this.b3 = new ButtonColorPaleta("paleta3.png",engine, gr.getWidthLogic()/2  ,(gr.getHeightLogic()/5)*5 -50,100,100,3);
 
         this.bBack = new ButtonBackTitle("back.png",engine,(gr.getWidthLogic()/5),gr.getBorderTop(),200/2,75/2);
+        this.coins = gr.newImage("moneda.png");
     }
 
     @Override
@@ -33,6 +38,8 @@ public class SelectPaletaScene implements StateA {
 
     @Override
     public void render(GraphicsA graphics) {
+        graphics.drawText(Integer.toString(engine.getStats().getMonedas()),graphics.logicToRealX(((graphics.getWidthLogic()/5)*4)-35),graphics.logicToRealY(graphics.getHeightLogic()/11), 0x442700,null, graphics.scaleToReal(20));
+        graphics.drawImage(this.coins,(graphics.getWidthLogic()/5)*4,graphics.getHeightLogic()/15, 20, 20);
         String s = "Selecciona la paleta usada en el juego";
         graphics.drawText(s,graphics.logicToRealX(graphics.getWidthLogic()/2),graphics.logicToRealY(graphics.getHeightLogic()/6), 0x442700,null, graphics.scaleToReal(20));
         this.bBack.render(graphics);
