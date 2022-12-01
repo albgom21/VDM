@@ -1,6 +1,7 @@
 package gdv.ucm.appnonogram;
 
 
+import com.example.libenginea.EngineA;
 import com.example.libenginea.GraphicsA;
 import com.example.libenginea.ImageA;
 
@@ -16,10 +17,11 @@ public class RenderBoard {
         this.fullLife = b.getEngine().getGraphics().newImage("vida.png");
         this.noLife = b.getEngine().getGraphics().newImage("vidaGastada.png");
     }
-    public void render(GraphicsA gr){
+
+    public void render(GraphicsA gr, EngineA engine){
         for (int i = 0; i < this.b.getWidth(); ++i) {
             for (int j = 0; j < this.b.getHeight(); ++j) {
-                renderCell.render(gr, this.b.getCell(i,j));
+                renderCell.render(gr, this.b.getCell(i,j), engine);
             }
         }
     }

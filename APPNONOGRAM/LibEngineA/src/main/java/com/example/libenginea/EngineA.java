@@ -6,13 +6,13 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
-
-
 public class EngineA implements Runnable {
     private SurfaceView myView;
     private SurfaceHolder holder;
     private Canvas canvas;
     private AssetManager mgr;
+
+    private StatsA stats;
 
     private Thread renderThread;
     private boolean running;
@@ -40,6 +40,7 @@ public class EngineA implements Runnable {
         this.graphics.setAssetManager(this.mgr);
         this.audio.setAssetManager(this.mgr);
         this.read = new ReadA(this.mgr);
+        this.stats = new StatsA();
     }
 
     //bucle principal
@@ -82,10 +83,14 @@ public class EngineA implements Runnable {
 
     protected void render() {
         // "Borramos" el fondo.
-//        this.getGraphics().clear(0xe7d6bd); //paleta normal
-//        this.getGraphics().clear(0xc1d8e2); //paleta 1
-//        this.getGraphics().clear(0xb06c92); //paleta 2
-        this.getGraphics().clear(0x9bbdaa); //paleta 3
+        if(this.stats.getPaleta() == 0)
+            this.getGraphics().clear(0xe7d6bd); //paleta normal
+        else if(this.stats.getPaleta() == 1)
+            this.getGraphics().clear(0xc1d8e2); //paleta 1
+        else if(this.stats.getPaleta() == 2)
+            this.getGraphics().clear(0xb06c92); //paleta 2
+        else if(this.stats.getPaleta() == 3)
+            this.getGraphics().clear(0x9bbdaa); //paleta 3
 
         // Pintamos la escena
         this.currentScene.render(this.graphics);
@@ -126,6 +131,8 @@ public class EngineA implements Runnable {
             }
         }
     }
+
+    public StatsA getStats() { return stats; }
 
     public GraphicsA getGraphics() {
         return this.graphics;

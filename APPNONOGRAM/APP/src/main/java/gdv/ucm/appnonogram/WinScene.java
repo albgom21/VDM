@@ -12,8 +12,10 @@ public class WinScene implements StateA {
     private Board b;
     private RenderBoard renderBoard;
     private ButtonBack bBack;
+    private EngineA engine;
 
     public WinScene(EngineA engine, Board b) {
+        this.engine = engine;
         GraphicsA gr = engine.getGraphics();
         this.bBack = new ButtonBack("back.png", engine,gr.getWidthLogic()/2, (gr.getHeightLogic()/6)*5,200/2,75/2);
         this.b = b;
@@ -28,7 +30,7 @@ public class WinScene implements StateA {
         String s = "¡ENHORABUENA!";
         graphics.drawText(s,graphics.logicToRealX(graphics.getWidthLogic()/2),graphics.logicToRealY(graphics.getHeightLogic()/8),
                     0x06561e, null, graphics.scaleToReal(20));
-        this.renderBoard.render(graphics);
+        this.renderBoard.render(graphics, engine);
         this.bBack.render(graphics);
     }
 

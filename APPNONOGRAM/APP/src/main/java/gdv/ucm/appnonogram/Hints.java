@@ -76,10 +76,10 @@ public class Hints implements InterfaceA {
         }
 
         Pair a = new Pair(counterBlue,counterRed);
-        if(a.getFirst()==0 && a.getSecond()==0) { // Todas las sol marcadas y sin fallos = win
-            endGame();
-            this.end = true;
-        }
+//        if(a.getFirst()==0 && a.getSecond()==0) { // Todas las sol marcadas y sin fallos = win
+//            endGame();
+//            this.end = true;
+//        }
         return a;
     }
 
@@ -87,7 +87,13 @@ public class Hints implements InterfaceA {
     public void render(GraphicsA g) {}
 
     @Override
-    public void update(Double deltaTime) {}
+    public void update(Double deltaTime) {
+        Pair a = isSol(); // Comprobar si se ha completado el nivel
+        if(a.getFirst()==0) { // Todas las sol marcadas y sin fallos = win
+            endGame();
+            this.end = true;
+        }
+    }
 
     @Override
     public boolean handleEvent(InputA.Event e) {

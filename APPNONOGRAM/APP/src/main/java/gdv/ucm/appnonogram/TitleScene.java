@@ -13,6 +13,7 @@ import java.util.Iterator;
 public class TitleScene implements StateA {
     private FontA font;
     private ButtonPlay bPlay;
+    private ButtonPaleta bPaleta;
     private ImageA logo;
 
     public TitleScene(EngineA engine) {
@@ -20,15 +21,18 @@ public class TitleScene implements StateA {
         //CARGA DE RECURSOS
         if(!engine.getAudio().isLoaded("click.wav"))
             engine.getAudio().newSound("click.wav", false);
+        if(!engine.getAudio().isLoaded("back.wav"))
+            engine.getAudio().newSound("back.wav", false);
         if(!engine.getAudio().isLoaded("ambiente.wav")){
             engine.getAudio().newSoundAmbient("ambiente.wav");
             engine.getAudio().playSound("ambiente");
         }
         this.font = gr.newFont("coolvetica.otf", 20, false);
-       gr.setFont(this.font);
+        gr.setFont(this.font);
 
         this.logo = gr.newImage("logo.png");
-        this.bPlay = new ButtonPlay("jugar.png",engine, (gr.getWidthLogic()/2),(gr.getHeightLogic()/10)*6,200,75);
+        this.bPlay = new ButtonPlay("jugar.png",engine, (gr.getWidthLogic()/2),(gr.getHeightLogic()/5)*2,200,75);
+        this.bPaleta = new ButtonPaleta("paletas.png",engine, (gr.getWidthLogic()/2),(int)((gr.getHeightLogic()/5)*3.5),200,75);
     }
 
     @Override
@@ -37,7 +41,8 @@ public class TitleScene implements StateA {
     @Override
     public void render(GraphicsA graphics) {
         this.bPlay.render(graphics);
-        graphics.drawImage(this.logo,(graphics.getWidthLogic()/2),graphics.getHeightLogic()/6, 365, 67);
+        this.bPaleta.render(graphics);
+        graphics.drawImage(this.logo,(graphics.getWidthLogic()/2),graphics.getHeightLogic()/8, 365, 67);
     }
 
     @Override
@@ -49,6 +54,7 @@ public class TitleScene implements StateA {
         while (it.hasNext()) {
             InputA.Event event = it.next();
             this.bPlay.handleEvent(event);
+            this.bPaleta.handleEvent(event);
         }
 
         input.clearEvents();

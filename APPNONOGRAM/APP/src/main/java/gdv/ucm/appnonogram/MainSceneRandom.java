@@ -46,6 +46,7 @@ public class MainSceneRandom implements StateA {
     @Override
     public void update(double deltaTime) {
         this.bCheck.update(deltaTime);
+        this.hints.update(deltaTime);
         if(this.board.getLifes() <= 0) //Perdimos
         {
             LoseScene scene = new LoseScene(this.engine,"",this.cols,this.fils);
@@ -61,7 +62,7 @@ public class MainSceneRandom implements StateA {
     @Override
     public void render(GraphicsA graphics) {
         this.board.render(graphics);
-        this.renderBoard.render(graphics);
+        this.renderBoard.render(graphics,engine);
         this.renderBoard.renderLifes(graphics);
         this.renderHints.render(graphics);
         this.bCheck.render(graphics);
