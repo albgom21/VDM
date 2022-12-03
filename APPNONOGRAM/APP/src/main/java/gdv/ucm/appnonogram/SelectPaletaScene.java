@@ -24,10 +24,12 @@ public class SelectPaletaScene implements StateA {
 
         if(!engine.getAudio().isLoaded("click.wav"))
             engine.getAudio().newSound("click.wav", false);
-        this.b0 = new ButtonColorPaleta("paletaNormal.png",engine, gr.getWidthLogic()/2  ,(gr.getHeightLogic()/5)*2 -50,100,100,0);
-        this.b1 = new ButtonColorPaleta("paleta1.png",engine, gr.getWidthLogic()/2  ,(gr.getHeightLogic()/5)*3 -50,100,100,1);
-        this.b2 = new ButtonColorPaleta("paleta2.png",engine, gr.getWidthLogic()/2  ,(gr.getHeightLogic()/5)*4 -50,100,100,2);
-        this.b3 = new ButtonColorPaleta("paleta3.png",engine, gr.getWidthLogic()/2  ,(gr.getHeightLogic()/5)*5 -50,100,100,3);
+        if(!engine.getAudio().isLoaded("error.wav"))
+            engine.getAudio().newSound("error.wav", false);
+        this.b0 = new ButtonColorPaleta("paletaNormal",engine, gr.getWidthLogic()/2  ,(gr.getHeightLogic()/5)*2 -50,100,100,0, this.engine.getStats().isPaletaUnlock(0));
+        this.b1 = new ButtonColorPaleta("paleta1",engine, gr.getWidthLogic()/2  ,(gr.getHeightLogic()/5)*3 -50,100,100,1,this.engine.getStats().isPaletaUnlock(1));
+        this.b2 = new ButtonColorPaleta("paleta2",engine, gr.getWidthLogic()/2  ,(gr.getHeightLogic()/5)*4 -50,100,100,2,this.engine.getStats().isPaletaUnlock(2));
+        this.b3 = new ButtonColorPaleta("paleta3",engine, gr.getWidthLogic()/2  ,(gr.getHeightLogic()/5)*5 -50,100,100,3,this.engine.getStats().isPaletaUnlock(3));
 
         this.bBack = new ButtonBackTitle("back.png",engine,(gr.getWidthLogic()/5),gr.getBorderTop(),200/2,75/2);
         this.coins = gr.newImage("moneda.png");

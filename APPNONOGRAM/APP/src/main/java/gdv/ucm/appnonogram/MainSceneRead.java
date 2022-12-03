@@ -43,6 +43,8 @@ public class MainSceneRead implements StateA {
             engine.getAudio().newSound("check.wav", false);
         if(!engine.getAudio().isLoaded("win.wav"))
             engine.getAudio().newSound("win.wav", false);
+        if(!engine.getAudio().isLoaded("lose.wav"))
+            engine.getAudio().newSound("lose.wav", false);
         if(!engine.getAudio().isLoaded("wrong.wav"))
             engine.getAudio().newSound("wrong.wav", false);
         this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (gr.getWidthLogic()/5)*4,(gr.getHeightLogic()/10)*9,200/2,75/2);

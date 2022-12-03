@@ -2,32 +2,35 @@ package com.example.libenginea;
 
 public class StatsA {
 
-    private int paleta = 0; // 0 1 2 3
-    private int monedas = 0; // 0 1 2 3
+    private int paleta;
+    private int monedas;
+    private boolean[] paletas = new boolean[4]; // true desbloqueado false bloqueado
     private boolean[] bosque = new boolean[20]; // true desbloqueado false bloqueado
-    private boolean[] emoji = new boolean[20];; // 1 desbloqueado 0 bloqueado
-    private boolean[] comida = new boolean[20];; // 1 desbloqueado 0 bloqueado
-    private boolean[] navidad = new boolean[20];; // 1 desbloqueado 0 bloqueado
+    private boolean[] emoji = new boolean[20]; // 1 desbloqueado 0 bloqueado
+    private boolean[] comida = new boolean[20]; // 1 desbloqueado 0 bloqueado
+    private boolean[] navidad = new boolean[20]; // 1 desbloqueado 0 bloqueado
 
     StatsA(){
+        paletas[0] = true;
         bosque[0] = true;
         emoji[0] = true;
         comida[0] = true;
         navidad[0] = true;
-        monedas = 10;
+        monedas = 1000;
     }
 
     public void setPaleta(int p){
-        paleta = p;
+        if(paletas[p])
+            paleta = p;
     }
+
+    public boolean isPaletaUnlock(int p){ return paletas[p];} //true desbloqueada false bloqueada
 
     public void addMoneda(int m){
         monedas += m;
     }
 
-    public void subMoneda(int m){
-        monedas -= m;
-    }
+    public void subMoneda(int m){ monedas -= m; }
 
     public int getPaleta() {
         return paleta;
@@ -53,6 +56,9 @@ public class StatsA {
         return navidad;
     }
 
+    public void setPaletaDesbloqueada(int i) {
+        paletas[i] = true;
+    }
     public void setBosqueDesbloqueado(int i) {
         bosque[i] = true;
     }

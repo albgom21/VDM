@@ -14,8 +14,6 @@ public class LoseScene implements StateA {
 
     public LoseScene(EngineA engine, int cols, int fils, int lvl, String type) {
         GraphicsA gr = engine.getGraphics();
-        if(!engine.getAudio().isLoaded("lose.wav"))
-            engine.getAudio().newSound("lose.wav", false);
         engine.getAudio().playSound("lose");
         this.bBack = new ButtonBack("back.png",engine,gr.getWidthLogic()/3, (gr.getHeightLogic()/6)*5,200/2,75/2);
         this.bRetry = new ButtonRetry("retry.png", engine,(gr.getWidthLogic()/3)*2, (gr.getHeightLogic()/6)*5,200/2,75/2, cols, fils, lvl,type);
