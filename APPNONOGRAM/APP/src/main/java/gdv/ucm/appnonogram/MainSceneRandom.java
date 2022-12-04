@@ -60,7 +60,7 @@ public class MainSceneRandom implements StateA {
         }
         if(this.hints.getEnd()) {
             this.engine.getAudio().playSound("win");
-            WinScene scene = new WinScene(this.engine, this.board,true,0,"");
+            WinScene scene = new WinScene(this.engine, this.board,true,0,"", (this.fils+this.cols)/2);
             this.engine.setCurrentScene(scene);
         }
     }

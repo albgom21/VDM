@@ -71,7 +71,7 @@ public class MainSceneRead implements StateA {
             else if(this.type == "d")
                 this.engine.getStats().setNavidadDesbloqueado(this.lvl);
             this.engine.getAudio().playSound("win");
-            WinScene scene = new WinScene(this.engine, this.board,false,this.lvl+1,this.type);
+            WinScene scene = new WinScene(this.engine, this.board,false,this.lvl+1,this.type,(this.board.getHeight()+this.board.getWidth())/2);
             this.engine.setCurrentScene(scene);
         }
     }
