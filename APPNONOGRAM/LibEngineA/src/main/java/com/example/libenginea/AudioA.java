@@ -39,21 +39,25 @@ public class AudioA {
 
 
     public SoundA newSoundAmbient(String file) {
-        try {
-            AssetFileDescriptor afd = mgr.openFd(file);
-            mPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-            mPlayer.prepare();
-            mPlayer.setLooping(true);
+        if(!isLoaded(file)){
+            try {
+                AssetFileDescriptor afd = mgr.openFd(file);
+                mPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                mPlayer.prepare();
+                mPlayer.setLooping(true);
 
-        } catch (IOException e) {
-            System.err.println("Couldn't load audio file");
-            e.printStackTrace();
+            } catch (IOException e) {
+                System.err.println("Couldn't load audio file");
+                e.printStackTrace();
+            }
+
+            SoundA sound = new SoundA(mPlayer.getAudioSessionId(), 1);
+            mPlayer.start();
+            sounds.put(file,sound);
+            return sound;
         }
-
-        SoundA sound = new SoundA(mPlayer.getAudioSessionId(), 1);
-        mPlayer.start();
-        sounds.put(file,sound);
-        return sound;
+        else
+            return null; //REVISAR---------------------------
     }
 
     public void playSound(String id) {

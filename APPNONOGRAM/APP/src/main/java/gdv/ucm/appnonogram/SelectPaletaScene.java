@@ -22,10 +22,8 @@ public class SelectPaletaScene implements StateA {
         GraphicsA gr = engine.getGraphics();
         this.engine = engine;
 
-        if(!engine.getAudio().isLoaded("click.wav"))
-            engine.getAudio().newSound("click.wav", false);
-        if(!engine.getAudio().isLoaded("error.wav"))
-            engine.getAudio().newSound("error.wav", false);
+        engine.getAudio().newSound("click.wav", false);
+        engine.getAudio().newSound("error.wav", false);
         this.b0 = new ButtonColorPaleta("paletaNormal",engine, gr.getWidthLogic()/2  ,(gr.getHeightLogic()/5)*2 -50,100,100,0, this.engine.getStats().isPaletaUnlock(0));
         this.b1 = new ButtonColorPaleta("paleta1",engine, gr.getWidthLogic()/2  ,(gr.getHeightLogic()/5)*3 -50,100,100,1,this.engine.getStats().isPaletaUnlock(1));
         this.b2 = new ButtonColorPaleta("paleta2",engine, gr.getWidthLogic()/2  ,(gr.getHeightLogic()/5)*4 -50,100,100,2,this.engine.getStats().isPaletaUnlock(2));

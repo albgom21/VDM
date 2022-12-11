@@ -51,7 +51,7 @@ public class InputA implements View.OnTouchListener{
         eventos.remove(i);
     }
 
-    public synchronized void addEvent(MotionEvent event){
+    public void addEvent(MotionEvent event){
         InputTouchType tipo = null;
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
             tipo = InputTouchType.PRESSED;

@@ -6,6 +6,13 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 public class EngineA implements Runnable {
     private SurfaceView myView;
     private SurfaceHolder holder;
@@ -21,14 +28,14 @@ public class EngineA implements Runnable {
     private InputA input;
     private GraphicsA graphics;
     private AudioA audio;
-
+    private String filenameStats;
     public ReadA getRead() {
         return read;
     }
 
     private ReadA read;
 
-    public EngineA(SurfaceView myView){
+    public EngineA(SurfaceView myView, StatsA statsA){
         this.myView = myView;
         this.input = new InputA();
         this.myView.setOnTouchListener((View.OnTouchListener) this.input);
@@ -40,7 +47,23 @@ public class EngineA implements Runnable {
         this.graphics.setAssetManager(this.mgr);
         this.audio.setAssetManager(this.mgr);
         this.read = new ReadA(this.mgr);
-        this.stats = new StatsA();
+        this.stats = statsA;
+        if(this.stats == null)
+            this.stats = new StatsA();
+        this.filenameStats = "stats.ser";
+        try
+        {
+            // Reading the object from a file
+            FileInputStream file = new FileInputStream(filenameStats);
+            ObjectInputStream in = new ObjectInputStream(file);
+            // Method for deserialization of object
+            stats = (StatsA)in.readObject();
+            in.close();
+            file.close();
+            System.out.println("Object has been deserialized ");
+        } catch(Exception ex) {
+            System.out.println("Exception is caught");
+        }
     }
 
     //bucle principal
@@ -113,6 +136,21 @@ public class EngineA implements Runnable {
             this.renderThread = new Thread(this);
             this.renderThread.start();
             this.audio.getmPlayer().start();
+
+            // Deserialization
+            try
+            {
+                // Reading the object from a file
+                FileInputStream file = new FileInputStream(filenameStats);
+                ObjectInputStream in = new ObjectInputStream(file);
+                // Method for deserialization of object
+                stats = (StatsA)in.readObject();
+                in.close();
+                file.close();
+                System.out.println("Object has been deserialized ");
+            } catch(Exception ex) {
+                System.out.println("Exception is caught");
+            }
         }
     }
 
@@ -120,6 +158,23 @@ public class EngineA implements Runnable {
         if (this.running) {
             this.running = false;
             this.audio.getmPlayer().pause();
+            // Serialization
+            try
+            {
+                //Saving of object in a file
+                FileOutputStream file = new FileOutputStream(filenameStats) ;
+                ObjectOutputStream out = new ObjectOutputStream(file) ;
+                // Method for serialization of object
+                out.writeObject(stats) ;
+                out.close() ;
+                file.close() ;
+            }
+            catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             while (true) {
                 try {
                     this.renderThread.join();

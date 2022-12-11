@@ -35,8 +35,7 @@ public class LvlThemeScene implements StateA {
 
         this.bBack = new ButtonBack("back.png",engine,(gr.getWidthLogic()/5),gr.getBorderTop(),200/2,75/2);
 
-        if(!engine.getAudio().isLoaded("back.wav"))
-            engine.getAudio().newSound("back.wav", false);
+        engine.getAudio().newSound("back.wav", false);
     }
 
     @Override

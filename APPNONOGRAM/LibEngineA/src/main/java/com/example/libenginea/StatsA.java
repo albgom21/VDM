@@ -1,6 +1,8 @@
 package com.example.libenginea;
 
-public class StatsA {
+import java.io.Serializable;
+
+public class StatsA implements Serializable {
 
     private int paleta;
     private int monedas;

@@ -24,8 +24,7 @@ public class SelectThemeScene implements StateA {
         this.bTheme4 = new ButtonLvlLore("navidad.png",engine,(gr.getWidthLogic()/4)*3,(int)((gr.getHeightLogic()/5)*3.5),  150,150, "d");
         this.bBack = new ButtonBack("back.png",engine,(gr.getWidthLogic()/5),gr.getBorderTop(),200/2,75/2);
 
-        if(!engine.getAudio().isLoaded("back.wav"))
-            engine.getAudio().newSound("back.wav", false);
+        engine.getAudio().newSound("back.wav", false);
     }
 
     @Override
