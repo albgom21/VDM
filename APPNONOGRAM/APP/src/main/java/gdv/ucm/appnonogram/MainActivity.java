@@ -2,6 +2,7 @@ package gdv.ucm.appnonogram;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.res.AssetManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.SurfaceView;
 import com.example.libenginea.EngineA;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Creación del motor de Android y la escena inicial
-        this.engine = new EngineA(this.renderView, statsA);
+        this.engine = new EngineA(this.renderView, statsA, this);
         TitleScene scene = new TitleScene(engine);
         engine.setCurrentScene(scene);
         engine.resume();
@@ -41,10 +42,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
+
+
         super.onRestoreInstanceState(savedInstanceState);
         statsA = (StatsA) savedInstanceState.getSerializable("STATS_KEY");
     }
 
+    @Override
     protected void onResume() {
         super.onResume();
         this.engine.resume();
@@ -52,8 +56,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            System.out.println("XXXXXXXXXXXXXXXXXXXXXX\n");
+            //Poner la res del movil-------------------------
+            this.engine.getGraphics().setLogicWidth(1920);
+            this.engine.getGraphics().setLogicHeight(1080);
+        }
         super.onPause();
         this.engine.pause();
     }
-
 }
