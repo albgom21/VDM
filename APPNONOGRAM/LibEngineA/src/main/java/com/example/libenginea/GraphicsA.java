@@ -48,11 +48,11 @@ public class GraphicsA {
         this.paint = new Paint();
         this.canvas = canvas;
 
-        this.logicWidth = 1920;
-        this.logicHeight = 1080;
+//        this.logicWidth = 1920;
+//        this.logicHeight = 1080;
 
-        //this.logicWidth = 400;
-        //this.logicHeight = 600;
+        this.logicWidth = 400;
+        this.logicHeight = 600;
 
         this.borderTop = 31;
     }
@@ -226,13 +226,13 @@ public class GraphicsA {
         {
             this.window = (int)(this.logicWidth * this.factorX);
             int a = (int) ((getHeight() - (this.logicHeight * this.factorX)) / 2);
-            this.borderHeight = 0;//a; //Bordes arriba y abajo
+            this.borderHeight = a;//a; //Bordes arriba y abajo
             this.borderWidth=0;
         }
         else {
             this.window = (int)(this.logicWidth*this.factorY);
             int a = (int) ((getWidth() - (this.logicWidth * this.factorY)) / 2);
-            this.borderWidth = 0;//a; //Bordes Laterales
+            this.borderWidth = a;//a; //Bordes Laterales
             this.borderHeight=0;
         }
     }
