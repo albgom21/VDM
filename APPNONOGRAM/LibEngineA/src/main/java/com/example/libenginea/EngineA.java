@@ -1,5 +1,6 @@
 package com.example.libenginea;
 
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
@@ -19,6 +20,7 @@ public class EngineA implements Runnable {
     private Canvas canvas;
     private AssetManager mgr;
 
+    private Context c;
     private StatsA stats;
 
     private Thread renderThread;
@@ -35,8 +37,9 @@ public class EngineA implements Runnable {
 
     private ReadA read;
 
-    public EngineA(SurfaceView myView, StatsA statsA){
+    public EngineA(SurfaceView myView, StatsA statsA, Context c){
         this.myView = myView;
+        this.c = c;
         this.input = new InputA();
         this.myView.setOnTouchListener((View.OnTouchListener) this.input);
         this.mgr = myView.getContext().getAssets();
@@ -186,6 +189,7 @@ public class EngineA implements Runnable {
             }
         }
     }
+    public Context getC() {return c; }
 
     public StatsA getStats() { return stats; }
 

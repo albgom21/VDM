@@ -20,6 +20,14 @@ public class GraphicsA {
 
     private AssetManager mgr;
 
+    public void setLogicWidth(int logicWidth) {
+        this.logicWidth = logicWidth;
+    }
+
+    public void setLogicHeight(int logicHeight) {
+        this.logicHeight = logicHeight;
+    }
+
     private int logicWidth;
     private int logicHeight;
 
@@ -40,8 +48,11 @@ public class GraphicsA {
         this.paint = new Paint();
         this.canvas = canvas;
 
-        this.logicWidth = 400;
-        this.logicHeight = 600;
+        this.logicWidth = 1920;
+        this.logicHeight = 1080;
+
+        //this.logicWidth = 400;
+        //this.logicHeight = 600;
 
         this.borderTop = 31;
     }
@@ -121,6 +132,8 @@ public class GraphicsA {
         float newW = (scaleToReal(w));
         float newH = (scaleToReal(h));
         Bitmap aux = getResizedBitmap(image.getImg(),newW ,newH);
+        float left = logicToRealX(x) - (aux.getWidth()/2);
+        float top = logicToRealY(y)- (aux.getHeight()/2);
         this.canvas.drawBitmap(aux,logicToRealX(x) - (aux.getWidth()/2),logicToRealY(y)- (aux.getHeight()/2),this.paint);
     }
 
@@ -213,13 +226,13 @@ public class GraphicsA {
         {
             this.window = (int)(this.logicWidth * this.factorX);
             int a = (int) ((getHeight() - (this.logicHeight * this.factorX)) / 2);
-            this.borderHeight = a; //Bordes arriba y abajo
+            this.borderHeight = 0;//a; //Bordes arriba y abajo
             this.borderWidth=0;
         }
         else {
             this.window = (int)(this.logicWidth*this.factorY);
             int a = (int) ((getWidth() - (this.logicWidth * this.factorY)) / 2);
-            this.borderWidth = a; //Bordes Laterales
+            this.borderWidth = 0;//a; //Bordes Laterales
             this.borderHeight=0;
         }
     }

@@ -1,5 +1,7 @@
 package gdv.ucm.appnonogram;
 
+import android.content.res.Configuration;
+
 import com.example.libenginea.EngineA;
 import com.example.libenginea.GraphicsA;
 import com.example.libenginea.ImageA;
@@ -29,6 +31,9 @@ public class WinScene implements StateA {
         this.renderBoard = new RenderBoard(this.b);
         this.engine.getStats().addMoneda(coins);
         this.coins = gr.newImage("moneda.png");
+        if(this.engine.getC().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            System.out.println("ZZZZZZZZZZZZZZZZZZZZZ\n");
+
         if(!random) //Si no es una escena random, pasamos al siguiente nivel
             this.bNext = new ButtonNext("siguiente.png",engine,gr.getWidthLogic()/2, (int)((gr.getHeightLogic()/6)*5.75), 200/2, 75/2, lvl, type);
     }
