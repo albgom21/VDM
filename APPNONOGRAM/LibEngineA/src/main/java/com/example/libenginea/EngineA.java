@@ -10,6 +10,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.rewarded.RewardedAd;
@@ -28,7 +29,7 @@ public class EngineA implements Runnable {
     private Canvas canvas;
     private AssetManager mgr;
 
-    private Context c;
+    private Context context;
     private StatsA stats;
 
     private Thread renderThread;
@@ -50,7 +51,7 @@ public class EngineA implements Runnable {
 
     public EngineA(SurfaceView myView, StatsA statsA, Context c){
         this.myView = myView;
-        this.c = c;
+        this.context = c;
         this.input = new InputA();
         this.myView.setOnTouchListener((View.OnTouchListener) this.input);
         this.mgr = myView.getContext().getAssets();
@@ -168,15 +169,16 @@ public class EngineA implements Runnable {
         }
     }
     public void loadReward(){
-        AdRequest adRequest = new AdRequest.Builder().build(); // Aquí o pasar el del main activity
-        RewardedAd.load(this, "ca-app-pub-3940256099942544/5224354917",
+       AdRequest adRequest = new AdRequest.Builder().build(); // Aquí o pasar el del main activity
+
+        RewardedAd.load(this.context, "ca-app-pub-3940256099942544/5224354917",
                 adRequest, new RewardedAdLoadCallback() {
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                         // Handle the error.
                         Log.d(TAG, loadAdError.toString());
-                        mRewardedAd = null;
-                    }
+                       mRewardedAd = null;
+                   }
 
                     @Override
                     public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
@@ -218,7 +220,7 @@ public class EngineA implements Runnable {
             }
         }
     }
-    public Context getC() {return c; }
+    public Context getContext() {return context; }
 
     public StatsA getStats() { return stats; }
 

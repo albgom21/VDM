@@ -101,6 +101,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            //Poner la res del movil-------------------------
+            this.engine.getGraphics().setLogicWidth(1920);
+            this.engine.getGraphics().setLogicHeight(1080);
+        }
         super.onSaveInstanceState(outState);
         outState.putSerializable("STATS_KEY", engine.getStats());
     }
@@ -121,11 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-            //Poner la res del movil-------------------------
-            this.engine.getGraphics().setLogicWidth(1920);
-            this.engine.getGraphics().setLogicHeight(1080);
-        }
+
         super.onPause();
         this.engine.pause();
     }

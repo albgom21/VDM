@@ -26,7 +26,7 @@ public class SelectPaletaScene implements StateA {
 
         engine.getAudio().newSound("click.wav", false);
         engine.getAudio().newSound("error.wav", false);
-        if(this.engine.getC().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+        if(this.engine.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             this.b0 = new ButtonColorPaleta("paletaNormal",engine, gr.getWidthLogic()/8 ,(gr.getHeightLogic()/2),100,100,0, this.engine.getStats().isPaletaUnlock(0));
             this.b1 = new ButtonColorPaleta("paleta1",engine, (gr.getWidthLogic()/6)*3 -100 ,(gr.getHeightLogic()/2),100,100,1,this.engine.getStats().isPaletaUnlock(1));
             this.b2 = new ButtonColorPaleta("paleta2",engine, (gr.getWidthLogic()/6)*4 -100 ,(gr.getHeightLogic()/2),100,100,2,this.engine.getStats().isPaletaUnlock(2));

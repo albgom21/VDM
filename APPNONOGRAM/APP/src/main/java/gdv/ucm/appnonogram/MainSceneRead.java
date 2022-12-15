@@ -17,6 +17,7 @@ public class MainSceneRead implements StateA {
     private Hints hints;
     private RenderBoard renderBoard;
     private RenderHints renderHints;
+    private ButtonReward bReward;
     private ButtonCheck bCheck;
     private ButtonSurrender bSurrender;
     private String filename;
@@ -37,18 +38,15 @@ public class MainSceneRead implements StateA {
         this.renderHints = new RenderHints(this.hints);
         this.renderBoard = new RenderBoard(this.board);
 
-        if(!engine.getAudio().isLoaded("cell.wav"))
-            engine.getAudio().newSound("cell.wav", false);
-        if(!engine.getAudio().isLoaded("check.wav"))
-            engine.getAudio().newSound("check.wav", false);
-        if(!engine.getAudio().isLoaded("win.wav"))
-            engine.getAudio().newSound("win.wav", false);
-        if(!engine.getAudio().isLoaded("lose.wav"))
-            engine.getAudio().newSound("lose.wav", false);
-        if(!engine.getAudio().isLoaded("wrong.wav"))
-            engine.getAudio().newSound("wrong.wav", false);
+        engine.getAudio().newSound("cell.wav", false);
+        engine.getAudio().newSound("check.wav", false);
+        engine.getAudio().newSound("win.wav", false);
+        engine.getAudio().newSound("lose.wav", false);
+        engine.getAudio().newSound("wrong.wav", false);
+
         this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (gr.getWidthLogic()/5)*4,(gr.getHeightLogic()/10)*9,200/2,75/2);
         this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (gr.getWidthLogic()/5),(gr.getHeightLogic()/10)*9,200/2,75/2);
+        this.bReward = new ButtonReward("videoVida.png", this.engine, (gr.getWidthLogic()/5),gr.getHeightLogic()/15,200/2,75/2);
         this.coins = gr.newImage("moneda.png");
     }
 
@@ -86,6 +84,7 @@ public class MainSceneRead implements StateA {
         this.renderHints.render(graphics);
         this.bCheck.render(graphics);
         this.bSurrender.render(graphics);
+        this.bReward.render(graphics);
     }
 
     @Override
@@ -100,6 +99,7 @@ public class MainSceneRead implements StateA {
                 this.engine.getAudio().playSound("cell");
             this.bCheck.handleEvent(event);
             this.bSurrender.handleEvent(event);
+            this.bReward.handleEvent(event);
         }
         input.clearEvents();
     }

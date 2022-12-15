@@ -19,6 +19,7 @@ public class MainSceneRandom implements StateA {
     private RenderHints renderHints;
     private ButtonCheck bCheck;
     private ButtonSurrender bSurrender;
+    private ButtonReward bReward;
     private int cols, fils;
     private ImageA coins;
 
@@ -45,6 +46,7 @@ public class MainSceneRandom implements StateA {
             engine.getAudio().newSound("wrong.wav", false);
         this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (gr.getWidthLogic()/5)*4,(gr.getHeightLogic()/10)*9,200/2,75/2);
         this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (gr.getWidthLogic()/5),(gr.getHeightLogic()/10)*9,200/2,75/2);
+        this.bReward = new ButtonReward("videoVida.png", this.engine, (gr.getWidthLogic()/5),gr.getHeightLogic()/15,200/2,75/2);
         this.coins = gr.newImage("moneda.png");
 
     }
@@ -75,6 +77,7 @@ public class MainSceneRandom implements StateA {
         this.renderHints.render(graphics);
         this.bCheck.render(graphics);
         this.bSurrender.render(graphics);
+        this.bReward.render(graphics);
     }
 
     @Override
@@ -89,6 +92,7 @@ public class MainSceneRandom implements StateA {
                 this.engine.getAudio().playSound("cell");
             this.bCheck.handleEvent(event);
             this.bSurrender.handleEvent(event);
+            this.bReward.handleEvent(event);
         }
         input.clearEvents();
     }
