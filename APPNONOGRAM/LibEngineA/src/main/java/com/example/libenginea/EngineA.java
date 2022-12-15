@@ -3,9 +3,17 @@ package com.example.libenginea;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -34,6 +42,9 @@ public class EngineA implements Runnable {
     public ReadA getRead() {
         return read;
     }
+
+    private RewardedAd mRewardedAd;
+    private final String TAG = "MainActivity";
 
     private ReadA read;
 
@@ -155,6 +166,24 @@ public class EngineA implements Runnable {
                 System.out.println("Exception is caught");
             }
         }
+    }
+    public void loadReward(){
+        AdRequest adRequest = new AdRequest.Builder().build(); // Aquí o pasar el del main activity
+        RewardedAd.load(this, "ca-app-pub-3940256099942544/5224354917",
+                adRequest, new RewardedAdLoadCallback() {
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error.
+                        Log.d(TAG, loadAdError.toString());
+                        mRewardedAd = null;
+                    }
+
+                    @Override
+                    public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
+                        mRewardedAd = rewardedAd;
+                        Log.d(TAG, "Ad was loaded.");
+                    }
+                });
     }
 
     public void pause() {
