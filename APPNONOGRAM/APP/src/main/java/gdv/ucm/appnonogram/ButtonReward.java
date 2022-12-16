@@ -45,13 +45,11 @@ public class ButtonReward implements InterfaceA {
                 (mX >= this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2) && mX <= this.gr.scaleToReal(w) + this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2)
                         && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2) && mY <= this.gr.scaleToReal(h) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2))){ // dentro del cuadrado
             this.audio.playSound("click");
-            this.engine.loadReward();
-            show(); //esperar a tener el anuncio cargado
+            //this.engine.loadReward();
+            this.engine.showReward(); //esperar a tener el anuncio cargado
+            this.engine.showReward(); //esperar a tener el anuncio cargado
             return true;
         }
         return false;
-    }
-    private void show(){
-
     }
 }

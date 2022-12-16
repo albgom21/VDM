@@ -41,12 +41,6 @@ public class MainActivity extends AppCompatActivity {
             statsA = (StatsA) savedInstanceState.getSerializable("STATS_KEY");
         }
 
-        // Creación del motor de Android y la escena inicial
-        this.engine = new EngineA(this.renderView, statsA, this);
-        TitleScene scene = new TitleScene(this.engine);
-        engine.setCurrentScene(scene);
-        engine.resume();
-
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -55,6 +49,14 @@ public class MainActivity extends AppCompatActivity {
         });
         AdRequest adRequest = new AdRequest.Builder().build();
         this.mAdView.loadAd(adRequest);
+
+        // Creación del motor de Android y la escena inicial
+        this.engine = new EngineA(this.renderView, statsA, this, adRequest);
+        TitleScene scene = new TitleScene(this.engine);
+        engine.setCurrentScene(scene);
+        engine.resume();
+
+
 
 
         // REWARDED

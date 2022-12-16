@@ -46,7 +46,7 @@ public class ButtonShare implements InterfaceA {
                         && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2) && mY <= this.gr.scaleToReal(h) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2))){ // dentro del cuadrado
             this.audio.playSound("click");
             // INTENT
-            // COMPARTIR
+            // SHARE
             return true;
         }
         return false;
