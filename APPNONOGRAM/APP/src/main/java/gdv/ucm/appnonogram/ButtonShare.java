@@ -1,5 +1,8 @@
 package gdv.ucm.appnonogram;
 
+import android.content.Intent;
+import android.net.Uri;
+
 import com.example.libenginea.AudioA;
 import com.example.libenginea.EngineA;
 import com.example.libenginea.GraphicsA;
@@ -16,8 +19,11 @@ public class ButtonShare implements InterfaceA {
     private int y;
     private int w;
     private int h;
+    private boolean random;
+    private int lvl;
+    private String type;
 
-    ButtonShare(String filename, EngineA engine, int x, int y, int w, int h ){
+    ButtonShare(String filename, EngineA engine, int x, int y, int w, int h, boolean random, int lvl, String type){
         this.engine = engine;
         this.gr = engine.getGraphics();
         this.img = this.engine.getGraphics().newImage(filename);
@@ -25,6 +31,9 @@ public class ButtonShare implements InterfaceA {
         this.y = y;
         this.w = w;
         this.h = h;
+        this.random = random;
+        this.lvl = lvl;
+        this.type = type;
         this.audio = this.engine.getAudio();
     }
 
@@ -46,7 +55,28 @@ public class ButtonShare implements InterfaceA {
                         && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2) && mY <= this.gr.scaleToReal(h) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2))){ // dentro del cuadrado
             this.audio.playSound("click");
             // INTENT
-            // SHARE
+            String msg;
+            if(random)
+                msg = "¡Otro nivel rápido completado en APPNONOGRAM!";
+            else{
+                String categoria = null;
+                if(type == "a")
+                    categoria = "bosque";
+                else if(type == "b")
+                    categoria = "emoji";
+                else if(type == "c")
+                    categoria = "comida";
+                else if(type == "d")
+                    categoria = "navidad";
+
+                msg = "¡Nivel " + Integer.toString(lvl) + " de la categoría " + categoria + " completado en APPNONOGRAM!";
+            }
+
+            Uri builtURI = Uri.parse("https://twitter.com/intent/tweet").buildUpon().appendQueryParameter( "text", msg).build() ; //Genera la URl
+            Intent intent = new Intent(Intent.ACTION_VIEW, builtURI);
+
+            this.engine.getContext().startActivity(intent);
+
             return true;
         }
         return false;

@@ -24,7 +24,7 @@ public class MainSceneRead implements StateA {
     private String type;
     private int lvl;
     private ImageA coins;
-
+    private ImageA bRewardLock;
 
     public MainSceneRead(EngineA engine, String filename, String type, int lvl) {
         this.type = type;
@@ -48,13 +48,18 @@ public class MainSceneRead implements StateA {
         this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (gr.getWidthLogic()/5),(gr.getHeightLogic()/10)*9,200/2,75/2);
         this.bReward = new ButtonReward("videoVida.png", this.engine, (gr.getWidthLogic()/5),gr.getHeightLogic()/15,200/2,75/2);
         this.coins = gr.newImage("moneda.png");
+        this.bRewardLock = gr.newImage("videoVidaLock.png");
     }
 
     @Override
     public void update(double deltaTime) {
         this.bCheck.update(deltaTime);
         this.hints.update(deltaTime);
-        if(this.board.getLifes() <= 0) //Perdimos
+        if(this.engine.getRewardObtain()){ //Si hemos visto el anuncio 1 vida mas
+            this.board.addLife();
+            this.engine.useRewardObtain();
+        }
+        if(this.board.getLives() <= 0) //Perdimos
         {
             LoseScene scene = new LoseScene(this.engine,0,0, this.lvl, this.type);
             this.engine.setCurrentScene(scene);
@@ -84,7 +89,10 @@ public class MainSceneRead implements StateA {
         this.renderHints.render(graphics);
         this.bCheck.render(graphics);
         this.bSurrender.render(graphics);
-        this.bReward.render(graphics);
+        if(this.board.getLives() < 3) // Si hay menos de 3 vidas se renderiza el boton
+            this.bReward.render(graphics);
+        else
+            graphics.drawImage(this.bRewardLock,(graphics.getWidthLogic()/5),graphics.getHeightLogic()/15,200/2,75/2);
     }
 
     @Override
@@ -99,7 +107,8 @@ public class MainSceneRead implements StateA {
                 this.engine.getAudio().playSound("cell");
             this.bCheck.handleEvent(event);
             this.bSurrender.handleEvent(event);
-            this.bReward.handleEvent(event);
+            if(this.board.getLives() < 3) // Si hay menos de 3 vidas puedes ver el video
+                this.bReward.handleEvent(event);
         }
         input.clearEvents();
     }

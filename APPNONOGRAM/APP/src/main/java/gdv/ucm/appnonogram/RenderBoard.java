@@ -30,7 +30,7 @@ public class RenderBoard {
     {
         for(int i = 0; i < 3; i++)
         {
-            if(i < b.getLifes()) //Renderizar vidas actuales
+            if(i < b.getLives()) //Renderizar vidas actuales
                 gr.drawImage(this.fullLife,(gr.getWidthLogic()/3)*2 - (25 + i*40),(gr.getHeightLogic()/10)*9, 35, 35);
             else //Renderizar perdidas
                 gr.drawImage(this.noLife,(gr.getWidthLogic()/3)*2 - (25 + i*40),(gr.getHeightLogic()/10)*9, 35, 35);

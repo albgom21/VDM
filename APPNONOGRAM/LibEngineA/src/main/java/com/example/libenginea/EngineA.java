@@ -56,7 +56,7 @@ public class EngineA implements Runnable, SensorEventListener {
     private RewardedAd mRewardedAd;
     private AdRequest adRequest;
     private final String TAG = "MainActivity";
-
+    private boolean rewardObtain;
     private ReadA read;
 
     public EngineA(SurfaceView myView, StatsA statsA, Activity c, AdRequest adRequest){
@@ -76,6 +76,7 @@ public class EngineA implements Runnable, SensorEventListener {
         this.adRequest = adRequest;
         if(this.stats == null)
             this.stats = new StatsA();
+        this.rewardObtain = false;
         this.filenameStats = "stats.ser";
 
         // SENSOR
@@ -215,29 +216,23 @@ public class EngineA implements Runnable, SensorEventListener {
             @Override
             public void run() {
                 // LOAD ----------------------------------------------------------------------------------
-
                 if (mRewardedAd != null) {
                     // SET_CALLBACK -----------------------------------------------------------------------------
                     mRewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                        //@Override
-                        //public void onAdClicked() {
-                            // Called when a click is recorded for an ad.
-                            // Log.d(TAG, "Ad was clicked.");
-                        //}
-
                         @Override
                         public void onAdDismissedFullScreenContent() {
                             // Called when ad is dismissed.
                             // Set the ad reference to null so you don't show the ad a second time.
                             Log.d(TAG, "Ad dismissed fullscreen content.");
-                            mRewardedAd = null;
+                            //mRewardedAd = null;
                         }
 
                         @Override
                         public void onAdFailedToShowFullScreenContent(AdError adError) {
                             // Called when ad fails to show.
+//                           preloadReward();
                             Log.e(TAG, "Ad failed to show fullscreen content.");
-                            mRewardedAd = null;
+                            //mRewardedAd = null;
                         }
 
                         @Override
@@ -248,6 +243,7 @@ public class EngineA implements Runnable, SensorEventListener {
 
                         @Override
                         public void onAdShowedFullScreenContent() {
+//                            preloadReward();
                             // Called when ad is shown.
                             Log.d(TAG, "Ad showed fullscreen content.");
                         }
@@ -258,13 +254,12 @@ public class EngineA implements Runnable, SensorEventListener {
                         @Override
                         public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
                             // Handle the reward.
-                            Log.d(TAG, "The user earned the reward.");
-                            //int rewardAmount = rewardItem.getAmount();
-                            //String rewardType = rewardItem.getType();
+//                            currentScene.
+                            rewardObtain = true;
                         }
                     });
 
-                    mRewardedAd = null;
+                    //mRewardedAd = null;
                     preloadReward();
                 } else {
                     System.out.println("The rewarded ad wasn't ready yet.");
@@ -307,6 +302,9 @@ public class EngineA implements Runnable, SensorEventListener {
         }
     }
     public Context getContext() {return context; }
+
+    public Boolean getRewardObtain() {return rewardObtain; }
+    public void useRewardObtain() { rewardObtain = false; }
 
     public StatsA getStats() { return stats; }
 

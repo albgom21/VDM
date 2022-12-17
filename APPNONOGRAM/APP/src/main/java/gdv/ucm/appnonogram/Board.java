@@ -17,13 +17,13 @@ public class Board implements InterfaceA {
    }
 
    private EngineA engine; //Preguntar si pasar engine a board -> cell (para sonidos e imagenes)
-   private int lifes;
+   private int lives;
 
    public Board(String filename, ReadA read, EngineA engine) //filename = "name.txt"
    {
       this.read = read;
       this.engine = engine;
-      this.lifes = 3;
+      this.lives = 3;
       int[][] a = this.read.newBoard(filename);
       this.width = a.length;
       this.height = a[0].length;
@@ -44,7 +44,7 @@ public class Board implements InterfaceA {
       width = w;
       height = h;
       this.engine = engine;
-      this.lifes = 3;
+      this.lives = 3;
       int cont = 0;
       // Inicialización del tablero
       board = new Cell [width][height];
@@ -73,7 +73,7 @@ public class Board implements InterfaceA {
          for (int j = 0; j < height; ++j) {
             if(board[i][j].handleEvent(e)) {
                if (board[i][j].loseLife())
-                  lifes--;
+                  lives--;
                return true;
             }
          }
@@ -84,7 +84,8 @@ public class Board implements InterfaceA {
    // Getters
    public int getWidth() { return width; }
    public int getHeight() { return height; }
-   public int getLifes() { return lifes; }
+   public int getLives() { return lives; }
+   public void addLife() { lives++; }
    public Cell getCell(int x, int y) { return board[x][y]; }
 
    @Override
