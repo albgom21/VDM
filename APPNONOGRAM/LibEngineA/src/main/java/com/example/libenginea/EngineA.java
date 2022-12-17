@@ -77,9 +77,12 @@ public class EngineA implements Runnable, SensorEventListener {
         if(this.stats == null)
             this.stats = new StatsA();
         this.filenameStats = "stats.ser";
+
+        // SENSOR
         SensorManager sensorManager=(SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
         Sensor sensor=sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+
         try
         {
             // Reading the object from a file
@@ -329,11 +332,16 @@ public class EngineA implements Runnable, SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        float i=sensorEvent.values[2];
-        if(i>2.0||i<-2.0){
-            System.out.println("Giroscopio a tope");
-            this.getStats().setPaletaDesbloqueada(2);
-            this.getStats().setPaleta(2);
+        float i = sensorEvent.values[0]; // EN EL EJE X
+        if(i>3.0){
+            int p = this.stats.getPaleta()-1;
+            if(p >= 0 && this.stats.isPaletaUnlock(p))
+                this.stats.setPaleta(p);
+        }
+        else if(i<-3.0){
+            int p = this.stats.getPaleta()+1;
+            if(p <= 3 && this.stats.isPaletaUnlock(p))
+                this.stats.setPaleta(p);
         }
     }
 

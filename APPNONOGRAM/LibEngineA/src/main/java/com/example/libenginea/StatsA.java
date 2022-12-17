@@ -16,6 +16,7 @@ public class StatsA implements Serializable {
 
     StatsA(){
         paletas[0] = true;
+        paletas[1] = true;
         bosque[0] = true;
         emoji[0] = true;
         comida[0] = true;
