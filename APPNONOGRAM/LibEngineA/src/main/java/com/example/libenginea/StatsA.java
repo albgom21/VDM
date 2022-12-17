@@ -1,5 +1,7 @@
 package com.example.libenginea;
 
+
+
 import java.io.Serializable;
 
 public class StatsA implements Serializable {
@@ -73,4 +75,5 @@ public class StatsA implements Serializable {
     public void setNavidadDesbloqueado(int i) {
         navidad[i] = true;
     }
+
 }

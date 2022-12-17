@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Canvas;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -28,7 +32,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class EngineA implements Runnable {
+public class EngineA implements Runnable, SensorEventListener {
     private SurfaceView myView;
     private SurfaceHolder holder;
     private Canvas canvas;
@@ -73,6 +77,9 @@ public class EngineA implements Runnable {
         if(this.stats == null)
             this.stats = new StatsA();
         this.filenameStats = "stats.ser";
+        SensorManager sensorManager=(SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
+        Sensor sensor=sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
         try
         {
             // Reading the object from a file
@@ -318,5 +325,20 @@ public class EngineA implements Runnable {
 
     public void setCurrentScene(StateA currentScene) {
         this.currentScene = currentScene;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        float i=sensorEvent.values[2];
+        if(i>2.0||i<-2.0){
+            System.out.println("Giroscopio a tope");
+            this.getStats().setPaletaDesbloqueada(2);
+            this.getStats().setPaleta(2);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
     }
 }
