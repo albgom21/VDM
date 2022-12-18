@@ -67,7 +67,7 @@ public class EngineA implements Runnable, SensorEventListener {
     private ReadA read;
     private IntentSystemAndroid intentSystemAndroid;
 
-    public EngineA(SurfaceView myView, StatsA statsA, Activity c, AdRequest adRequest){
+    public EngineA(SurfaceView myView, StatsA statsA, Activity c, AdRequest adRequest) {
         this.myView = myView;
         this.context = c;
         this.input = new InputA();
@@ -87,9 +87,6 @@ public class EngineA implements Runnable, SensorEventListener {
         this.rewardObtain = false;
         this.filenameStats = "stats.ser";
 
-        String monedasExtras = this.context.getIntent().getStringExtra("Monedas");
-        if(monedasExtras != null)
-            this.stats.addMoneda(Integer.parseInt(monedasExtras));
         this.intentSystemAndroid = new IntentSystemAndroid(this.context);
 
         // SENSOR
@@ -144,7 +141,6 @@ public class EngineA implements Runnable, SensorEventListener {
             this.graphics.prepareFrame();
             this.render();
             this.graphics.unlockCanvas();
-
         }
     }
 
@@ -376,7 +372,7 @@ public class EngineA implements Runnable, SensorEventListener {
             this.channel_id = "nonogram_prueba";
 
             createChannel();
-            createNotification();
+            //createNotification();
         }
 
         private void createChannel() {

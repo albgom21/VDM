@@ -6,14 +6,18 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
@@ -69,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
         engine.setCurrentScene(scene);
         engine.resume();
         createWorkRequest();
+
+        int monedasExtras = this.getIntent().getIntExtra("Monedas",0);
+        this.engine.getStats().addMoneda(monedasExtras);
     }
 
 
@@ -108,22 +115,22 @@ public class MainActivity extends AppCompatActivity {
         dataValues.put("chanel", "nonogram_prueba");
         dataValues.put("smallIcon", androidx.constraintlayout.widget.R.drawable.notification_template_icon_low_bg);
         Data inputData = new Data.Builder().putAll(dataValues).build();
-        WorkRequest uploadWorkRequest =
-                new OneTimeWorkRequest.Builder(IntentWork.class)
-                        // Additional configuration
+        //WorkRequest uploadWorkRequest =
+        //        new OneTimeWorkRequest.Builder(IntentWork.class)
+        //                // Additional configuration
+        //                .addTag("String")
+        //                .setInitialDelay(10, TimeUnit.SECONDS)
+        //                .setInputData(inputData)
+        //                .build();
+
+        PeriodicWorkRequest uploadWorkRequest =
+                new PeriodicWorkRequest.Builder(IntentWork.class,
+                        1, TimeUnit.MINUTES,
+                        5, TimeUnit.MINUTES)
+                        // Constraints
                         .addTag("String")
-                        .setInitialDelay(30, TimeUnit.SECONDS)
                         .setInputData(inputData)
                         .build();
-
-//        PeriodicWorkRequest uploadWorkRequest =
-//                new PeriodicWorkRequest.Builder(IntentWork.class,
-//                        15, TimeUnit.MINUTES,
-//                        5, TimeUnit.MINUTES)
-//                        // Constraints
-//                        .addTag("String")
-//                        .setInputData(inputData)
-//                        .build();
 
         WorkManager.getInstance(this).enqueue(uploadWorkRequest);
         //WorkManager.getInstance(this).getWorkInfosByTag("String");
@@ -142,19 +149,27 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Result doWork() {
 
-            //Intent intent = new Intent(context , MainActivity.);
-            //PendingIntent contentIntent = PendingIntent. getActivity(context, 0, intent, PendingIntent. FLAG_UPDATE_CURRENT);
-            Data data = getInputData();
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this.context, data.getString("chanel"))
-                    .setSmallIcon(data.getInt("smallIcon", androidx.constraintlayout.widget.R.drawable.notification_template_icon_low_bg))
-                    .setContentTitle( "My notification" )
-                    .setContentText( "Much longer text that cannot fit one line..." )
-                    .setStyle( new NotificationCompat.BigTextStyle()
-                            .bigText( "Much longer text that cannot fit one line..." ))
-                    .setPriority(NotificationCompat. PRIORITY_DEFAULT)
-                    //.setContentIntent(contentIntent)
-                    .setAutoCancel(true);
+            Intent notifyIntent = new Intent(this.context, this.context.getClass());
+            notifyIntent.putExtra("Monedas",10);
+            // Set the Activity to start in a new, empty task
+            notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            // Create the PendingIntent
+            PendingIntent notifyPendingIntent = PendingIntent.getActivity(
+                    this.context, 0, notifyIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+            );
 
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this.context, "nonogram_prueba") //@mipmap/ic_launcher
+                    .setSmallIcon(com.example.libenginea.R.drawable.ic_stat_name)
+                    .setColor(Color.RED)
+                    .setContentTitle( "Entra ahora para conseguir 10 monedas gratis" )
+                    .setContentText( "¡Llevas tiempo sin jugar, entra ahora!" )
+                    .setStyle( new NotificationCompat.BigTextStyle()
+                            .bigText( "¡Llevas tiempo sin jugar, entra ahora!" ))
+                    .setPriority(NotificationCompat. PRIORITY_DEFAULT)
+                    .setContentIntent(notifyPendingIntent)
+                    .setAutoCancel(true);
 
             NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
             managerCompat.notify(1, builder.build());
