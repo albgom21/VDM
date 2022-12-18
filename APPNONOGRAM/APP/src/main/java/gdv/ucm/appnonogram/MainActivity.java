@@ -12,12 +12,15 @@ import androidx.work.WorkRequest;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
@@ -34,16 +37,16 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
-import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     private EngineA engine;          // Motor de Android
-    private StatsA statsA;          // Motor de Android
+    private StatsA statsA;           // Motor de Android
     private SurfaceView renderView;  // Canvas
     private AssetManager mgr;        // Manager recursos
     private AdView mAdView;
 
+    private NotificationManager notificationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,12 +75,13 @@ public class MainActivity extends AppCompatActivity {
         TitleScene scene = new TitleScene(this.engine);
         engine.setCurrentScene(scene);
         engine.resume();
+
+        createChannel();
         createWorkRequest();
 
         int monedasExtras = this.getIntent().getIntExtra("Monedas",0);
         this.engine.getStats().addMoneda(monedasExtras);
     }
-
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -110,37 +114,35 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         this.engine.pause();
     }
-    private void createWorkRequest(){
-        HashMap<String, Object> dataValues = new HashMap<>();
-        dataValues.put("chanel", "nonogram_prueba");
-        dataValues.put("smallIcon", androidx.constraintlayout.widget.R.drawable.notification_template_icon_low_bg);
-        Data inputData = new Data.Builder().putAll(dataValues).build();
-        //WorkRequest uploadWorkRequest =
-        //        new OneTimeWorkRequest.Builder(IntentWork.class)
-        //                // Additional configuration
-        //                .addTag("String")
-        //                .setInitialDelay(10, TimeUnit.SECONDS)
-        //                .setInputData(inputData)
-        //                .build();
 
-        PeriodicWorkRequest uploadWorkRequest =
-                new PeriodicWorkRequest.Builder(IntentWork.class,
-                        1, TimeUnit.MINUTES,
-                        5, TimeUnit.MINUTES)
-                        // Constraints
-                        .addTag("String")
-                        .setInputData(inputData)
-                        .build();
+    private void createChannel() {
 
-        WorkManager.getInstance(this).enqueue(uploadWorkRequest);
-        //WorkManager.getInstance(this).getWorkInfosByTag("String");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("0" , "Pruebas", NotificationManager.IMPORTANCE_HIGH) ;
+            notificationManager = this.getSystemService(NotificationManager. class);
+            notificationManager.createNotificationChannel(channel) ;
+        }
     }
 
-    public class IntentWork extends Worker{
+    private void createWorkRequest(){
+        WorkRequest uploadWorkRequest =
+                new OneTimeWorkRequest.Builder(NotificationWorker.class)
+                        .setInitialDelay(15, TimeUnit.SECONDS)
+                        .build();
+
+//        PeriodicWorkRequest uploadWorkRequest =
+//                new PeriodicWorkRequest.Builder(NotificationWorker.class,
+//                        15, TimeUnit.MINUTES)
+//                        .build();
+
+        WorkManager.getInstance(this).enqueue(uploadWorkRequest);
+    }
+
+    public class NotificationWorker extends Worker{
 
         Context context;
 
-        public IntentWork(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+        public NotificationWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
             super(context, workerParams);
             this.context = context;
         }
@@ -160,19 +162,19 @@ public class MainActivity extends AppCompatActivity {
                     PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
             );
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this.context, "nonogram_prueba") //@mipmap/ic_launcher
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this.context, "0")
                     .setSmallIcon(com.example.libenginea.R.drawable.ic_stat_name)
                     .setColor(Color.RED)
                     .setContentTitle( "Entra ahora para conseguir 10 monedas gratis" )
                     .setContentText( "¡Llevas tiempo sin jugar, entra ahora!" )
                     .setStyle( new NotificationCompat.BigTextStyle()
                             .bigText( "¡Llevas tiempo sin jugar, entra ahora!" ))
-                    .setPriority(NotificationCompat. PRIORITY_DEFAULT)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setContentIntent(notifyPendingIntent)
                     .setAutoCancel(true);
-
-            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
-            managerCompat.notify(1, builder.build());
+            notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            // Enviar la notificación
+            notificationManager.notify(1, builder.build());
 
             return Result.success();
         }

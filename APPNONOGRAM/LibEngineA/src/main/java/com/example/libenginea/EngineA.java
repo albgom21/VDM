@@ -65,7 +65,7 @@ public class EngineA implements Runnable, SensorEventListener {
     private final String TAG = "MainActivity";
     private boolean rewardObtain;
     private ReadA read;
-    private IntentSystemAndroid intentSystemAndroid;
+//    private IntentSystemAndroid intentSystemAndroid;
 
     public EngineA(SurfaceView myView, StatsA statsA, Activity c, AdRequest adRequest) {
         this.myView = myView;
@@ -87,7 +87,7 @@ public class EngineA implements Runnable, SensorEventListener {
         this.rewardObtain = false;
         this.filenameStats = "stats.ser";
 
-        this.intentSystemAndroid = new IntentSystemAndroid(this.context);
+//        this.intentSystemAndroid = new IntentSystemAndroid(this.context);
 
         // SENSOR
         SensorManager sensorManager=(SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
@@ -366,28 +366,13 @@ public class EngineA implements Runnable, SensorEventListener {
         private String channel_id;
 
         public IntentSystemAndroid(Context cont) {
-            this.context = cont;
-            this.channel_name = "Pruebas";
-            this.channel_description = "Esto es un canal de Prueba";
-            this.channel_id = "nonogram_prueba";
 
-            createChannel();
+
+//            createChannel();
             //createNotification();
         }
 
-        private void createChannel() {
-            // Create the NotificationChannel, but only on API 26+ because
-            // the NotificationChannel class is new and not in the support library
-            if (Build.VERSION. SDK_INT >= Build.VERSION_CODES. O) {
-                int importance = NotificationManager. IMPORTANCE_DEFAULT;
-                NotificationChannel channel = new NotificationChannel(this.channel_id , this.channel_name, importance) ;
-                channel.setDescription(this.channel_description) ;
-                // Register the channel with the system; you can't change the importance
-                // or other notification behaviors after this
-                NotificationManager notificationManager = this.context.getSystemService(NotificationManager. class);
-                notificationManager.createNotificationChannel(channel) ;
-            }
-        }
+
 
         public void createNotification() {
             Intent notifyIntent = new Intent(this.context, this.context.getClass());
