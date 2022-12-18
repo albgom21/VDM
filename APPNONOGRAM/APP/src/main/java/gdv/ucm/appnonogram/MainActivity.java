@@ -2,6 +2,16 @@ package gdv.ucm.appnonogram;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
+import androidx.work.Worker;
+import androidx.work.WorkerParameters;
+
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -19,6 +29,9 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     private EngineA engine;          // Motor de Android
@@ -55,49 +68,7 @@ public class MainActivity extends AppCompatActivity {
         TitleScene scene = new TitleScene(this.engine);
         engine.setCurrentScene(scene);
         engine.resume();
-
-
-
-
-        // REWARDED
-        //AdRequest adRequestReward = new AdRequest.Builder().build();
-
-
-//        mRewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-//            @Override
-//            public void onAdClicked() {
-//                // Called when a click is recorded for an ad.
-//                Log.d(TAG, "Ad was clicked.");
-//            }
-//
-//            @Override
-//            public void onAdDismissedFullScreenContent() {
-//                // Called when ad is dismissed.
-//                // Set the ad reference to null so you don't show the ad a second time.
-//                Log.d(TAG, "Ad dismissed fullscreen content.");
-//                mRewardedAd = null;
-//            }
-//
-//            @Override
-//            public void onAdFailedToShowFullScreenContent(AdError adError) {
-//                // Called when ad fails to show.
-//                Log.e(TAG, "Ad failed to show fullscreen content.");
-//                mRewardedAd = null;
-//            }
-//
-//            @Override
-//            public void onAdImpression() {
-//                // Called when an impression is recorded for an ad.
-//                Log.d(TAG, "Ad recorded an impression.");
-//            }
-//
-//            @Override
-//            public void onAdShowedFullScreenContent() {
-//                // Called when ad is shown.
-//                Log.d(TAG, "Ad showed fullscreen content.");
-//            }
-//        });
-
+        createWorkRequest();
     }
 
 
@@ -105,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             //Poner la res del movil-------------------------
-            this.engine.getGraphics().setLogicWidth(1920);
-            this.engine.getGraphics().setLogicHeight(1080);
+//            this.engine.getGraphics().setLogicWidth(1920);
+//            this.engine.getGraphics().setLogicHeight(1080);
         }
         super.onSaveInstanceState(outState);
         outState.putSerializable("STATS_KEY", engine.getStats());
@@ -131,5 +102,64 @@ public class MainActivity extends AppCompatActivity {
 
         super.onPause();
         this.engine.pause();
+    }
+    private void createWorkRequest(){
+        HashMap<String, Object> dataValues = new HashMap<>();
+        dataValues.put("chanel", "nonogram_prueba");
+        dataValues.put("smallIcon", androidx.constraintlayout.widget.R.drawable.notification_template_icon_low_bg);
+        Data inputData = new Data.Builder().putAll(dataValues).build();
+        WorkRequest uploadWorkRequest =
+                new OneTimeWorkRequest.Builder(IntentWork.class)
+                        // Additional configuration
+                        .addTag("String")
+                        .setInitialDelay(30, TimeUnit.SECONDS)
+                        .setInputData(inputData)
+                        .build();
+
+//        PeriodicWorkRequest uploadWorkRequest =
+//                new PeriodicWorkRequest.Builder(IntentWork.class,
+//                        15, TimeUnit.MINUTES,
+//                        5, TimeUnit.MINUTES)
+//                        // Constraints
+//                        .addTag("String")
+//                        .setInputData(inputData)
+//                        .build();
+
+        WorkManager.getInstance(this).enqueue(uploadWorkRequest);
+        //WorkManager.getInstance(this).getWorkInfosByTag("String");
+    }
+
+    public class IntentWork extends Worker{
+
+        Context context;
+
+        public IntentWork(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+            super(context, workerParams);
+            this.context = context;
+        }
+
+        @NonNull
+        @Override
+        public Result doWork() {
+
+            //Intent intent = new Intent(context , MainActivity.);
+            //PendingIntent contentIntent = PendingIntent. getActivity(context, 0, intent, PendingIntent. FLAG_UPDATE_CURRENT);
+            Data data = getInputData();
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this.context, data.getString("chanel"))
+                    .setSmallIcon(data.getInt("smallIcon", androidx.constraintlayout.widget.R.drawable.notification_template_icon_low_bg))
+                    .setContentTitle( "My notification" )
+                    .setContentText( "Much longer text that cannot fit one line..." )
+                    .setStyle( new NotificationCompat.BigTextStyle()
+                            .bigText( "Much longer text that cannot fit one line..." ))
+                    .setPriority(NotificationCompat. PRIORITY_DEFAULT)
+                    //.setContentIntent(contentIntent)
+                    .setAutoCancel(true);
+
+
+            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
+            managerCompat.notify(1, builder.build());
+
+            return Result.success();
+        }
     }
 }
