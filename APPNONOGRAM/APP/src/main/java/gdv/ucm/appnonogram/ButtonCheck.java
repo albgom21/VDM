@@ -39,6 +39,12 @@ public class ButtonCheck implements InterfaceA {
         this.audio = this.engine.getAudio();
     }
 
+    public void setPos(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
     @Override
     public void render(GraphicsA g) {
         g.drawImage(this.img,x,y,w,h);

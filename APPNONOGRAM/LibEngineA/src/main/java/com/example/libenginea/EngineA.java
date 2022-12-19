@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -130,6 +131,16 @@ public class EngineA implements Runnable, SensorEventListener {
 
     protected void update(double deltaTime) {
         this.currentScene.update(deltaTime);
+
+        if(this.context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            this.graphics.setLogicWidth(600);
+            this.graphics.setLogicHeight(400);
+        }
+        else
+        {
+            this.graphics.setLogicWidth(400);
+            this.graphics.setLogicHeight(600);
+        }
     }
 
     protected void render() {

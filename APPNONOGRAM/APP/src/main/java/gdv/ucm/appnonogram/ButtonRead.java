@@ -34,6 +34,12 @@ public class ButtonRead implements InterfaceA {
         this.bloqueado = bloqueado;
     }
 
+    public void setPos(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
     @Override
     public void render(GraphicsA g) {
         g.drawImage(this.img,x,y,w,h);

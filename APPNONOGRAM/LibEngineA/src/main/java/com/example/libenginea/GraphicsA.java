@@ -43,6 +43,10 @@ public class GraphicsA {
     private float factorY;
 
 
+    public float getFactorScale() {
+        return factorScale;
+    }
+
     GraphicsA(SurfaceView myView, Canvas canvas){
         this.myView = myView;
         this.paint = new Paint();
@@ -134,7 +138,7 @@ public class GraphicsA {
         Bitmap aux = getResizedBitmap(image.getImg(),newW ,newH);
         float left = logicToRealX(x) - (aux.getWidth()/2);
         float top = logicToRealY(y)- (aux.getHeight()/2);
-        this.canvas.drawBitmap(aux,logicToRealX(x) - (aux.getWidth()/2),logicToRealY(y)- (aux.getHeight()/2),this.paint);
+        this.canvas.drawBitmap(aux,left,top,this.paint);
     }
 
     public void drawImage(ImageA image, int x, int y) {

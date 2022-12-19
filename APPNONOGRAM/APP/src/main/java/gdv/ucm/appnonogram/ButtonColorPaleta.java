@@ -43,6 +43,12 @@ public class ButtonColorPaleta implements InterfaceA {
             this.img = this.engine.getGraphics().newImage(this.filenameLock);
     }
 
+    public void setPos(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
     @Override
     public void render(GraphicsA g) {
         g.drawImage(this.img,x,y,w,h);

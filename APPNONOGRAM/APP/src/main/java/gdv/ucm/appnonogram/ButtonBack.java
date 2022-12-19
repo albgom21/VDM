@@ -16,6 +16,13 @@ public class ButtonBack implements InterfaceA {
     private int y;
     private int w;
     private int h;
+
+    public void setPos(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
     private AudioA audio;
 
     ButtonBack(String filename, EngineA engine, int x, int y, int w, int h){
