@@ -56,6 +56,7 @@ public class EngineA implements Runnable, SensorEventListener {
     private GraphicsA graphics;
     private AudioA audio;
     private String filenameStats;
+
     public ReadA getRead() {
         return read;
     }
@@ -67,7 +68,7 @@ public class EngineA implements Runnable, SensorEventListener {
     private ReadA read;
 //    private IntentSystemAndroid intentSystemAndroid;
 
-    public EngineA(SurfaceView myView, StatsA statsA, Activity c, AdRequest adRequest) {
+    public EngineA(SurfaceView myView, StatsA statsA, Activity c, AdRequest adRequest, String filenameStats) {
         this.myView = myView;
         this.context = c;
         this.input = new InputA();
@@ -82,31 +83,14 @@ public class EngineA implements Runnable, SensorEventListener {
         this.read = new ReadA(this.mgr);
         this.stats = statsA;
         this.adRequest = adRequest;
-        if(this.stats == null)
-            this.stats = new StatsA();
         this.rewardObtain = false;
-        this.filenameStats = "stats.ser";
-
-//        this.intentSystemAndroid = new IntentSystemAndroid(this.context);
+        this.filenameStats = filenameStats;
 
         // SENSOR
         SensorManager sensorManager=(SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
         Sensor sensor=sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 
-        try
-        {
-            // Reading the object from a file
-            FileInputStream file = new FileInputStream(filenameStats);
-            ObjectInputStream in = new ObjectInputStream(file);
-            // Method for deserialization of object
-            stats = (StatsA)in.readObject();
-            in.close();
-            file.close();
-            System.out.println("Object has been deserialized ");
-        } catch(Exception ex) {
-            System.out.println("Exception is caught");
-        }
         preloadReward();
     }
 
@@ -172,6 +156,24 @@ public class EngineA implements Runnable, SensorEventListener {
 
     //Métodos sincronización (parar y reiniciar aplicación)
     public void resume() {
+        try {
+            // Creamos un FileInputStream para leer desde el archivo en el almacenamiento interno de la aplicación
+            FileInputStream fis = this.context.openFileInput(filenameStats);
+
+            // Creamos un ObjectInputStream a partir del FileInputStream
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            // Leemos el objeto serializado del archivo y lo asignamos a una variable de tipo Persona
+            this.stats = (StatsA) ois.readObject();
+
+            // Cerramos los streams
+            ois.close();
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         if (!this.running) {
             // Solo hacemos algo si no nos estábamos ejecutando ya
             // (programación defensiva)
@@ -180,24 +182,43 @@ public class EngineA implements Runnable, SensorEventListener {
             this.renderThread = new Thread(this);
             this.renderThread.start();
             this.audio.getmPlayer().start();
-
-            // Deserialization
-            try
-            {
-                // Reading the object from a file
-                FileInputStream file = new FileInputStream(filenameStats);
-                ObjectInputStream in = new ObjectInputStream(file);
-                // Method for deserialization of object
-                stats = (StatsA)in.readObject();
-                in.close();
-                file.close();
-                System.out.println("Object has been deserialized ");
-            } catch(Exception ex) {
-                System.out.println("Exception is caught");
-            }
         }
     }
 
+    public void pause() {
+        // Serialization
+        try {
+            // Creamos un FileOutputStream para escribir en un archivo en el almacenamiento interno de la aplicación
+            FileOutputStream fos = this.context.openFileOutput(filenameStats, Context.MODE_PRIVATE);
+
+            // Creamos un ObjectOutputStream a partir del FileOutputStream
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            // Serializamos el objeto persona y lo escribimos en el archivo
+            oos.writeObject(this.stats);
+
+            // Cerramos los streams
+            oos.close();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (this.running) {
+            this.running = false;
+            this.audio.getmPlayer().pause();
+
+            while (true) {
+                try {
+                    this.renderThread.join();
+                    this.renderThread = null;
+                    break;
+                } catch (InterruptedException ie) {
+                    // Esto no debería ocurrir nunca...
+                }
+            }
+        }
+    }
     public void preloadReward()
     {
         // LOAD ----------------------------------------------------------------------------------
@@ -278,41 +299,10 @@ public class EngineA implements Runnable, SensorEventListener {
         });
     }
 
-    public void pause() {
-        if (this.running) {
-            this.running = false;
-            this.audio.getmPlayer().pause();
-            // Serialization
-            try
-            {
-                //Saving of object in a file
-                FileOutputStream file = new FileOutputStream(filenameStats) ;
-                ObjectOutputStream out = new ObjectOutputStream(file) ;
-                // Method for serialization of object
-                out.writeObject(stats) ;
-                out.close() ;
-                file.close() ;
-            }
-            catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            while (true) {
-                try {
-                    this.renderThread.join();
-                    this.renderThread = null;
-                    break;
-                } catch (InterruptedException ie) {
-                    // Esto no debería ocurrir nunca...
-                }
-            }
-        }
-    }
     public Context getContext() {return context; }
 
     public Boolean getRewardObtain() {return rewardObtain; }
+
     public void useRewardObtain() { rewardObtain = false; }
 
     public StatsA getStats() { return stats; }

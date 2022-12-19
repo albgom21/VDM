@@ -37,6 +37,12 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private SurfaceView renderView;  // Canvas
     private AssetManager mgr;        // Manager recursos
     private AdView mAdView;
-
+    private String filenameStats;
     private NotificationManager notificationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +62,27 @@ public class MainActivity extends AppCompatActivity {
 
         this.mAdView = findViewById(R.id.adView);
         this.renderView = findViewById(R.id.surfaceView);
+        this.statsA = new StatsA();
+        this.filenameStats = "stats.ser";
+        if (savedInstanceState != null)
+         statsA = (StatsA) savedInstanceState.getSerializable("STATS_KEY");
+        else{
+            try {
+                // Creamos un FileInputStream para leer desde el archivo en el almacenamiento interno de la aplicación
+                FileInputStream fis = openFileInput(filenameStats);
+                // Creamos un ObjectInputStream a partir del FileInputStream
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                // Leemos el objeto serializado del archivo y lo asignamos a una variable de tipo Persona
+                this.statsA = (StatsA) ois.readObject();
 
-        if (savedInstanceState != null) {
-            statsA = (StatsA) savedInstanceState.getSerializable("STATS_KEY");
+                // Cerramos los streams
+                ois.close();
+                fis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -71,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         this.mAdView.loadAd(adRequest);
 
         // Creación del motor de Android y la escena inicial
-        this.engine = new EngineA(this.renderView, statsA, this, adRequest);
+        this.engine = new EngineA(this.renderView, statsA, this, adRequest, this.filenameStats);
         TitleScene scene = new TitleScene(this.engine);
         engine.setCurrentScene(scene);
         engine.resume();
@@ -85,21 +109,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-            //Poner la res del movil-------------------------
-//            this.engine.getGraphics().setLogicWidth(1920);
-//            this.engine.getGraphics().setLogicHeight(1080);
-        }
         super.onSaveInstanceState(outState);
         outState.putSerializable("STATS_KEY", engine.getStats());
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-
-
         super.onRestoreInstanceState(savedInstanceState);
-        statsA = (StatsA) savedInstanceState.getSerializable("STATS_KEY");
+        if (savedInstanceState != null)
+            this.statsA = (StatsA) savedInstanceState.getSerializable("STATS_KEY");
     }
 
     @Override
@@ -110,11 +128,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-
         super.onPause();
         this.engine.pause();
     }
 
+//    NOTIFICACIONES-------------------------------------------------------------------------------------
     private void createChannel() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

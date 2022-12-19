@@ -14,7 +14,7 @@ public class StatsA implements Serializable {
     private boolean[] comida = new boolean[20]; // 1 desbloqueado 0 bloqueado
     private boolean[] navidad = new boolean[20]; // 1 desbloqueado 0 bloqueado
 
-    StatsA(){
+    public StatsA(){
         paletas[0] = true;
         paletas[1] = true;
         bosque[0] = true;
