@@ -1,5 +1,7 @@
 package gdv.ucm.appnonogram;
 
+import android.content.res.Configuration;
+
 import com.example.libenginea.EngineA;
 import com.example.libenginea.GraphicsA;
 import com.example.libenginea.InputA;
@@ -12,8 +14,12 @@ public class LvlThemeScene implements StateA {
     private ButtonRead [] bLvls;
     private ButtonBack bBack;
 
+    private EngineA engine;
+    private GraphicsA gr;
+
     public LvlThemeScene(EngineA engine, String type) {
-        GraphicsA gr = engine.getGraphics();
+        this.engine = engine;
+        this.gr = engine.getGraphics();
         this.bLvls = new ButtonRead[20];
         int y = 0;
         int x = 0;
@@ -39,7 +45,37 @@ public class LvlThemeScene implements StateA {
     }
 
     @Override
-    public void update(double deltaTime) {}
+    public void update(double deltaTime) {
+        if(this.engine.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            this.bBack.setPos(0,this.gr.getBorderTop());
+            int y = 0;
+            int x = 0;
+            for(int i = 1; i <= 20; i++)
+            {
+                if(x>=5) {
+                    y++;
+                    x = 0;
+                }
+                this.bLvls[i-1].setPos(((gr.getWidthLogic() / 11) * (x + (x - 1))) + 125, ((gr.getHeightLogic() / 14) * (int)(y+(y-1))) + 150);
+                x++;
+            }
+        }
+        else
+        {
+            this.bBack.setPos((gr.getWidthLogic()/5),gr.getBorderTop());
+            int y = 0;
+            int x = 0;
+            for(int i = 1; i <= 20; i++)
+            {
+                if(x>=4) {
+                    y++;
+                    x = 0;
+                }
+                this.bLvls[i-1].setPos(((gr.getWidthLogic() / 11) * (x + (x - 1))) + 125, ((gr.getHeightLogic() / 14) * (int)(y+(y-1))) + 200);
+                x++;
+            }
+        }
+    }
 
     @Override
     public void render(GraphicsA graphics) {

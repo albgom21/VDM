@@ -1,5 +1,7 @@
 package gdv.ucm.appnonogram;
 
+import android.content.res.Configuration;
+
 import com.example.libenginea.EngineA;
 import com.example.libenginea.GraphicsA;
 import com.example.libenginea.InputA;
@@ -15,8 +17,12 @@ public class SelectThemeScene implements StateA {
     private ButtonLvlLore bTheme4;
     private ButtonBack bBack;
 
+    private EngineA engine;
+    private GraphicsA gr;
+
     public SelectThemeScene(EngineA engine) {
-        GraphicsA gr = engine.getGraphics();
+        this.engine = engine;
+        this.gr = engine.getGraphics();
 
         this.bTheme1 = new ButtonLvlLore("bosque.png",engine, gr.getWidthLogic()/4  ,(gr.getHeightLogic()/5)*2,150,150, "a");
         this.bTheme2 = new ButtonLvlLore("emoji.png",engine,(gr.getWidthLogic()/4)*3,(gr.getHeightLogic()/5)*2,  150,150, "b");
@@ -28,7 +34,33 @@ public class SelectThemeScene implements StateA {
     }
 
     @Override
-    public void update(double deltaTime) {}
+    public void update(double deltaTime) {
+        if(this.engine.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            this.bBack.setPos(0,this.gr.getBorderTop());
+            this.bTheme1.setScale(100,100);
+            this.bTheme2.setScale(100,100);
+            this.bTheme3.setScale(100,100);
+            this.bTheme4.setScale(100,100);
+
+            this.bTheme1.setPos(gr.getWidthLogic()/3  ,(gr.getHeightLogic()/5)*2);
+            this.bTheme2.setPos((gr.getWidthLogic()/3)*2,(gr.getHeightLogic()/5)*2);
+            this.bTheme3.setPos(gr.getWidthLogic()/3  ,(int)((gr.getHeightLogic()/5)*3.5));
+            this.bTheme4.setPos((gr.getWidthLogic()/3)*2,(int)((gr.getHeightLogic()/5)*3.5));
+        }
+        else
+        {
+            this.bBack.setPos((gr.getWidthLogic()/5),this.gr.getBorderTop());
+            this.bTheme1.setScale(150,150);
+            this.bTheme2.setScale(150,150);
+            this.bTheme3.setScale(150,150);
+            this.bTheme4.setScale(150,150);
+
+            this.bTheme1.setPos(gr.getWidthLogic()/4  ,(gr.getHeightLogic()/5)*2);
+            this.bTheme2.setPos((gr.getWidthLogic()/4)*3,(gr.getHeightLogic()/5)*2);
+            this.bTheme3.setPos(gr.getWidthLogic()/4  ,(int)((gr.getHeightLogic()/5)*3.5));
+            this.bTheme4.setPos((gr.getWidthLogic()/4)*3,(int)((gr.getHeightLogic()/5)*3.5));
+        }
+    }
 
     @Override
     public void render(GraphicsA graphics) {

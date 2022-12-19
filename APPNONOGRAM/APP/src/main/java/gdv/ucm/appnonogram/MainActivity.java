@@ -131,9 +131,8 @@ public class MainActivity extends AppCompatActivity {
 
         PeriodicWorkRequest uploadWorkRequest =
                 new PeriodicWorkRequest.Builder(NotificationWorker.class,
-                        15, TimeUnit.MINUTES)
-//                        5, TimeUnit.MINUTES)
-//                        .setInitialDelay(1, TimeUnit.MINUTES)
+                        15, TimeUnit.MINUTES,
+                        5, TimeUnit.MINUTES)
                         .build();
 
         WorkManager.getInstance(this).enqueue(uploadWorkRequest);

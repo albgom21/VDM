@@ -1,5 +1,7 @@
 package gdv.ucm.appnonogram;
 
+import android.content.res.Configuration;
+
 import com.example.libenginea.EngineA;
 import com.example.libenginea.GraphicsA;
 import com.example.libenginea.InputA;
@@ -13,8 +15,12 @@ public class SelectGamemodeScene implements StateA {
     private ButtonLore bLore;
     private ButtonBackTitle bBack;
 
+    private EngineA engine;
+    private GraphicsA gr;
+
     public SelectGamemodeScene(EngineA engine) {
-        GraphicsA gr = engine.getGraphics();
+        this.engine = engine;
+        this.gr = engine.getGraphics();
 
         this.bFast = new ButtonFast("rapido.png",engine, gr.getWidthLogic()/2  ,(gr.getHeightLogic()/5)*2,200,75);
         this.bLore = new ButtonLore("historia.png",engine,gr.getWidthLogic()/2,(int)((gr.getHeightLogic()/5)*3.5),  200,75);
@@ -24,7 +30,20 @@ public class SelectGamemodeScene implements StateA {
     }
 
     @Override
-    public void update(double deltaTime) {}
+    public void update(double deltaTime) {
+        if(this.engine.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+        {
+            this.bFast.setPos(this.gr.getWidthLogic()/2  ,(this.gr.getHeightLogic()/5)*2);
+            this.bLore.setPos(this.gr.getWidthLogic()/2,(int)((this.gr.getHeightLogic()/5)*3.5));
+            this.bBack.setPos(0,this.gr.getBorderTop());
+        }
+        else
+        {
+            this.bFast.setPos(this.gr.getWidthLogic()/2  ,(this.gr.getHeightLogic()/5)*2);
+            this.bLore.setPos(this.gr.getWidthLogic()/2,(int)((this.gr.getHeightLogic()/5)*3.5));
+            this.bBack.setPos((this.gr.getWidthLogic()/5),this.gr.getBorderTop());
+        }
+    }
 
     @Override
     public void render(GraphicsA graphics) {

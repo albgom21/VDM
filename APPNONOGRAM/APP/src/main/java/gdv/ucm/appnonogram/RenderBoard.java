@@ -1,6 +1,8 @@
 package gdv.ucm.appnonogram;
 
 
+import android.content.res.Configuration;
+
 import com.example.libenginea.EngineA;
 import com.example.libenginea.GraphicsA;
 import com.example.libenginea.ImageA;
@@ -26,14 +28,24 @@ public class RenderBoard {
         }
     }
 
-    public void renderLifes(GraphicsA gr) //Preguntar carga de recursos (se ve raro el codigo)
+    public void renderLifes(GraphicsA gr, EngineA engine) //Preguntar carga de recursos (se ve raro el codigo)
     {
         for(int i = 0; i < 3; i++)
         {
             if(i < b.getLives()) //Renderizar vidas actuales
-                gr.drawImage(this.fullLife,(gr.getWidthLogic()/3)*2 - (25 + i*40),(gr.getHeightLogic()/10)*9, 35, 35);
+            {
+                if(engine.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+                    gr.drawImage(this.fullLife, (gr.getWidthLogic() / 3) * 2 - (65 + i * 40), (gr.getHeightLogic() / 10) * 9, 35, 35);
+                else
+                    gr.drawImage(this.fullLife, (gr.getWidthLogic() / 3) * 2 - (25 + i * 40), (gr.getHeightLogic() / 10) * 9, 35, 35);
+            }
             else //Renderizar perdidas
-                gr.drawImage(this.noLife,(gr.getWidthLogic()/3)*2 - (25 + i*40),(gr.getHeightLogic()/10)*9, 35, 35);
+            {
+                if(engine.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+                    gr.drawImage(this.noLife, (gr.getWidthLogic() / 3) * 2 - (65 + i * 40), (gr.getHeightLogic() / 10) * 9, 35, 35);
+                else
+                    gr.drawImage(this.noLife, (gr.getWidthLogic() / 3) * 2 - (25 + i * 40), (gr.getHeightLogic() / 10) * 9, 35, 35);
+            }
         }
     }
 }

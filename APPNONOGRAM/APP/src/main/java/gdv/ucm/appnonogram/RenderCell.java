@@ -1,21 +1,33 @@
 package gdv.ucm.appnonogram;
+import android.content.res.Configuration;
+
 import com.example.libenginea.EngineA;
 import com.example.libenginea.GraphicsA;
 
 public class RenderCell {
     public void render(GraphicsA gr, Cell c, EngineA engine) {
-        int side = (int)(((gr.getWindow()/3)*2)/c.getMedia());
+        int side;
+        if(engine.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            side = (int)(((gr.getWindow()/4)*2)/c.getMedia());
+        else
+            side = (int)(((gr.getWindow()/3)*2)/c.getMedia());
+
+
         int sep = side/10;
 
-        int tr_x = gr.logicToRealX(gr.getWidthLogic()/2) // mitad de la pantalla
-                - (int)((c.getOffsetX()/2) * (side))        // mitad casillas izq
-                - (int)((c.getOffsetX()/2 - 1) * sep)       // mitad offsets (uno menos que las casillas)
-                + sep*3                                     // offset
-                + (c.getX()*((side)+(sep)));                // pos de cada casilla
+        int tr_x;
+        int tr_y;
 
-        int tr_y = gr.logicToRealY(gr.getHeightLogic()/2) // mitad pantalla
-                - ((int)((c.getOffsetY()/2)*(side + sep)))   // mitad casillas arriba
-                + (c.getY()*(side+sep));                     // pos de cada casilla
+        tr_x = gr.logicToRealX(gr.getWidthLogic() / 2) // mitad de la pantalla
+                - (int) ((c.getOffsetX() / 2) * (side))        // mitad casillas izq
+                - (int) ((c.getOffsetX() / 2 - 1) * sep)       // mitad offsets (uno menos que las casillas)
+                + sep * 3                                     // offset
+                + (c.getX() * ((side) + (sep)));                // pos de cada casilla
+
+        tr_y = gr.logicToRealY(gr.getHeightLogic() / 2) // mitad pantalla
+                - ((int) ((c.getOffsetY() / 2) * (side + sep)))   // mitad casillas arriba
+                + sep * 3                                      // offset
+                + (c.getY() * (side + sep));                     // pos de cada casilla
 
         c.setTr_x(tr_x);
         c.setTr_y(tr_y);

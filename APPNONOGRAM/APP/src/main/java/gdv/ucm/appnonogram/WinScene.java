@@ -22,11 +22,13 @@ public class WinScene implements StateA {
     private ImageA coins;
     private int reward;
 
+    private GraphicsA gr;
+
     public WinScene(EngineA engine, Board b, boolean random, int lvl, String type, int coins) {
         this.engine = engine;
         this.random = random;
         this.reward = coins;
-        GraphicsA gr = engine.getGraphics();
+        this.gr = engine.getGraphics();
         this.bBack = new ButtonBack("back.png", engine,(gr.getWidthLogic()/5),(int)((gr.getHeightLogic()/6)*5.75),200/2,75/2);
         this.bShare = new ButtonShare("compartir.png", engine,gr.getWidthLogic()/2, (gr.getHeightLogic()/6)*5,200/2,75/2, random,lvl-1, type);
         this.b = b;
@@ -40,16 +42,40 @@ public class WinScene implements StateA {
     }
 
     @Override
-    public void update(double deltaTime) {}
+    public void update(double deltaTime) {
+        if(this.engine.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            this.bBack.setPos(0,this.gr.getHeightLogic()/4);
+            this.bShare.setPos(0,(this.gr.getHeightLogic()/4)*2);
+            if(!random)
+                this.bNext.setPos(0,(this.gr.getHeightLogic()/4)*3);
+        }
+        else
+        {
+            this.bBack.setPos((gr.getWidthLogic()/5),(int)((gr.getHeightLogic()/6)*5.75));
+            this.bShare.setPos(gr.getWidthLogic()/2, (gr.getHeightLogic()/6)*5);
+            if(!random)
+                this.bNext.setPos((gr.getWidthLogic()/5)*4, (int)((gr.getHeightLogic()/6)*5.75));
+        }
+    }
 
     @Override
     public void render(GraphicsA graphics) {
-        graphics.drawImage(this.coins,(graphics.getWidthLogic()/2) + 30,graphics.getHeightLogic()/7 - 50, 20, 20);
-        graphics.drawText("+ " + Integer.toString(this.reward),graphics.logicToRealX(graphics.getWidthLogic()/2),graphics.logicToRealY((int)((graphics.getHeightLogic()/9)*1.5) - 50),
-                0x06561e, null, graphics.scaleToReal(20));
         String s = "¡ENHORABUENA!";
-        graphics.drawText(s,graphics.logicToRealX(graphics.getWidthLogic()/2),graphics.logicToRealY(graphics.getHeightLogic()/9 -50),
+        if(this.engine.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            graphics.drawImage(this.coins, graphics.getWidthLogic() - 50, graphics.getHeightLogic() / 2 + 70, 20, 20);
+            graphics.drawText("+ " + Integer.toString(this.reward), graphics.logicToRealX(graphics.getWidthLogic() - 50), graphics.logicToRealY((int) ((graphics.getHeightLogic() / 2) + 50)),
                     0x06561e, null, graphics.scaleToReal(20));
+            graphics.drawText(s, graphics.logicToRealX(graphics.getWidthLogic() - 50), graphics.logicToRealY(graphics.getHeightLogic() / 2),
+                    0x06561e, null, graphics.scaleToReal(20));
+        }
+        else
+        {
+            graphics.drawImage(this.coins, (graphics.getWidthLogic() / 2) + 30, graphics.getHeightLogic() / 7 - 50, 20, 20);
+            graphics.drawText("+ " + Integer.toString(this.reward), graphics.logicToRealX(graphics.getWidthLogic() / 2), graphics.logicToRealY((int) ((graphics.getHeightLogic() / 9) * 1.5) - 50),
+                    0x06561e, null, graphics.scaleToReal(20));
+            graphics.drawText(s, graphics.logicToRealX(graphics.getWidthLogic() / 2), graphics.logicToRealY(graphics.getHeightLogic() / 9 - 50),
+                    0x06561e, null, graphics.scaleToReal(20));
+        }
         this.renderBoard.render(graphics, engine);
         this.bBack.render(graphics);
         if(!random)

@@ -1,5 +1,7 @@
 package gdv.ucm.appnonogram;
 
+import android.content.res.Configuration;
+
 import com.example.libenginea.EngineA;
 import com.example.libenginea.GraphicsA;
 import com.example.libenginea.ImageA;
@@ -22,12 +24,14 @@ public class MainSceneRandom implements StateA {
     private ImageA coins;
     private ImageA bRewardLock;
 
+    private GraphicsA gr;
+
 
     public MainSceneRandom(EngineA engine, int cols, int fils) {
         this.engine = engine;
         this.cols = cols;
         this.fils = fils;
-        GraphicsA gr = this.engine.getGraphics();
+        this.gr = this.engine.getGraphics();
         this.board = new Board(cols, fils, this.engine);
         this.hints = new Hints(this.board);
         this.renderHints = new RenderHints(this.hints);
@@ -68,22 +72,47 @@ public class MainSceneRandom implements StateA {
             WinScene scene = new WinScene(this.engine, this.board,true,0,"", (this.fils+this.cols)/2);
             this.engine.setCurrentScene(scene);
         }
+
+        if(engine.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+        {
+            this.bCheck.setPos(this.gr.getWidthLogic(),this.gr.getHeightLogic()-50);
+            this.bSurrender.setPos(0,this.gr.getHeightLogic()-50);
+            this.bReward.setPos(0,this.gr.getBorderTop());
+        }
+        else
+        {
+            this.bCheck.setPos((gr.getWidthLogic()/5)*4,(gr.getHeightLogic()/10)*9);
+            this.bSurrender.setPos((gr.getWidthLogic()/5),(gr.getHeightLogic()/10)*9);
+            this.bReward.setPos((gr.getWidthLogic()/5),gr.getHeightLogic()/15);
+        }
     }
 
     @Override
     public void render(GraphicsA graphics) {
-        graphics.drawText(Integer.toString(engine.getStats().getMonedas()),graphics.logicToRealX(((graphics.getWidthLogic()/5)*4)-35),graphics.logicToRealY(graphics.getHeightLogic()/11), 0x442700,null, graphics.scaleToReal(20));
-        graphics.drawImage(this.coins,(graphics.getWidthLogic()/5)*4,graphics.getHeightLogic()/15, 20, 20);
+        if(engine.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+        {
+            graphics.drawText(Integer.toString(engine.getStats().getMonedas()), graphics.logicToRealX(graphics.getWidthLogic() - 30), graphics.logicToRealY((int) (63)), 0x442700, null, graphics.scaleToReal(20));
+            graphics.drawImage(this.coins, graphics.getWidthLogic(), 50, 20, 20);
+        }
+        else {
+            graphics.drawText(Integer.toString(engine.getStats().getMonedas()), graphics.logicToRealX(((graphics.getWidthLogic() / 5) * 4) - 35), graphics.logicToRealY(graphics.getHeightLogic() / 11), 0x442700, null, graphics.scaleToReal(20));
+            graphics.drawImage(this.coins, (graphics.getWidthLogic() / 5) * 4, graphics.getHeightLogic() / 15, 20, 20);
+        }
         this.board.render(graphics);
         this.renderBoard.render(graphics,engine);
-        this.renderBoard.renderLifes(graphics);
-        this.renderHints.render(graphics);
+        this.renderBoard.renderLifes(graphics, this.engine);
+        this.renderHints.render(graphics, this.engine);
         this.bCheck.render(graphics);
         this.bSurrender.render(graphics);
         if(this.board.getLives() < 3) // Si hay menos de 3 vidas se renderiza el boton
             this.bReward.render(graphics);
-        else
-            graphics.drawImage(this.bRewardLock,(graphics.getWidthLogic()/5),graphics.getHeightLogic()/15,200/2,75/2);
+        else {
+            if(engine.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+                graphics.drawImage(this.bRewardLock, 0, this.gr.getBorderTop(), 200 / 2, 75 / 2);
+            else
+                graphics.drawImage(this.bRewardLock, (graphics.getWidthLogic() / 5), graphics.getHeightLogic() / 15, 200 / 2, 75 / 2);
+
+        }
     }
 
     @Override

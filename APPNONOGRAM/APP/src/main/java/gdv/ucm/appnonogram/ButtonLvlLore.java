@@ -36,6 +36,12 @@ public class ButtonLvlLore implements InterfaceA {
         this.y = y;
     }
 
+    public void setScale(int w, int h)
+    {
+        this.w = w;
+        this.h = h;
+    }
+
     @Override
     public void render(GraphicsA g) {
         g.drawImage(this.img,x,y,w,h);

@@ -1,5 +1,7 @@
 package gdv.ucm.appnonogram;
 
+import android.content.res.Configuration;
+
 import com.example.libenginea.EngineA;
 import com.example.libenginea.GraphicsA;
 import com.example.libenginea.InputA;
@@ -12,15 +14,29 @@ public class LoseScene implements StateA {
     private ButtonRetry bRetry;
     private ButtonBack bBack;
 
+    private EngineA engine;
+    private GraphicsA gr;
+
     public LoseScene(EngineA engine, int cols, int fils, int lvl, String type) {
-        GraphicsA gr = engine.getGraphics();
+        this.engine = engine;
+        this.gr = engine.getGraphics();
         engine.getAudio().playSound("lose");
         this.bBack = new ButtonBack("back.png",engine,gr.getWidthLogic()/3, (gr.getHeightLogic()/6)*5,200/2,75/2);
         this.bRetry = new ButtonRetry("retry.png", engine,(gr.getWidthLogic()/3)*2, (gr.getHeightLogic()/6)*5,200/2,75/2, cols, fils, lvl,type);
     }
 
     @Override
-    public void update(double deltaTime) {}
+    public void update(double deltaTime) {
+        if(this.engine.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            this.bBack.setPos(gr.getWidthLogic()/3, (gr.getHeightLogic()/6)*5);
+            this.bRetry.setPos((gr.getWidthLogic()/3)*2, (gr.getHeightLogic()/6)*5);
+        }
+        else
+        {
+            this.bBack.setPos(gr.getWidthLogic()/3, (gr.getHeightLogic()/6)*5);
+            this.bRetry.setPos((gr.getWidthLogic()/3)*2, (gr.getHeightLogic()/6)*5);
+        }
+    }
 
     @Override
     public void render(GraphicsA graphics) {

@@ -234,7 +234,7 @@ public class GraphicsA {
             this.borderWidth=0;
         }
         else {
-            this.window = (int)(this.logicWidth*this.factorY);
+            this.window = (int)(this.logicHeight*this.factorY);
             int a = (int) ((getWidth() - (this.logicWidth * this.factorY)) / 2);
             this.borderWidth = a;//a; //Bordes Laterales
             this.borderHeight=0;
