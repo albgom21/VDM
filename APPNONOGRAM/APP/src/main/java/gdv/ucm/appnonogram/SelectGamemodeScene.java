@@ -20,6 +20,8 @@ public class SelectGamemodeScene implements StateA {
 
     public SelectGamemodeScene(EngineA engine) {
         this.engine = engine;
+        this.engine.setSaveBoard(false);
+
         this.gr = engine.getGraphics();
 
         this.bFast = new ButtonFast("rapido.png",engine, gr.getWidthLogic()/2  ,(gr.getHeightLogic()/5)*2,200,75);

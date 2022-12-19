@@ -33,12 +33,13 @@ public class MainActivity extends AppCompatActivity {
     private AssetManager mgr;        // Manager recursos
     private AdView mAdView;
     private String filenameStats;
+    private Board boardSaved;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mgr = getAssets();
-
+        this.boardSaved = null;
         setContentView(R.layout.activity_main);
 
         this.mAdView = findViewById(R.id.adView);
@@ -64,6 +65,24 @@ public class MainActivity extends AppCompatActivity {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+
+            try {
+                // Creamos un FileInputStream para leer desde el archivo en el almacenamiento interno de la aplicación
+                FileInputStream fis = openFileInput("t.ser");
+                // Creamos un ObjectInputStream a partir del FileInputStream
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                // Leemos el objeto serializado del archivo y lo asignamos a una variable de tipo Persona
+                this.boardSaved = (Board) ois.readObject();
+
+                // Cerramos los streams
+                ois.close();
+                fis.close();
+                this.deleteFile("t.ser");
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -78,8 +97,14 @@ public class MainActivity extends AppCompatActivity {
         // Creación del motor de Android y la escena inicial
         this.engine = new EngineA(this.renderView, statsA, this, adRequest, this.filenameStats);
 
-        TitleScene scene = new TitleScene(this.engine);
-        engine.setCurrentScene(scene);
+        if(this.boardSaved != null){
+            MainSceneRandom scene = new MainSceneRandom(this.engine,this.boardSaved);
+            engine.setCurrentScene(scene);
+        }
+        else{
+            TitleScene scene = new TitleScene(this.engine);
+            engine.setCurrentScene(scene);
+        }
         engine.resume();
 
         createChannel();
@@ -110,7 +135,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        if(this.engine.getSaveBoard()){
+            MainSceneRandom r = (MainSceneRandom) this.engine.getState();
+            this.engine.serialize(r.getBoard(), "t.ser");
+        }
         this.engine.pause();
+
     }
 
 //    NOTIFICACIONES-------------------------------------------------------------------------------------

@@ -39,6 +39,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 public class EngineA implements Runnable, SensorEventListener {
     private SurfaceView myView;
@@ -51,6 +52,8 @@ public class EngineA implements Runnable, SensorEventListener {
 
     private Thread renderThread;
     private boolean running;
+
+    private boolean saveBoard;
 
     private StateA currentScene;
     private InputA input;
@@ -86,6 +89,7 @@ public class EngineA implements Runnable, SensorEventListener {
         this.adRequest = adRequest;
         this.rewardObtain = false;
         this.filenameStats = filenameStats;
+        this.saveBoard = false;
 
         // SENSOR
         SensorManager sensorManager=(SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
@@ -165,17 +169,16 @@ public class EngineA implements Runnable, SensorEventListener {
         this.input.clearEvents();
     }
 
-    //Métodos sincronización (parar y reiniciar aplicación)
-    public void resume() {
+    public void desSerialize(Serializable serializable, String file){
         try {
             // Creamos un FileInputStream para leer desde el archivo en el almacenamiento interno de la aplicación
-            FileInputStream fis = this.context.openFileInput(filenameStats);
+            FileInputStream fis = this.context.openFileInput(file);
 
             // Creamos un ObjectInputStream a partir del FileInputStream
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             // Leemos el objeto serializado del archivo y lo asignamos a una variable de tipo Persona
-            this.stats = (StatsA) ois.readObject();
+            serializable = (Serializable) ois.readObject();
 
             // Cerramos los streams
             ois.close();
@@ -185,6 +188,37 @@ public class EngineA implements Runnable, SensorEventListener {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+    public void serialize(Serializable serializable, String file){
+        try {
+            // Creamos un FileOutputStream para escribir en un archivo en el almacenamiento interno de la aplicación
+            FileOutputStream fos = this.context.openFileOutput(file, Context.MODE_PRIVATE);
+
+            // Creamos un ObjectOutputStream a partir del FileOutputStream
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            // Serializamos el objeto persona y lo escribimos en el archivo
+            oos.writeObject(serializable);
+
+            // Cerramos los streams
+            oos.close();
+            fos.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean getSaveBoard() {
+        return saveBoard;
+    }
+    public void setSaveBoard(Boolean b){
+        saveBoard = b;
+    }
+
+    //Métodos sincronización (parar y reiniciar aplicación)
+    public void resume() {
+        desSerialize(stats,filenameStats);
         if (!this.running) {
             // Solo hacemos algo si no nos estábamos ejecutando ya
             // (programación defensiva)
@@ -197,24 +231,7 @@ public class EngineA implements Runnable, SensorEventListener {
     }
 
     public void pause() {
-        // Serialization
-        try {
-            // Creamos un FileOutputStream para escribir en un archivo en el almacenamiento interno de la aplicación
-            FileOutputStream fos = this.context.openFileOutput(filenameStats, Context.MODE_PRIVATE);
-
-            // Creamos un ObjectOutputStream a partir del FileOutputStream
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-            // Serializamos el objeto persona y lo escribimos en el archivo
-            oos.writeObject(this.stats);
-
-            // Cerramos los streams
-            oos.close();
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        serialize(stats,filenameStats);
         if (this.running) {
             this.running = false;
             this.audio.getmPlayer().pause();

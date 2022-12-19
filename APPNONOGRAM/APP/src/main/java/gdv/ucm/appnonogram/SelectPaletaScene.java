@@ -26,6 +26,7 @@ public class SelectPaletaScene implements StateA {
     public SelectPaletaScene(EngineA engine) {
         this.gr = engine.getGraphics();
         this.engine = engine;
+        this.engine.setSaveBoard(false);
 
         engine.getAudio().newSound("click.wav", false);
         engine.getAudio().newSound("error.wav", false);

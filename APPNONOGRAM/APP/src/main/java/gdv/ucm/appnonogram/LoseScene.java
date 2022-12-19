@@ -19,6 +19,8 @@ public class LoseScene implements StateA {
 
     public LoseScene(EngineA engine, int cols, int fils, int lvl, String type) {
         this.engine = engine;
+        this.engine.setSaveBoard(false);
+
         this.gr = engine.getGraphics();
         engine.getAudio().playSound("lose");
         this.bBack = new ButtonBack("back.png",engine,gr.getWidthLogic()/3, (gr.getHeightLogic()/6)*5,200/2,75/2);

@@ -13,11 +13,11 @@ public class RenderBoard {
     private ImageA fullLife;
     private ImageA noLife;
 
-    RenderBoard(Board b){
+    RenderBoard(Board b, GraphicsA gr){
         this.b = b;
         this.renderCell = new RenderCell();
-        this.fullLife = b.getEngine().getGraphics().newImage("vida.png");
-        this.noLife = b.getEngine().getGraphics().newImage("vidaGastada.png");
+        this.fullLife = gr.newImage("vida.png");
+        this.noLife = gr.newImage("vidaGastada.png");
     }
 
     public void render(GraphicsA gr, EngineA engine){

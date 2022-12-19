@@ -6,7 +6,9 @@ import com.example.libenginea.GraphicsA;
 import com.example.libenginea.InterfaceA;
 import com.example.libenginea.InputA;
 
-public class Cell implements InterfaceA {
+import java.io.Serializable;
+
+public class Cell implements InterfaceA, Serializable {
     // Attributes
     private int x;          // x a nivel lógico, en la matriz del tablero
     private int y;
@@ -27,13 +29,9 @@ public class Cell implements InterfaceA {
     private boolean isSol;
     private boolean loselife;
 
-    private AudioA audio;
-    private EngineA engine;
-
-    public Cell(int x, int y, float offsetX, float offsetY, boolean sol, CellState state, EngineA engine)  {
+    public Cell(int x, int y, float offsetX, float offsetY, boolean sol, CellState state)  {
         this.x = x;
         this.y = y;
-        this.engine = engine;
         this.side = 30;
         this.offsetX = offsetX; // Cantidad de celdas en x
         this.offsetY = offsetY; // Cantidad de celdas en y
@@ -44,7 +42,6 @@ public class Cell implements InterfaceA {
 
         this.isSol = sol;
         this.state = state;
-        this.audio = engine.getAudio();
     }
 
     @Override
@@ -59,7 +56,7 @@ public class Cell implements InterfaceA {
 
                 if(state.equals(CellState.GRAY) && !this.isSol) {
                     state = CellState.RED;
-                    this.audio.playSound("wrong");
+//                    this.audio.playSound("wrong");
                     this.loselife = true;
                 }
                 else if(state.equals(CellState.GRAY))

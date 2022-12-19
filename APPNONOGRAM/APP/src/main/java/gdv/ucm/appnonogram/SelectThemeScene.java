@@ -22,6 +22,7 @@ public class SelectThemeScene implements StateA {
 
     public SelectThemeScene(EngineA engine) {
         this.engine = engine;
+        this.engine.setSaveBoard(false);
         this.gr = engine.getGraphics();
 
         this.bTheme1 = new ButtonLvlLore("bosque.png",engine, gr.getWidthLogic()/4  ,(gr.getHeightLogic()/5)*2,150,150, "a");

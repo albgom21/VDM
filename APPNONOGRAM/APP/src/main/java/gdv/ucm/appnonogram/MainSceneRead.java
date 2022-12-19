@@ -34,13 +34,14 @@ public class MainSceneRead implements StateA {
         this.type = type;
         this.lvl = lvl;
         this.engine = engine;
+        this.engine.setSaveBoard(true);
+
         this.filename = filename;
         this.gr = this.engine.getGraphics();
-        ReadA rd = this.engine.getRead();
-        this.board = new Board(filename, rd, this.engine);
+        this.board = new Board(this.engine.getRead().newBoard(filename));
         this.hints = new Hints(this.board);
         this.renderHints = new RenderHints(this.hints);
-        this.renderBoard = new RenderBoard(this.board);
+        this.renderBoard = new RenderBoard(this.board, this.gr);
 
         engine.getAudio().newSound("cell.wav", false);
         engine.getAudio().newSound("check.wav", false);
@@ -139,5 +140,8 @@ public class MainSceneRead implements StateA {
                 this.bReward.handleEvent(event);
         }
         input.clearEvents();
+    }
+    public Board getBoard() {
+        return board;
     }
 }

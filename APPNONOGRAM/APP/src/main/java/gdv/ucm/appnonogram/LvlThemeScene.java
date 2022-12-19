@@ -19,6 +19,8 @@ public class LvlThemeScene implements StateA {
 
     public LvlThemeScene(EngineA engine, String type) {
         this.engine = engine;
+        this.engine.setSaveBoard(false);
+
         this.gr = engine.getGraphics();
         this.bLvls = new ButtonRead[20];
         int y = 0;

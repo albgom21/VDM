@@ -20,6 +20,7 @@ public class SelectLvlScene implements StateA {
 
     public SelectLvlScene(EngineA engine) {
         this.engine = engine;
+        this.engine.setSaveBoard(false);
         this.gr = engine.getGraphics();
         this.bLvls = new ButtonLvl[6];
 

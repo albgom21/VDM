@@ -23,6 +23,7 @@ public class TitleScene implements StateA {
 
     public TitleScene(EngineA engine) {
         this.engine = engine;
+        this.engine.setSaveBoard(false);
         this.gr = engine.getGraphics();
         //CARGA DE RECURSOS
         engine.getAudio().newSound("click.wav", false);

@@ -13,6 +13,11 @@ import java.util.Iterator;
 
 public class MainSceneRandom implements StateA {
     private EngineA engine;
+
+    public Board getBoard() {
+        return board;
+    }
+
     private Board board;
     private Hints hints;
     private RenderBoard renderBoard;
@@ -26,16 +31,46 @@ public class MainSceneRandom implements StateA {
 
     private GraphicsA gr;
 
+    public MainSceneRandom(EngineA engine, Board b) {
+        this.engine = engine;
+        this.engine.setSaveBoard(true);
+
+        this.gr = this.engine.getGraphics();
+        this.cols = b.getWidth();
+        this.fils = b.getHeight();
+        this.board = new Board(b);
+        this.hints = new Hints(this.board);
+        this.renderHints = new RenderHints(this.hints);
+        this.renderBoard = new RenderBoard(this.board, this.gr);
+
+        if(!engine.getAudio().isLoaded("cell.wav"))
+            engine.getAudio().newSound("cell.wav", false);
+        if(!engine.getAudio().isLoaded("check.wav"))
+            engine.getAudio().newSound("check.wav", false);
+        if(!engine.getAudio().isLoaded("win.wav"))
+            engine.getAudio().newSound("win.wav", false);
+        if(!engine.getAudio().isLoaded("lose.wav"))
+            engine.getAudio().newSound("lose.wav", false);
+        if(!engine.getAudio().isLoaded("wrong.wav"))
+            engine.getAudio().newSound("wrong.wav", false);
+        this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (gr.getWidthLogic()/5)*4,(gr.getHeightLogic()/10)*9,200/2,75/2);
+        this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (gr.getWidthLogic()/5),(gr.getHeightLogic()/10)*9,200/2,75/2);
+        this.bReward = new ButtonReward("videoVida.png", this.engine, (gr.getWidthLogic()/5),gr.getHeightLogic()/15,200/2,75/2);
+        this.coins = gr.newImage("moneda.png");
+        this.bRewardLock = gr.newImage("videoVidaLock.png");
+    }
 
     public MainSceneRandom(EngineA engine, int cols, int fils) {
         this.engine = engine;
+        this.engine.setSaveBoard(true);
+
         this.cols = cols;
         this.fils = fils;
         this.gr = this.engine.getGraphics();
-        this.board = new Board(cols, fils, this.engine);
+        this.board = new Board(cols, fils);
         this.hints = new Hints(this.board);
         this.renderHints = new RenderHints(this.hints);
-        this.renderBoard = new RenderBoard(this.board);
+        this.renderBoard = new RenderBoard(this.board, this.gr);
 
         if(!engine.getAudio().isLoaded("cell.wav"))
             engine.getAudio().newSound("cell.wav", false);
