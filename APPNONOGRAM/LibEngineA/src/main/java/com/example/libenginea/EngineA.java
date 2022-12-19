@@ -73,7 +73,7 @@ public class EngineA implements Runnable, SensorEventListener {
         this.myView = myView;
         this.context = c;
         this.input = new InputA();
-        this.myView.setOnTouchListener((View.OnTouchListener) this.input);
+        this.myView.setOnTouchListener(this.input);
         this.mgr = myView.getContext().getAssets();
         this.holder = this.myView.getHolder();
         this.canvas = new Canvas();
@@ -340,13 +340,18 @@ public class EngineA implements Runnable, SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        float i = sensorEvent.values[0]; // EN EL EJE X
-        if(i>3.0){
+        float valorGiroscopio = 0;
+        if(this.context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            valorGiroscopio = sensorEvent.values[1]; // EN EL EJE Y
+        else
+            valorGiroscopio = sensorEvent.values[0]; // EN EL EJE X
+
+        if(valorGiroscopio>3.0){
             int p = this.stats.getPaleta()-1;
             if(p >= 0 && this.stats.isPaletaUnlock(p))
                 this.stats.setPaleta(p);
         }
-        else if(i<-3.0){
+        else if(valorGiroscopio<-3.0){
             int p = this.stats.getPaleta()+1;
             if(p <= 3 && this.stats.isPaletaUnlock(p))
                 this.stats.setPaleta(p);
@@ -356,50 +361,5 @@ public class EngineA implements Runnable, SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
-    }
-
-    public class IntentSystemAndroid {
-        // activity context
-        private Context context;
-        private Activity activity;
-        private String channel_name;
-        private String channel_description;
-        private String channel_id;
-
-        public IntentSystemAndroid(Context cont) {
-
-
-//            createChannel();
-            //createNotification();
-        }
-
-
-
-        public void createNotification() {
-            Intent notifyIntent = new Intent(this.context, this.context.getClass());
-            notifyIntent.putExtra("Monedas",10);
-            // Set the Activity to start in a new, empty task
-            notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            // Create the PendingIntent
-            PendingIntent notifyPendingIntent = PendingIntent.getActivity(
-                    this.context, 0, notifyIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-            );
-
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this.context, this.channel_id) //@mipmap/ic_launcher
-                    .setSmallIcon(R.drawable.ic_stat_name)
-                    .setColor(Color.RED)
-                    .setContentTitle( "Entra ahora para conseguir 10 monedas gratis" )
-                    .setContentText( "¡Llevas tiempo sin jugar, entra ahora!" )
-                    .setStyle( new NotificationCompat.BigTextStyle()
-                            .bigText( "¡Llevas tiempo sin jugar, entra ahora!" ))
-                    .setPriority(NotificationCompat. PRIORITY_DEFAULT)
-                    .setContentIntent(notifyPendingIntent)
-                    .setAutoCancel(true);
-
-            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
-            managerCompat.notify(1, builder.build());
-        }
     }
 }
