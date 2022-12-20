@@ -67,10 +67,10 @@ public class ButtonColorPaleta implements InterfaceA {
           e.index == 1 &&                            // boton izq
           (mX >= this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2) && mX <= this.gr.scaleToReal(w) + this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2)
           && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2) && mY <= this.gr.scaleToReal(h) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2))){ // dentro del cuadrado
-            if(!this.desbloqueado && this.engine.getStats().getMonedas() < 100){
+            if(!this.desbloqueado && this.engine.getStats().getMonedas() < 100){    //Si no tienes monedas para comprar
                 this.audio.playSound("error");
             }
-            else if(!this.desbloqueado && this.engine.getStats().getMonedas() >= 100){
+            else if(!this.desbloqueado && this.engine.getStats().getMonedas() >= 100){  //Si tienes monedas para comprar
                 this.audio.playSound("click");
                 this.engine.getStats().subMoneda(100);
                 this.engine.getStats().setPaletaDesbloqueada(this.color);
@@ -78,7 +78,7 @@ public class ButtonColorPaleta implements InterfaceA {
                 this.img = this.engine.getGraphics().newImage(this.filename);
                 this.desbloqueado = true;
             }
-            else if(this.desbloqueado){
+            else if(this.desbloqueado){ //Si ya se tiene la paleta, se selecciona
                 this.audio.playSound("click");
                 this.engine.getStats().setPaleta(this.color);
             }

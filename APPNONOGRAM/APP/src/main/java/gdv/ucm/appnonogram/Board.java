@@ -15,9 +15,9 @@ public class Board implements InterfaceA, Serializable {
 
    private int lvl;
    private String type;
-   private boolean random;
+   private boolean random;    //para saber si es del modo historia o modo rápido
 
-   public Board(Board b){
+   public Board(Board b){     //Constructora por copia
       this.width = b.width;
       this.height = b.height;
       this.board = b.board;
@@ -27,7 +27,7 @@ public class Board implements InterfaceA, Serializable {
       this.type = b.type;
    }
 
-   public Board(int[][] a, int lvl, String type)
+   public Board(int[][] a, int lvl, String type)   //Constructora por nivel y tipo
    {
       this.lvl = lvl;
       this.type = type;
@@ -48,7 +48,7 @@ public class Board implements InterfaceA, Serializable {
       }
    }
 
-   public Board(int w, int h) {
+   public Board(int w, int h) {     //constructora tablero aleatorio
       this.width = w;
       this.height = h;
       this.lvl = 0;
@@ -82,7 +82,7 @@ public class Board implements InterfaceA, Serializable {
       for (int i = 0; i < width; ++i) {
          for (int j = 0; j < height; ++j) {
             if(board[i][j].handleEvent(e)) {
-               if (board[i][j].loseLife())
+               if (board[i][j].loseLife())         //perdida de vida
                   lives--;
                return true;
             }
@@ -100,6 +100,7 @@ public class Board implements InterfaceA, Serializable {
    public int getLives() { return lives; }
    public boolean getRandom() { return random; }
    public Cell getCell(int x, int y) { return board[x][y]; }
+
 
    public void addLife() { lives++; }
    public void setLvl(int lvl) {this.lvl = lvl;}

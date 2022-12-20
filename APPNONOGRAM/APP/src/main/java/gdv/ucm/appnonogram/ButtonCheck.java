@@ -51,7 +51,6 @@ public class ButtonCheck implements InterfaceA {
         g.drawImage(this.img,x,y,w,h);
         if(check) {
             this.engine.getGraphics().drawText(s1, this.gr.logicToRealX(this.gr.getWidthLogic() / 2), (this.gr.logicToRealY((this.gr.getHeightLogic() / 11)*9)), 0xac3232, null, this.gr.scaleToReal(15));
-//            this.engine.getGraphics().drawText(s2, this.gr.logicToRealX(this.gr.getWidthLogic() / 2), (this.gr.logicToRealY((int)((this.gr.getHeightLogic() / 11)*10.5))), 0xac3232, null, this.gr.scaleToReal(15));
         }
     }
 
@@ -59,7 +58,6 @@ public class ButtonCheck implements InterfaceA {
     public void update(Double deltaTime) {
         if(System.currentTimeMillis()>this.timer+this.onScreen && this.check) {
             check = false;
-//            this.hints.clearWrongs();
         }
     }
 
@@ -71,7 +69,7 @@ public class ButtonCheck implements InterfaceA {
           e.index == 1 &&                            // boton izq
           (mX >= this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2) && mX <= this.gr.scaleToReal(w) + this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2)
           && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2) && mY <= this.gr.scaleToReal(h) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2))){ // dentro del cuadrado
-            Pair aux = this.hints.check();
+            Pair aux = this.hints.check();      //comprueba todo lo relacionado con que el nivel es solución o no
             this.s1 = "Te faltan "+ aux.getFirst()+" casillas";
             this.s2 = "Tienes mal "+ aux.getSecond()+" casillas";
             this.timer = System.currentTimeMillis();

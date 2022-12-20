@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class LvlThemeScene implements StateA {
-    private ButtonRead [] bLvls;
+    private ButtonRead [] bLvls;    //20 niveles
     private ButtonBack bBack;
 
     private EngineA engine;
@@ -54,7 +54,7 @@ public class LvlThemeScene implements StateA {
             int x = 0;
             for(int i = 1; i <= 20; i++)
             {
-                if(x>=5) {
+                if(x>=5) {          //cada 5 niveles, cambia de fila
                     y++;
                     x = 0;
                 }
@@ -69,7 +69,7 @@ public class LvlThemeScene implements StateA {
             int x = 0;
             for(int i = 1; i <= 20; i++)
             {
-                if(x>=4) {
+                if(x>=4) {      //cada 4 niveles, cambia de fila
                     y++;
                     x = 0;
                 }

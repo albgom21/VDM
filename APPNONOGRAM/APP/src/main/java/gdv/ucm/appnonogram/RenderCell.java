@@ -7,7 +7,7 @@ import com.example.libenginea.GraphicsA;
 public class RenderCell {
     public void render(GraphicsA gr, Cell c, EngineA engine) {
         int side;
-        if(engine.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+        if(engine.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)    //dependiendo de la orientacion
             side = (int)(((gr.getWindow()/4)*2)/c.getMedia());
         else
             side = (int)(((gr.getWindow()/3)*2)/c.getMedia());

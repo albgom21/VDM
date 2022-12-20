@@ -75,9 +75,6 @@ public class GraphicsA {
     public int getWindow() {
         return this.window;
     }
-    public void setResolution(int w, int h) { //no deberia llamarse en Android
-        this.myView.getHolder().setFixedSize(w,h);
-    }
 
     public void setFont(FontA font) {
         this.paint.setTypeface(font.getFont());
@@ -107,7 +104,7 @@ public class GraphicsA {
         return imgA;
     }
 
-    public FontA newFont(String filename, int size, boolean isBold) {
+    public FontA newFont(String filename, int size, boolean isBold) {   //Crea fuente normal/negrita
         Typeface tface = Typeface.createFromAsset(mgr, filename);
         this.paint.setTypeface(tface);
         this.paint.setTextSize(size);
@@ -130,7 +127,7 @@ public class GraphicsA {
         return resizedBitmap;
     }
 
-    public void drawImage(ImageA image, int x, int y, int w, int h) {
+    public void drawImage(ImageA image, int x, int y, int w, int h) { //Crea imagen con sus medidas
         float newW = (scaleToReal(w));
         float newH = (scaleToReal(h));
         Bitmap aux = getResizedBitmap(image.getImg(),newW ,newH);

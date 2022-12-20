@@ -17,7 +17,7 @@ public class ReadA {
         this.mgr = mgr;
     }
 
-    public int[][] newBoard(String file) {
+    public int[][] newBoard(String file) {      //Crea tablero a partir de lectura de txt
         int[][] board = null;
         try {
             InputStream inputStream = this.mgr.open(file);

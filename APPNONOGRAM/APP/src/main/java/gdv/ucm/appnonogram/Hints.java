@@ -68,7 +68,6 @@ public class Hints implements InterfaceA {
                 }
                 else {
                     if(cell.getState() == CellState.BLUE) {
-//                        cell.setState(CellState.RED);
                         counterRed++;
                     }
                 }
@@ -76,10 +75,7 @@ public class Hints implements InterfaceA {
         }
 
         Pair a = new Pair(counterBlue,counterRed);
-//        if(a.getFirst()==0 && a.getSecond()==0) { // Todas las sol marcadas y sin fallos = win
-//            endGame();
-//            this.end = true;
-//        }
+
         return a;
     }
 

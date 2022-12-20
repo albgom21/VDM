@@ -53,7 +53,7 @@ public class ButtonPaleta implements InterfaceA {
           (mX >= this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2) && mX <= this.gr.scaleToReal(w) + this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2)
           && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2) && mY <= this.gr.scaleToReal(h) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2))){ // dentro del cuadrado
             this.audio.playSound("click");
-            SelectPaletaScene scene = new SelectPaletaScene(engine);
+            SelectPaletaScene scene = new SelectPaletaScene(engine);        //menu paletas
             engine.setCurrentScene(scene);
             return true;
         }

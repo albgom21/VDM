@@ -1,6 +1,6 @@
 package gdv.ucm.appnonogram;
 
-public class Pair {
+public class Pair { //Clase Par
     int a;
     int b;
     Pair(int a, int b){

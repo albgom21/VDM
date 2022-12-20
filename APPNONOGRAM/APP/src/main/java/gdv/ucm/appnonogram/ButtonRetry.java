@@ -61,11 +61,11 @@ public class ButtonRetry implements InterfaceA {
             this.audio.playSound("back");
             if(this.cols != 0)
             {
-                MainSceneRandom scene = new MainSceneRandom(this.engine, this.cols, this.fils);
+                MainSceneRandom scene = new MainSceneRandom(this.engine, this.cols, this.fils); //Si reiniciamos en un nivel random, se genera uno nuevo
                 engine.setCurrentScene(scene);
             }
             else {
-                MainSceneRead scene = new MainSceneRead(this.engine,"Lvl" + lvl + type + ".txt", type, lvl);
+                MainSceneRead scene = new MainSceneRead(this.engine,"Lvl" + lvl + type + ".txt", type, lvl);  //Si reiniciamos se genera el mismo nivel que fallamos
                 engine.setCurrentScene(scene);
             }
 

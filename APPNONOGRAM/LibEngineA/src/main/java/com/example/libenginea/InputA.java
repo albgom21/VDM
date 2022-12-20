@@ -67,7 +67,7 @@ public class InputA implements View.OnTouchListener{
         if(endTime-startTime > 500) //500ms => 0.5s
             tipo = InputTouchType.LONG_PRESSED;
         else if(tipo == InputTouchType.RELEASED)
-            tipo = InputTouchType.NORMAL_PRESSED; //Ojo nos estamos comiendo el MOVE
+            tipo = InputTouchType.NORMAL_PRESSED;
 
         if(tipo!=null)
             eventos.add(new Event((int)event.getX(0),(int)event.getY(0),event.getPointerCount(),tipo));

@@ -59,7 +59,7 @@ public class ButtonRead implements InterfaceA {
                         && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2) && mY <= this.gr.scaleToReal(h) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2))){ // dentro del cuadrado
             this.audio.playSound("click");
             if(!bloqueado){
-                MainSceneRead scene = new MainSceneRead(engine, "Lvl"+Integer.toString(lvl)+type+".txt", type, lvl);
+                MainSceneRead scene = new MainSceneRead(engine, "Lvl"+Integer.toString(lvl)+type+".txt", type, lvl);    //pasa al nivel correspondiente
                 engine.setCurrentScene(scene);
             }
             return true;

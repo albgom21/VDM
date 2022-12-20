@@ -12,7 +12,7 @@ import java.util.Iterator;
 
 public class SelectLvlScene implements StateA {
 
-    private ButtonLvl [] bLvls;
+    private ButtonLvl [] bLvls; //Botones de los niveles
     private ButtonBack bBack;
 
     private EngineA engine;

@@ -56,7 +56,6 @@ public class Cell implements InterfaceA, Serializable {
 
                 if(state.equals(CellState.GRAY) && !this.isSol) {
                     state = CellState.RED;
-//                    this.audio.playSound("wrong");
                     this.loselife = true;
                 }
                 else if(state.equals(CellState.GRAY))
@@ -71,7 +70,7 @@ public class Cell implements InterfaceA, Serializable {
 
                 return true;
            }
-        else if(e.type == InputA.InputTouchType.LONG_PRESSED && //click
+        else if(e.type == InputA.InputTouchType.LONG_PRESSED && //click largo
                 e.index == 1 &&                            // boton izq
                 (mX >= tr_x - (this.side/2) && mX <= this.side + tr_x - (this.side/2)
                         && mY >= tr_y - (this.side/2) && mY <= this.side + tr_y - (this.side/2))){ // dentro del cuadrado

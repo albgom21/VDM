@@ -56,7 +56,7 @@ public class ButtonNext implements InterfaceA {
                 (mX >= this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2) && mX <= this.gr.scaleToReal(w) + this.gr.logicToRealX(x) - (this.gr.scaleToReal(w)/2)
                         && mY >= this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2) && mY <= this.gr.scaleToReal(h) + this.gr.logicToRealY(y) - (this.gr.scaleToReal(h)/2))){ // dentro del cuadrado
             this.audio.playSound("back");
-            MainSceneRead scene = new MainSceneRead(engine,"Lvl"+this.lvl+this.type+".txt",this.type,this.lvl);
+            MainSceneRead scene = new MainSceneRead(engine,"Lvl"+this.lvl+this.type+".txt",this.type,this.lvl); //Escena nivel
             engine.setCurrentScene(scene);
             return true;
         }
