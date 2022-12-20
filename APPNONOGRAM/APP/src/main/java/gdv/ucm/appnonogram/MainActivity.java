@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+//            GUARDAR TABLERO
             try {
                 // Creamos un FileInputStream para leer desde el archivo en el almacenamiento interno de la aplicación
                 FileInputStream fis = openFileInput("t.ser");
@@ -98,8 +99,14 @@ public class MainActivity extends AppCompatActivity {
         this.engine = new EngineA(this.renderView, statsA, this, adRequest, this.filenameStats);
 
         if(this.boardSaved != null){
-            MainSceneRandom scene = new MainSceneRandom(this.engine,this.boardSaved);
-            engine.setCurrentScene(scene);
+            if(this.boardSaved.getRandom()){
+                MainSceneRandom scene = new MainSceneRandom(this.engine,this.boardSaved);
+                engine.setCurrentScene(scene);
+            }
+            else{
+                MainSceneRead scene = new MainSceneRead(this.engine,this.boardSaved);
+                engine.setCurrentScene(scene);
+            }
         }
         else{
             TitleScene scene = new TitleScene(this.engine);
@@ -136,8 +143,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         if(this.engine.getSaveBoard()){
-            MainSceneRandom r = (MainSceneRandom) this.engine.getState();
-            this.engine.serialize(r.getBoard(), "t.ser");
+            if(this.engine.getRandomBoard()){
+                MainSceneRandom r = (MainSceneRandom) this.engine.getState();
+                this.engine.serialize(r.getBoard(), "t.ser");
+            }
+            else{
+                MainSceneRead r = (MainSceneRead) this.engine.getState();
+                this.engine.serialize(r.getBoard(), "t.ser");
+            }
+
         }
         this.engine.pause();
 

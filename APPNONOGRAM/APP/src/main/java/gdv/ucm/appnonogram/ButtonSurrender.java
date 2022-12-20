@@ -7,7 +7,6 @@ import com.example.libenginea.InterfaceA;
 import com.example.libenginea.ImageA;
 import com.example.libenginea.InputA;
 
-
 public class ButtonSurrender implements InterfaceA {
     private final AudioA audio;
     private final GraphicsA gr;
@@ -27,6 +26,7 @@ public class ButtonSurrender implements InterfaceA {
         this.w = w;
         this.h = h;
         this.audio = this.engine.getAudio();
+        this.engine.getAudio().newSound("back.wav", false);
     }
 
     public void setPos(int x, int y)

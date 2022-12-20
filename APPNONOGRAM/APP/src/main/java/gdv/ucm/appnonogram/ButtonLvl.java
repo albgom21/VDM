@@ -30,6 +30,7 @@ public class ButtonLvl implements InterfaceA {
         this.cols = cols;
         this.fils = fils;
         this.audio = this.engine.getAudio();
+        this.engine.getAudio().newSound("click.wav", false);
     }
 
     public void setPos(int x, int y)

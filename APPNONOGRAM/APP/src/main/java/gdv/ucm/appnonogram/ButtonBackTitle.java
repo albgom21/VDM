@@ -27,6 +27,7 @@ public class ButtonBackTitle implements InterfaceA {
         this.w = w;
         this.h = h;
         this.audio = this.engine.getAudio();
+        this.engine.getAudio().newSound("back.wav", false);
     }
 
     public void setPos(int x, int y)

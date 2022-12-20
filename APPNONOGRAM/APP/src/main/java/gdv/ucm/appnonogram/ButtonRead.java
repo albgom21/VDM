@@ -32,6 +32,7 @@ public class ButtonRead implements InterfaceA {
         this.lvl = lvl;
         this.audio = this.engine.getAudio();
         this.bloqueado = bloqueado;
+        this.engine.getAudio().newSound("click.wav", false);
     }
 
     public void setPos(int x, int y)

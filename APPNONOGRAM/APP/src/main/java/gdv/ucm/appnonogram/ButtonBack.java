@@ -34,6 +34,7 @@ public class ButtonBack implements InterfaceA {
         this.w = w;
         this.h = h;
         this.audio = this.engine.getAudio();
+        this.engine.getAudio().newSound("back.wav", false);
     }
 
     @Override

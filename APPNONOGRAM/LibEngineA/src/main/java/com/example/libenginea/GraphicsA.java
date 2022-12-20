@@ -8,6 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.fonts.Font;
 import android.view.SurfaceView;
 
 import java.io.IOException;
@@ -51,9 +52,6 @@ public class GraphicsA {
         this.myView = myView;
         this.paint = new Paint();
         this.canvas = canvas;
-
-//        this.logicWidth = 1920;
-//        this.logicHeight = 1080;
 
         this.logicWidth = 400;
         this.logicHeight = 600;

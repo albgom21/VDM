@@ -3,6 +3,7 @@ package gdv.ucm.appnonogram;
 import android.content.res.Configuration;
 
 import com.example.libenginea.EngineA;
+import com.example.libenginea.FontA;
 import com.example.libenginea.GraphicsA;
 import com.example.libenginea.ImageA;
 import com.example.libenginea.InputA;
@@ -25,20 +26,24 @@ public class MainSceneRead implements StateA {
     private String filename;
     private String type;
     private int lvl;
+    private int lives;
     private ImageA coins;
     private ImageA bRewardLock;
+    private FontA font;
 
     private GraphicsA gr;
 
-    public MainSceneRead(EngineA engine, String filename, String type, int lvl) {
-        this.type = type;
-        this.lvl = lvl;
+
+    public MainSceneRead(EngineA engine, Board b) {
+        this.type = b.getType();
+        this.lvl = b.getLvl();
         this.engine = engine;
         this.engine.setSaveBoard(true);
+        this.engine.setRandomBoard(false);
 
-        this.filename = filename;
         this.gr = this.engine.getGraphics();
-        this.board = new Board(this.engine.getRead().newBoard(filename));
+        this.board = b;
+        this.lives = b.getLives();
         this.hints = new Hints(this.board);
         this.renderHints = new RenderHints(this.hints);
         this.renderBoard = new RenderBoard(this.board, this.gr);
@@ -48,6 +53,43 @@ public class MainSceneRead implements StateA {
         engine.getAudio().newSound("win.wav", false);
         engine.getAudio().newSound("lose.wav", false);
         engine.getAudio().newSound("wrong.wav", false);
+        engine.getAudio().newSoundAmbient("ambiente.wav");
+        engine.getAudio().playSound("ambiente");
+
+        this.font = gr.newFont("coolvetica.otf", 20, false);
+        gr.setFont(this.font);
+
+        this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (gr.getWidthLogic()/5)*4,(gr.getHeightLogic()/10)*9,200/2,75/2);
+        this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (gr.getWidthLogic()/5),(gr.getHeightLogic()/10)*9,200/2,75/2);
+        this.bReward = new ButtonReward("videoVida.png", this.engine, (gr.getWidthLogic()/5),gr.getHeightLogic()/15,200/2,75/2);
+        this.coins = gr.newImage("moneda.png");
+        this.bRewardLock = gr.newImage("videoVidaLock.png");
+    }
+
+    public MainSceneRead(EngineA engine, String filename, String type, int lvl) {
+        this.type = type;
+        this.lvl = lvl;
+        this.engine = engine;
+        this.engine.setSaveBoard(true);
+        this.engine.setRandomBoard(false);
+
+        this.filename = filename;
+        this.gr = this.engine.getGraphics();
+        this.board = new Board(this.engine.getRead().newBoard(filename), this.lvl, this.type);
+        this.lives = this.board.getLives();
+        this.hints = new Hints(this.board);
+        this.renderHints = new RenderHints(this.hints);
+        this.renderBoard = new RenderBoard(this.board, this.gr);
+
+        engine.getAudio().newSound("cell.wav", false);
+        engine.getAudio().newSound("check.wav", false);
+        engine.getAudio().newSound("win.wav", false);
+        engine.getAudio().newSound("lose.wav", false);
+        engine.getAudio().newSound("wrong.wav", false);
+
+
+        this.font = gr.newFont("coolvetica.otf", 20, false);
+        gr.setFont(this.font);
 
         this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (gr.getWidthLogic()/5)*4,(gr.getHeightLogic()/10)*9,200/2,75/2);
         this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (gr.getWidthLogic()/5),(gr.getHeightLogic()/10)*9,200/2,75/2);
@@ -136,6 +178,10 @@ public class MainSceneRead implements StateA {
                 this.engine.getAudio().playSound("cell");
             this.bCheck.handleEvent(event);
             this.bSurrender.handleEvent(event);
+            if(this.board.getLives() != this.lives){
+                this.engine.getAudio().playSound("wrong");
+                this.lives = this.board.getLives();
+            }
             if(this.board.getLives() < 3) // Si hay menos de 3 vidas puedes ver el video
                 this.bReward.handleEvent(event);
         }

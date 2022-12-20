@@ -3,6 +3,7 @@ package gdv.ucm.appnonogram;
 import android.content.res.Configuration;
 
 import com.example.libenginea.EngineA;
+import com.example.libenginea.FontA;
 import com.example.libenginea.GraphicsA;
 import com.example.libenginea.ImageA;
 import com.example.libenginea.InputA;
@@ -14,10 +15,7 @@ import java.util.Iterator;
 public class MainSceneRandom implements StateA {
     private EngineA engine;
 
-    public Board getBoard() {
-        return board;
-    }
-
+    private FontA font;
     private Board board;
     private Hints hints;
     private RenderBoard renderBoard;
@@ -30,29 +28,31 @@ public class MainSceneRandom implements StateA {
     private ImageA bRewardLock;
 
     private GraphicsA gr;
+    private int lives;
 
     public MainSceneRandom(EngineA engine, Board b) {
         this.engine = engine;
         this.engine.setSaveBoard(true);
+        this.engine.setRandomBoard(true);
 
         this.gr = this.engine.getGraphics();
         this.cols = b.getWidth();
         this.fils = b.getHeight();
         this.board = new Board(b);
+        this.lives = this.board.getLives();
         this.hints = new Hints(this.board);
         this.renderHints = new RenderHints(this.hints);
         this.renderBoard = new RenderBoard(this.board, this.gr);
 
-        if(!engine.getAudio().isLoaded("cell.wav"))
-            engine.getAudio().newSound("cell.wav", false);
-        if(!engine.getAudio().isLoaded("check.wav"))
-            engine.getAudio().newSound("check.wav", false);
-        if(!engine.getAudio().isLoaded("win.wav"))
-            engine.getAudio().newSound("win.wav", false);
-        if(!engine.getAudio().isLoaded("lose.wav"))
-            engine.getAudio().newSound("lose.wav", false);
-        if(!engine.getAudio().isLoaded("wrong.wav"))
-            engine.getAudio().newSound("wrong.wav", false);
+        engine.getAudio().newSound("cell.wav", false);
+        engine.getAudio().newSound("win.wav", false);
+        engine.getAudio().newSound("lose.wav", false);
+        engine.getAudio().newSound("wrong.wav", false);
+        engine.getAudio().newSoundAmbient("ambiente.wav");
+        engine.getAudio().playSound("ambiente");
+        this.font = gr.newFont("coolvetica.otf", 20, false);
+        gr.setFont(this.font);
+
         this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (gr.getWidthLogic()/5)*4,(gr.getHeightLogic()/10)*9,200/2,75/2);
         this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (gr.getWidthLogic()/5),(gr.getHeightLogic()/10)*9,200/2,75/2);
         this.bReward = new ButtonReward("videoVida.png", this.engine, (gr.getWidthLogic()/5),gr.getHeightLogic()/15,200/2,75/2);
@@ -63,25 +63,26 @@ public class MainSceneRandom implements StateA {
     public MainSceneRandom(EngineA engine, int cols, int fils) {
         this.engine = engine;
         this.engine.setSaveBoard(true);
+        this.engine.setRandomBoard(true);
 
         this.cols = cols;
         this.fils = fils;
         this.gr = this.engine.getGraphics();
         this.board = new Board(cols, fils);
+        this.lives = this.board.getLives();
         this.hints = new Hints(this.board);
         this.renderHints = new RenderHints(this.hints);
         this.renderBoard = new RenderBoard(this.board, this.gr);
 
-        if(!engine.getAudio().isLoaded("cell.wav"))
-            engine.getAudio().newSound("cell.wav", false);
-        if(!engine.getAudio().isLoaded("check.wav"))
-            engine.getAudio().newSound("check.wav", false);
-        if(!engine.getAudio().isLoaded("win.wav"))
-            engine.getAudio().newSound("win.wav", false);
-        if(!engine.getAudio().isLoaded("lose.wav"))
-            engine.getAudio().newSound("lose.wav", false);
-        if(!engine.getAudio().isLoaded("wrong.wav"))
-            engine.getAudio().newSound("wrong.wav", false);
+        engine.getAudio().newSound("cell.wav", false);
+        engine.getAudio().newSound("check.wav", false);
+        engine.getAudio().newSound("win.wav", false);
+        engine.getAudio().newSound("lose.wav", false);
+        engine.getAudio().newSound("wrong.wav", false);
+
+        this.font = gr.newFont("coolvetica.otf", 20, false);
+        gr.setFont(this.font);
+
         this.bCheck = new ButtonCheck("comprobar.png", this.engine, this.hints, (gr.getWidthLogic()/5)*4,(gr.getHeightLogic()/10)*9,200/2,75/2);
         this.bSurrender = new ButtonSurrender("rendirse.png", this.engine, (gr.getWidthLogic()/5),(gr.getHeightLogic()/10)*9,200/2,75/2);
         this.bReward = new ButtonReward("videoVida.png", this.engine, (gr.getWidthLogic()/5),gr.getHeightLogic()/15,200/2,75/2);
@@ -146,7 +147,6 @@ public class MainSceneRandom implements StateA {
                 graphics.drawImage(this.bRewardLock, 0, this.gr.getBorderTop(), 200 / 2, 75 / 2);
             else
                 graphics.drawImage(this.bRewardLock, (graphics.getWidthLogic() / 5), graphics.getHeightLogic() / 15, 200 / 2, 75 / 2);
-
         }
     }
 
@@ -162,9 +162,17 @@ public class MainSceneRandom implements StateA {
                 this.engine.getAudio().playSound("cell");
             this.bCheck.handleEvent(event);
             this.bSurrender.handleEvent(event);
+            if(this.board.getLives() != this.lives){
+                this.engine.getAudio().playSound("wrong");
+                this.lives = this.board.getLives();
+            }
             if(this.board.getLives() < 3) // Si hay menos de 3 vidas puedes ver el video
                 this.bReward.handleEvent(event);
         }
         input.clearEvents();
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }

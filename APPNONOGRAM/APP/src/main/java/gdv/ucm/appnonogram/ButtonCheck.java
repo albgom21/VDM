@@ -37,6 +37,7 @@ public class ButtonCheck implements InterfaceA {
         this.check = false;
         this.onScreen = 3000;
         this.audio = this.engine.getAudio();
+        this.engine.getAudio().newSound("check.wav", false);
     }
 
     public void setPos(int x, int y)

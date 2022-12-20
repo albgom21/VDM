@@ -54,6 +54,7 @@ public class EngineA implements Runnable, SensorEventListener {
     private boolean running;
 
     private boolean saveBoard;
+    private boolean randomBoard;
 
     private StateA currentScene;
     private InputA input;
@@ -89,7 +90,9 @@ public class EngineA implements Runnable, SensorEventListener {
         this.adRequest = adRequest;
         this.rewardObtain = false;
         this.filenameStats = filenameStats;
+
         this.saveBoard = false;
+        this.randomBoard = false;
 
         // SENSOR
         SensorManager sensorManager=(SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
@@ -326,6 +329,10 @@ public class EngineA implements Runnable, SensorEventListener {
             }
         });
     }
+
+    public boolean getRandomBoard() { return randomBoard; }
+
+    public void setRandomBoard(boolean randomBoard) { this.randomBoard = randomBoard; }
 
     public Context getContext() {return context; }
 

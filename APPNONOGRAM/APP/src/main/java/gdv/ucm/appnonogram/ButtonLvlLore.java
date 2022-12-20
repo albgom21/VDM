@@ -28,6 +28,7 @@ public class ButtonLvlLore implements InterfaceA {
         this.h = h;
         this.type = type;
         this.audio = this.engine.getAudio();
+        this.engine.getAudio().newSound("click.wav", false);
     }
 
     public void setPos(int x, int y)

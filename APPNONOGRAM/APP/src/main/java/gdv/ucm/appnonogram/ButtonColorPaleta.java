@@ -36,6 +36,8 @@ public class ButtonColorPaleta implements InterfaceA {
         this.h = h;
         this.color = color;
         this.audio = this.engine.getAudio();
+        this.engine.getAudio().newSound("click.wav", false);
+
         this.desbloqueado = desbloqueado;
         if(this.desbloqueado)
             this.img = this.engine.getGraphics().newImage(this.filename);

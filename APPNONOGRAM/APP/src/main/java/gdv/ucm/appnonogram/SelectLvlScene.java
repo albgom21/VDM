@@ -26,7 +26,7 @@ public class SelectLvlScene implements StateA {
 
         this.bLvls[0] = new ButtonLvl("4x4.png",engine, (gr.getWidthLogic()/4)  ,(gr.getHeightLogic()/5)*2,75,75, 4, 4);
         this.bLvls[1] = new ButtonLvl("5x5.png",engine,(gr.getWidthLogic()/2),(gr.getHeightLogic()/5)*2,  75,75, 5, 5);
-        this.bLvls[2] = new ButtonLvl("5x10.png",engine,(gr.getWidthLogic()/4)*3,(gr.getHeightLogic()/5)*2, 75,75, 6, 6);
+        this.bLvls[2] = new ButtonLvl("6x6.png",engine,(gr.getWidthLogic()/4)*3,(gr.getHeightLogic()/5)*2, 75,75, 6, 6);
         this.bLvls[3] = new ButtonLvl("8x8.png",engine,(gr.getWidthLogic()/4),(gr.getHeightLogic()/5)*3,  75,75, 8, 8);
         this.bLvls[4] = new ButtonLvl("10x10.png",engine,(gr.getWidthLogic()/2) ,(gr.getHeightLogic()/5)*3,75,75, 10 , 10);
         this.bLvls[5] = new ButtonLvl("10x15.png",engine,(gr.getWidthLogic()/4)*3 ,(gr.getHeightLogic()/5)*3,75,75, 10, 15);
