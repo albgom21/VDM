@@ -14,7 +14,8 @@ public class AudioA {
     private SoundPool soundPool;
     HashMap<String,SoundA> sounds = new HashMap<>();
     private MediaPlayer mPlayer;
-    AudioA(){
+    AudioA(AssetManager mgr){
+        this.mgr = mgr;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             this.soundPool = new SoundPool.Builder().setMaxStreams(10).build();
         }
@@ -67,10 +68,6 @@ public class AudioA {
 
     public boolean isLoaded(String id) {
         return sounds.containsKey(id);
-    }
-
-    public void setAssetManager(AssetManager mgr){
-        this.mgr = mgr;
     }
 
     public MediaPlayer getmPlayer() {

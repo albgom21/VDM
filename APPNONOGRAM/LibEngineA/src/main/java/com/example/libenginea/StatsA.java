@@ -1,7 +1,5 @@
 package com.example.libenginea;
 
-
-
 import java.io.Serializable;
 
 public class StatsA implements Serializable {
@@ -9,10 +7,10 @@ public class StatsA implements Serializable {
     private int paleta;
     private int monedas;
     private boolean[] paletas = new boolean[4]; // true desbloqueado false bloqueado
-    private boolean[] bosque = new boolean[20]; // true desbloqueado false bloqueado
-    private boolean[] emoji = new boolean[20]; // 1 desbloqueado 0 bloqueado
-    private boolean[] comida = new boolean[20]; // 1 desbloqueado 0 bloqueado
-    private boolean[] navidad = new boolean[20]; // 1 desbloqueado 0 bloqueado
+    private boolean[] bosque = new boolean[20];
+    private boolean[] emoji = new boolean[20];
+    private boolean[] comida = new boolean[20];
+    private boolean[] navidad = new boolean[20];
 
     public StatsA(){
         paletas[0] = true;
@@ -21,7 +19,7 @@ public class StatsA implements Serializable {
         emoji[0] = true;
         comida[0] = true;
         navidad[0] = true;
-        monedas = 1000;
+        monedas = 0;
     }
 
     public void setPaleta(int p){
@@ -76,5 +74,4 @@ public class StatsA implements Serializable {
     public void setNavidadDesbloqueado(int i) {
         navidad[i] = true;
     }
-
 }

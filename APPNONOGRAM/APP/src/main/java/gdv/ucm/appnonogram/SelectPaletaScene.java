@@ -1,7 +1,6 @@
 package gdv.ucm.appnonogram;
 
 import android.content.res.Configuration;
-import android.view.SurfaceView;
 
 import com.example.libenginea.EngineA;
 import com.example.libenginea.GraphicsA;
@@ -67,8 +66,7 @@ public class SelectPaletaScene implements StateA {
             graphics.drawImage(this.coins, graphics.getWidthLogic(), this.gr.getBorderTop(), 20, 20);
             graphics.drawText(s, graphics.logicToRealX(graphics.getWidthLogic() / 2), graphics.logicToRealY(graphics.getHeightLogic() / 4), 0x442700, null, graphics.scaleToReal(25));
         }
-        else
-        {
+        else {
             graphics.drawText(Integer.toString(engine.getStats().getMonedas()), graphics.logicToRealX(((graphics.getWidthLogic() / 5) * 4) - 35), graphics.logicToRealY(graphics.getHeightLogic() / 11), 0x442700, null, graphics.scaleToReal(20));
             graphics.drawImage(this.coins, (graphics.getWidthLogic() / 5) * 4, graphics.getHeightLogic() / 15, 20, 20);
             graphics.drawText(s, graphics.logicToRealX(graphics.getWidthLogic() / 2), graphics.logicToRealY(graphics.getHeightLogic() / 6), 0x442700, null, graphics.scaleToReal(20));

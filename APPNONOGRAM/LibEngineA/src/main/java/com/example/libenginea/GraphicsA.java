@@ -8,7 +8,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.graphics.fonts.Font;
 import android.view.SurfaceView;
 
 import java.io.IOException;
@@ -43,12 +42,11 @@ public class GraphicsA {
     private float factorX;
     private float factorY;
 
-
     public float getFactorScale() {
         return factorScale;
     }
 
-    GraphicsA(SurfaceView myView, Canvas canvas){
+    GraphicsA(SurfaceView myView, Canvas canvas, AssetManager mgr){
         this.myView = myView;
         this.paint = new Paint();
         this.canvas = canvas;
@@ -57,9 +55,7 @@ public class GraphicsA {
         this.logicHeight = 600;
 
         this.borderTop = 31;
-    }
 
-    public void setAssetManager(AssetManager mgr){
         this.mgr = mgr;
     }
 

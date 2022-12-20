@@ -36,7 +36,6 @@ public class WinScene implements StateA {
         this.renderBoard = new RenderBoard(this.b, this.gr);
         this.engine.getStats().addMoneda(coins);
         this.coins = gr.newImage("moneda.png");
-//        if(this.engine.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
 
         if(!random) //Si no es una escena random, pasamos al siguiente nivel
             this.bNext = new ButtonNext("siguiente.png",engine,(gr.getWidthLogic()/5)*4, (int)((gr.getHeightLogic()/6)*5.75), 200/2, 75/2, lvl, type);

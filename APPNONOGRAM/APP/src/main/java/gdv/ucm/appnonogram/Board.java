@@ -92,7 +92,6 @@ public class Board implements InterfaceA, Serializable {
    }
 
    // Getters
-
    public int getLvl() {return lvl;}
    public String getType() {return type;}
    public int getWidth() { return width; }

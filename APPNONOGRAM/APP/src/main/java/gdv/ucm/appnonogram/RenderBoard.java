@@ -1,6 +1,5 @@
 package gdv.ucm.appnonogram;
 
-
 import android.content.res.Configuration;
 
 import com.example.libenginea.EngineA;

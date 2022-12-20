@@ -7,12 +7,11 @@ import com.example.libenginea.FontA;
 import com.example.libenginea.GraphicsA;
 import com.example.libenginea.ImageA;
 import com.example.libenginea.InputA;
-import com.example.libenginea.ReadA;
 import com.example.libenginea.StateA;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
+import java.util.Objects;
 
 public class MainSceneRead implements StateA {
     private EngineA engine;
@@ -23,7 +22,6 @@ public class MainSceneRead implements StateA {
     private ButtonReward bReward;
     private ButtonCheck bCheck;
     private ButtonSurrender bSurrender;
-    private String filename;
     private String type;
     private int lvl;
     private int lives;
@@ -32,7 +30,6 @@ public class MainSceneRead implements StateA {
     private FontA font;
 
     private GraphicsA gr;
-
 
     public MainSceneRead(EngineA engine, Board b) {
         this.type = b.getType();
@@ -73,7 +70,6 @@ public class MainSceneRead implements StateA {
         this.engine.setSaveBoard(true);
         this.engine.setRandomBoard(false);
 
-        this.filename = filename;
         this.gr = this.engine.getGraphics();
         this.board = new Board(this.engine.getRead().newBoard(filename), this.lvl, this.type);
         this.lives = this.board.getLives();
@@ -112,13 +108,13 @@ public class MainSceneRead implements StateA {
             this.engine.setCurrentScene(scene);
         }
         if(this.hints.getEnd()) {
-            if(this.type == "a")
+            if(Objects.equals(this.type, "a"))
                 this.engine.getStats().setBosqueDesbloqueado(this.lvl);
-            else if(this.type == "b")
+            else if(Objects.equals(this.type, "b"))
                 this.engine.getStats().setEmojiDesbloqueado(this.lvl);
-            else if(this.type == "c")
+            else if(Objects.equals(this.type, "c"))
                 this.engine.getStats().setComidaDesbloqueado(this.lvl);
-            else if(this.type == "d")
+            else if(Objects.equals(this.type, "d"))
                 this.engine.getStats().setNavidadDesbloqueado(this.lvl);
             this.engine.getAudio().playSound("win");
             WinScene scene = new WinScene(this.engine, this.board,false,this.lvl+1,this.type,(this.board.getHeight()+this.board.getWidth())/2);

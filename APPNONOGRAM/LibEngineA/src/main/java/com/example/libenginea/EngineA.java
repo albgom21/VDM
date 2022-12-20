@@ -1,28 +1,19 @@
 package com.example.libenginea;
 
 import android.app.Activity;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Build;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
@@ -34,7 +25,6 @@ import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -48,6 +38,7 @@ public class EngineA implements Runnable, SensorEventListener {
     private AssetManager mgr;
 
     private Activity context;
+
     private StatsA stats;
 
     private Thread renderThread;
@@ -71,9 +62,8 @@ public class EngineA implements Runnable, SensorEventListener {
     private final String TAG = "MainActivity";
     private boolean rewardObtain;
     private ReadA read;
-//    private IntentSystemAndroid intentSystemAndroid;
 
-    public EngineA(SurfaceView myView, StatsA statsA, Activity c, AdRequest adRequest, String filenameStats) {
+    public EngineA(SurfaceView myView, Activity c, AdRequest adRequest, String filenameStats) {
         this.myView = myView;
         this.context = c;
         this.input = new InputA();
@@ -81,12 +71,9 @@ public class EngineA implements Runnable, SensorEventListener {
         this.mgr = myView.getContext().getAssets();
         this.holder = this.myView.getHolder();
         this.canvas = new Canvas();
-        this.graphics = new GraphicsA(this.myView, this.canvas);
-        this.audio = new AudioA();
-        this.graphics.setAssetManager(this.mgr);
-        this.audio.setAssetManager(this.mgr);
+        this.graphics = new GraphicsA(this.myView, this.canvas, this.mgr);
+        this.audio = new AudioA(this.mgr);
         this.read = new ReadA(this.mgr);
-        this.stats = statsA;
         this.adRequest = adRequest;
         this.rewardObtain = false;
         this.filenameStats = filenameStats;
@@ -99,10 +86,11 @@ public class EngineA implements Runnable, SensorEventListener {
         Sensor sensor=sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 
+        // ANUNCIO
         preloadReward();
     }
 
-    //bucle principal
+    //BUCLE PRINCIPAL
     @Override
     public void run() {
         if (renderThread != Thread.currentThread()) {
@@ -168,10 +156,12 @@ public class EngineA implements Runnable, SensorEventListener {
     protected void handleInputs() {
         this.currentScene.handleInputs(this.input);
     }
+
     protected void clearInputs() {
         this.input.clearEvents();
     }
 
+//-------------------------SERIALIZACIÓN Y DESERIALIZACIÓN---------------------------
     public void desSerialize(Serializable serializable, String file){
         try {
             // Creamos un FileInputStream para leer desde el archivo en el almacenamiento interno de la aplicación
@@ -180,7 +170,7 @@ public class EngineA implements Runnable, SensorEventListener {
             // Creamos un ObjectInputStream a partir del FileInputStream
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            // Leemos el objeto serializado del archivo y lo asignamos a una variable de tipo Persona
+            // Leemos el objeto serializado del archivo y lo asignamos a una variable de tipo Serializable
             serializable = (Serializable) ois.readObject();
 
             // Cerramos los streams
@@ -192,6 +182,7 @@ public class EngineA implements Runnable, SensorEventListener {
             e.printStackTrace();
         }
     }
+
     public void serialize(Serializable serializable, String file){
         try {
             // Creamos un FileOutputStream para escribir en un archivo en el almacenamiento interno de la aplicación
@@ -212,16 +203,11 @@ public class EngineA implements Runnable, SensorEventListener {
         }
     }
 
-    public boolean getSaveBoard() {
-        return saveBoard;
-    }
-    public void setSaveBoard(Boolean b){
-        saveBoard = b;
-    }
 
-    //Métodos sincronización (parar y reiniciar aplicación)
+//----------Métodos sincronización (parar y reiniciar aplicación)--------------------
     public void resume() {
         desSerialize(stats,filenameStats);
+
         if (!this.running) {
             // Solo hacemos algo si no nos estábamos ejecutando ya
             // (programación defensiva)
@@ -235,6 +221,7 @@ public class EngineA implements Runnable, SensorEventListener {
 
     public void pause() {
         serialize(stats,filenameStats);
+
         if (this.running) {
             this.running = false;
             this.audio.getmPlayer().pause();
@@ -250,9 +237,10 @@ public class EngineA implements Runnable, SensorEventListener {
             }
         }
     }
+
+//-----------------------------------------ANUNCIOS----------------------------------
     public void preloadReward()
     {
-        // LOAD ----------------------------------------------------------------------------------
         RewardedAd.load(this.context, "ca-app-pub-3940256099942544/5224354917",
                 adRequest, new RewardedAdLoadCallback() {
                     @Override
@@ -270,7 +258,6 @@ public class EngineA implements Runnable, SensorEventListener {
                 });
 
     }
-
     public void showReward() {
         Activity act = this.context;
         this.context.runOnUiThread(new Runnable() {
@@ -291,7 +278,6 @@ public class EngineA implements Runnable, SensorEventListener {
                         @Override
                         public void onAdFailedToShowFullScreenContent(AdError adError) {
                             // Called when ad fails to show.
-//                           preloadReward();
                             Log.e(TAG, "Ad failed to show fullscreen content.");
                             //mRewardedAd = null;
                         }
@@ -315,7 +301,6 @@ public class EngineA implements Runnable, SensorEventListener {
                         @Override
                         public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
                             // Handle the reward.
-//                            currentScene.
                             rewardObtain = true;
                         }
                     });
@@ -330,9 +315,38 @@ public class EngineA implements Runnable, SensorEventListener {
         });
     }
 
+//-------------------------------------SENSOR GIROSCOPIO-------------------------------------
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        float valorGiroscopio = 0;
+        if(this.context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            valorGiroscopio = sensorEvent.values[1]; // EN EL EJE Y
+        else
+            valorGiroscopio = sensorEvent.values[0]; // EN EL EJE X
+
+        if(valorGiroscopio>3.0){
+            int p = this.stats.getPaleta()-1;
+            if(p >= 0 && this.stats.isPaletaUnlock(p))
+                this.stats.setPaleta(p);
+        }
+        else if(valorGiroscopio<-3.0){
+            int p = this.stats.getPaleta()+1;
+            if(p <= 3 && this.stats.isPaletaUnlock(p))
+                this.stats.setPaleta(p);
+        }
+    }
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+
+//------------------------------------GETTERS Y SETTERS------------------------------------
     public boolean getRandomBoard() { return randomBoard; }
 
-    public void setRandomBoard(boolean randomBoard) { this.randomBoard = randomBoard; }
+    public boolean getSaveBoard() {
+        return saveBoard;
+    }
 
     public Context getContext() {return context; }
 
@@ -358,32 +372,11 @@ public class EngineA implements Runnable, SensorEventListener {
         return this.input;
     }
 
-    public void setCurrentScene(StateA currentScene) {
-        this.currentScene = currentScene;
-    }
+    public void setCurrentScene(StateA currentScene) { this.currentScene = currentScene; }
 
-    @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        float valorGiroscopio = 0;
-        if(this.context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-            valorGiroscopio = sensorEvent.values[1]; // EN EL EJE Y
-        else
-            valorGiroscopio = sensorEvent.values[0]; // EN EL EJE X
+    public void setStats(StatsA stats) { this.stats = stats;}
 
-        if(valorGiroscopio>3.0){
-            int p = this.stats.getPaleta()-1;
-            if(p >= 0 && this.stats.isPaletaUnlock(p))
-                this.stats.setPaleta(p);
-        }
-        else if(valorGiroscopio<-3.0){
-            int p = this.stats.getPaleta()+1;
-            if(p <= 3 && this.stats.isPaletaUnlock(p))
-                this.stats.setPaleta(p);
-        }
-    }
+    public void setRandomBoard(boolean randomBoard) { this.randomBoard = randomBoard; }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-
-    }
+    public void setSaveBoard(Boolean b){ saveBoard = b;}
 }

@@ -1,4 +1,5 @@
 package gdv.ucm.appnonogram;
+
 import android.content.res.Configuration;
 
 import com.example.libenginea.EngineA;
@@ -11,7 +12,6 @@ public class RenderCell {
             side = (int)(((gr.getWindow()/4)*2)/c.getMedia());
         else
             side = (int)(((gr.getWindow()/3)*2)/c.getMedia());
-
 
         int sep = side/10;
 

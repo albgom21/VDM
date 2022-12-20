@@ -3,7 +3,6 @@ package com.example.libenginea;
 import android.view.MotionEvent;
 import android.view.View;
 import java.util.ArrayList;
-import java.util.List;
 
 public class InputA implements View.OnTouchListener{
     private long startTime = 0;
