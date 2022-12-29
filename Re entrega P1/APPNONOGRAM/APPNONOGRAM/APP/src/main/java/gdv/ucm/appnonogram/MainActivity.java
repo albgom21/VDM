@@ -15,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Obtener AssetManager
         this.mgr = getAssets();
 
         //Crear el SurfaceView que "contendrá" la escena

@@ -15,8 +15,9 @@ public class SelectLvlScene implements IState {
 
     public SelectLvlScene(IEngine engine) {
         IGraphics gr = engine.getGraphics();
-        this.bLvls = new ButtonLvl[6];
 
+        //Botones distintos niveles
+        this.bLvls = new ButtonLvl[6];
         this.bLvls[0] = new ButtonLvl("4x4.png",engine, (gr.getWidthLogic()/3)  ,(gr.getHeightLogic()/5)*2,50,50, 4, 4);
         this.bLvls[1] = new ButtonLvl("5x5.png",engine,(gr.getWidthLogic()/2),(gr.getHeightLogic()/5)*2,  50,50, 5, 5);
         this.bLvls[2] = new ButtonLvl("5x10.png",engine,(gr.getWidthLogic()/3)*2,(gr.getHeightLogic()/5)*2, 50,50, 5, 10);

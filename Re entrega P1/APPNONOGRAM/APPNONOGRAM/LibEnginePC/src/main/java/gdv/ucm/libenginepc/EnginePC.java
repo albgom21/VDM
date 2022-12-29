@@ -10,10 +10,10 @@ import gdv.ucm.libengine.IInput;
 import gdv.ucm.libengine.IState;
 
 public class EnginePC implements Runnable, IEngine {
-    private JFrame myView;      //VENTANA
+    private JFrame myView;           //VENTANA
     private Thread renderThread;    //HILO DE RENDER
-    private boolean running;    //BOOLEANO PARA SABER SI LA APLIACION ESTA CORRIENDO
-    private InputPC input;      //CONTROL DE INPUT
+    private boolean running;        //BOOLEANO PARA SABER SI LA APLIACION ESTA CORRIENDO
+    private InputPC input;          //CONTROL DE INPUT
     private IState currentScene;    //ESCENA ACTUAL
     private GraphicsPC graphics;    //GRAPHICS QUE DIBUJA
     private AudioPC audio;          //GESTOR DE AUDIO
@@ -63,9 +63,7 @@ public class EnginePC implements Runnable, IEngine {
         }
     }
 
-    protected void update(double deltaTime) {
-        this.currentScene.update(deltaTime);
-    }   //UPDATE DE LA ESCENA
+    protected void update(double deltaTime) { this.currentScene.update(deltaTime); } //UPDATE DE LA ESCENA
 
     protected void render() {
         // "Borramos" el fondo.
@@ -74,25 +72,25 @@ public class EnginePC implements Runnable, IEngine {
         // Pintamos la escena
         this.currentScene.render(this.graphics);
 
-        //Border
-        this.graphics.setColor(0x000000);
-
-        // DIBUJAR BORDES LATERALES
-        this.graphics.fillRect(0,0,this.graphics.borderWidth,this.graphics.getHeight());
-        this.graphics.fillRect(this.graphics.getWidth()-this.graphics.borderWidth,0,this.graphics.borderWidth,this.graphics.getHeight());
-
-        // DIBUJAR BORDES Up & Down
-        this.graphics.fillRect(0,this.graphics.borderTop,this.graphics.getWidth(),this.graphics.borderHeight);
-        this.graphics.fillRect(0,this.graphics.getHeight(),this.graphics.getWidth(),-this.graphics.borderHeight);
+//        //Border
+//        this.graphics.setColor(0x000000);
+//
+//        // DIBUJAR BORDES LATERALES
+//        this.graphics.fillRect(0,0,this.graphics.borderWidth,this.graphics.getHeight());
+//        this.graphics.fillRect(this.graphics.getWidth()-this.graphics.borderWidth,0,this.graphics.borderWidth,this.graphics.getHeight());
+//
+//        // DIBUJAR BORDES Up & Down
+//        this.graphics.fillRect(0,this.graphics.borderTop,this.graphics.getWidth(),this.graphics.borderHeight);
+//        this.graphics.fillRect(0,this.graphics.getHeight(),this.graphics.getWidth(),-this.graphics.borderHeight);
 
     }
 
     protected void handleInputs() {     //CONTROL DE INPUT DE LA ESCENA ACTUAL
         this.currentScene.handleInputs(this.input);
-    }
+    } //MANEJAR INPUTS
     protected void clearInputs() {
         this.input.clearEvents();
-    }       //LIMPIAR INPUTS
+    }                    //LIMPIAR INPUTS
 
     //Métodos sincronización (parar y reiniciar aplicación)
     public void resume() {

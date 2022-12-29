@@ -6,5 +6,5 @@ public interface IEngine {
       IState getState();       // Obtener la escena actual
       IInput getInput();       // Obtener el módulo del input
 
-      void setCurrentScene(IState currentScene);
+      void setCurrentScene(IState currentScene); // Establecer una escena
 }

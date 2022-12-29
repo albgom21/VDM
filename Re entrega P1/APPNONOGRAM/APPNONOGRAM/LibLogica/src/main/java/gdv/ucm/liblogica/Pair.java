@@ -1,6 +1,6 @@
 package gdv.ucm.liblogica;
 
-public class Pair {
+public class Pair { // REPRESENTACION DE UNA PAR DE INTS
     int a;
     int b;
     Pair(int a, int b){

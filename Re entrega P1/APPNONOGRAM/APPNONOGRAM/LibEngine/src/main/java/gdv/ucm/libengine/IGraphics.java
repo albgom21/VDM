@@ -29,12 +29,10 @@ public interface IGraphics {
     // Dibujar texto
     void drawText(String text, int x, int y, int color, IFont font, float tam);
 
+    // Transformaciones
     int logicToRealX(int x);
     int logicToRealY(int y);
     int scaleToReal(int s);
-
-    int getWidthString(String text);
-    int getHeightString(String text);
 
     //Getters
     int getWidth();
@@ -43,6 +41,8 @@ public interface IGraphics {
     int getHeightLogic();
     int getBorderTop();
     int getWindow();
+    int getWidthString(String text);
+    int getHeightString(String text);
 
     //Setters
     void setResolution(int w, int h);

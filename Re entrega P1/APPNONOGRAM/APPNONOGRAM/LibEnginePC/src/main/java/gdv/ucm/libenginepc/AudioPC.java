@@ -20,7 +20,7 @@ public class AudioPC implements IAudio {
     public ISound newSound(String file, boolean loop) {     //NUEVO SONIDO
         AudioInputStream audioStream = null;
         Clip clip = null;
-        if (!isLoaded(file)){
+        if (!isLoaded(file)){ // Si no esta cargado el sonido
             try {
             File audioFile = new File("data/"+file);
             audioStream = AudioSystem.getAudioInputStream(audioFile);
@@ -54,7 +54,7 @@ public class AudioPC implements IAudio {
     public ISound newSoundAmbient(String file) {        //NUEVA MUSICA
         AudioInputStream audioStream = null;
         Clip clip = null;
-        if(!isLoaded(file)){
+        if(!isLoaded(file)){ // Si no esta cargado la musica
             try {
                 File audioFile = new File("data/"+file);
                 audioStream = AudioSystem.getAudioInputStream(audioFile);
@@ -85,7 +85,7 @@ public class AudioPC implements IAudio {
     }
 
     @Override
-    public void playSound(String id) {      //TOCAR SONIDO DESDE EL PRINCIPIO
+    public void playSound(String id) {     //REPRODUCIR EL SONIDO DESDE EL PRINCIPIO
         sounds.get(id+".wav").getClip().setFramePosition(0);
         sounds.get(id+".wav").play();
     }
@@ -93,5 +93,5 @@ public class AudioPC implements IAudio {
     @Override
     public boolean isLoaded(String id) {
         return sounds.containsKey(id);
-    }   //SI ESTA CARGADO
+    }  //SI EL SONIDO ESTA CARGADO
 }

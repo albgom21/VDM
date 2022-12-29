@@ -8,7 +8,8 @@ public class ImageA implements IImage {
 
     ImageA(Bitmap img){this.img = img;}
 
-    public Bitmap getImg(){return img;}     //IMAGEN
+    //GETTERS
+    public Bitmap getImg(){return img;}                         // OBTENER IMAGEN
 
     @Override
     public int getWidth() {
@@ -18,5 +19,5 @@ public class ImageA implements IImage {
     @Override
     public int getHeight() {
         return this.img.getHeight();
-    }       //ALTURA IMAGEN
+    }     //ALTURA IMAGEN
 }

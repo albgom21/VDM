@@ -13,20 +13,23 @@ import gdv.ucm.libengine.IAudio;
 import gdv.ucm.libengine.ISound;
 
 public class AudioA implements IAudio {
-    private AssetManager mgr;       //ASSET MANAGER
-    private SoundPool soundPool;    //SOUNDPOOL
-    HashMap<String,SoundA> sounds = new HashMap<>();    //MAPA DE CLAVE VALOR CON NOMBRE SONIDO
-    private MediaPlayer mPlayer;        //MEDIAPLAYER
+    private AssetManager mgr;                           // ASSET MANAGER
+    private SoundPool soundPool;                        // SOUNDPOOL para sonidos
+    HashMap<String,SoundA> sounds = new HashMap<>();    // MAPA DE CLAVE VALOR CON NOMBRE SONIDO
+    private MediaPlayer mPlayer;                        // MEDIAPLAYER para musica
+
+
     AudioA(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             this.soundPool = new SoundPool.Builder().setMaxStreams(10).build();
-        }
+
         mPlayer = new MediaPlayer();
         mPlayer.reset();
     }
+
     @Override
-    public ISound newSound(String file, boolean loop) {     //CREA UN NUEVO SONIDO QUE PUEDE ESTAR EN BUCLE O NO
-        if(!isLoaded(file)){
+    public ISound newSound(String file, boolean loop) { //CREA UN NUEVO SONIDO QUE PUEDE ESTAR EN BUCLE O NO
+        if(!isLoaded(file)){ // Si no estaba cargado el sonido
             int soundId = -1;
             try {
                 AssetFileDescriptor assetDescriptor = mgr.openFd(file);
@@ -45,8 +48,8 @@ public class AudioA implements IAudio {
     }
 
     @Override
-    public ISound newSoundAmbient(String file) {        //CREA NUEVA MUSICA
-        if(!isLoaded(file)){
+    public ISound newSoundAmbient(String file) {   //CREA NUEVA MUSICA AMBIENTE
+        if(!isLoaded(file)){ // Si no estaba cargada la musica
             try {
                 AssetFileDescriptor afd = mgr.openFd(file);
                 mPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
@@ -67,20 +70,17 @@ public class AudioA implements IAudio {
     }
 
     @Override
-    public void playSound(String id) {      //TOCAR MUSICA
+    public void playSound(String id) {    // REPRODUCIR SONIDO
         soundPool.play(sounds.get(id+".wav").getId(), 1, 1,1, sounds.get(id+".wav").getLoop(), 1);
     }
 
     @Override
-    public boolean isLoaded(String id) {       //COMPRUEBA SI ESTA CARGADO
+    public boolean isLoaded(String id) {   // COMPRUEBA SI ESTA CARGADO
         return sounds.containsKey(id);
     }
 
-    public void setAssetManager(AssetManager mgr){
-        this.mgr = mgr;
-    }       //PONER ASSET MANAGER
+    // SETTERS Y GETTERS
+    public void setAssetManager(AssetManager mgr){ this.mgr = mgr;}
 
-    public MediaPlayer getmPlayer() {
-        return this.mPlayer;
-    }
+    public MediaPlayer getmPlayer() {return this.mPlayer;}
 }

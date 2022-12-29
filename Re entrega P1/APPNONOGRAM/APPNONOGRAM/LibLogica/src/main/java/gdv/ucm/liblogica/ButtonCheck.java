@@ -19,7 +19,7 @@ public class ButtonCheck implements IInterface {
     private String s2;
     private boolean check;
     private long timer;
-    private int onScreen;
+    private int onScreen; // Tiempo que esta el efecto check
 
     private Hints hints;
     private IAudio audio;

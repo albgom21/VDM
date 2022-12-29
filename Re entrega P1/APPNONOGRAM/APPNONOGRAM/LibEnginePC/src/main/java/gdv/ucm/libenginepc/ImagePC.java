@@ -10,14 +10,15 @@ public class ImagePC implements IImage {
         this.img = img;
     }
 
-    public Image getImg(){return this.img;}     //IMAGEN
+    //GETTERS
+    public Image getImg(){return this.img;}                              //IMAGEN
     @Override
     public int getWidth() {
         return this.img.getWidth(null);
-    }           //ANCHO DE LA IMAGEN
+    }    //ANCHO DE LA IMAGEN
 
     @Override
     public int getHeight() {
         return this.img.getHeight(null);
-    }           //ALTO DE LA IMAGEN
+    }   //ALTO DE LA IMAGEN
 }

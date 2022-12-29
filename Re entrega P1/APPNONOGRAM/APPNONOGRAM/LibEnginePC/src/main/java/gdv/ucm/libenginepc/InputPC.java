@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import gdv.ucm.libengine.IInput;
 
 public class InputPC implements IInput, MouseListener {
-    public ArrayList<Event> eventos;        //EVENTOS DE INPUT
+    public ArrayList<Event> eventos;                 //EVENTOS DE INPUT
 
     InputPC(){
         eventos = new ArrayList<>();
     }
 
-    public void addEvent(MouseEvent evento){        //AÑADIR LOS DIFERENTES EVENTOS
+    public void addEvent(MouseEvent evento){         //AÑADIR LOS DIFERENTES EVENTOS
         InputTouchType tipo = null;
 
         if(evento.getID() == MouseEvent.MOUSE_PRESSED)
@@ -30,12 +30,12 @@ public class InputPC implements IInput, MouseListener {
     @Override
     public ArrayList<Event> getEvents() {
         return eventos;
-    }       //PILLAR LISTA DE EVENTOS
+    }           //OBTENER LISTA DE EVENTOS
 
     @Override
     public void clearEvents() {
         eventos.clear();
-    }       //LIMPIAR EVENTOS
+    }                   //LIMPIAR EVENTOS
 
     @Override
     public void clearIndexEvent(int i) {

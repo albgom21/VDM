@@ -1,8 +1,6 @@
 package com.example.libenginea;
 
 import android.content.res.AssetManager;
-import android.graphics.Canvas;
-import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
@@ -16,13 +14,13 @@ public class EngineA implements Runnable, IEngine {
     private SurfaceView myView;
     private AssetManager mgr;
 
-    private Thread renderThread;
-    private boolean running;
+    private Thread renderThread; // Hilo de render
+    private boolean running;     // Saber si se está ejecutando
 
-    private IState currentScene;
-    private IInput input;
-    private GraphicsA graphics;
-    private AudioA audio;
+    private IState currentScene; // Escena actual
+    private IInput input;        // manager de input
+    private GraphicsA graphics;  // Manager de graficos
+    private AudioA audio;        // Manager de audio
 
     public EngineA(SurfaceView myView, int logicWidth, int logicHeight){
         this.myView = myView;
@@ -34,7 +32,7 @@ public class EngineA implements Runnable, IEngine {
         this.audio.setAssetManager(this.mgr);
     }
 
-    //bucle principal
+    // Bucle principal
     @Override
     public void run() {
         if (renderThread != Thread.currentThread()) {
@@ -68,9 +66,7 @@ public class EngineA implements Runnable, IEngine {
         }
     }
 
-    protected void update(double deltaTime) {
-        this.currentScene.update(deltaTime);
-    }
+    protected void update(double deltaTime) { this.currentScene.update(deltaTime);} //UPDATE ESCENA
 
     protected void render() {
         // "Borramos" el fondo.
@@ -82,10 +78,10 @@ public class EngineA implements Runnable, IEngine {
 
     protected void handleInputs() {       //GESTION DEL INPUT
         this.currentScene.handleInputs(this.input);
-    }
+    } //MANEJAR INPUTS
     protected void clearInputs() {
         this.input.clearEvents();
-    }           //LIMPIAR INPUTS
+    }                    //LIMPIAR INPUTS
 
     //Métodos sincronización (parar y reiniciar aplicación)
     public void resume() {
@@ -115,6 +111,7 @@ public class EngineA implements Runnable, IEngine {
             }
         }
     }
+
     //GETTERS Y SETTERS
     @Override
     public IGraphics getGraphics() {

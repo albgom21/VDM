@@ -56,7 +56,7 @@ public class Board implements IInterface {
 
 
    @Override
-   public void render(IGraphics g){ }
+   public void render(IGraphics g){}
 
    @Override
    public void update(Double deltaTime) {}

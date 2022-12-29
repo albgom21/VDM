@@ -23,7 +23,7 @@ public class TitleScene implements IState {
         engine.getAudio().playSound("ambiente");
 
         this.font = gr.newFont("coolvetica.otf", 20, false);
-       gr.setFont(this.font);
+        gr.setFont(this.font);
 
         this.logo = gr.newImage("logo.png");
         this.bPlay = new ButtonPlay("jugar.png",engine, (gr.getWidthLogic()/2),(gr.getHeightLogic()/10)*6,200,75);

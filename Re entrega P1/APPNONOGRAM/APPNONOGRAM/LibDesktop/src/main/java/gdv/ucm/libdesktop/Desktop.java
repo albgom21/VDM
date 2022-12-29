@@ -16,6 +16,6 @@ public class Desktop {
         EnginePC engine = new EnginePC(renderView);     //MOTOR
         TitleScene scene = new TitleScene(engine);      //PRIMERA ESCENA
         engine.setCurrentScene(scene);
-        engine.resume();            //COMIENZA LA EJECUCION
+        engine.resume();                                //COMIENZA LA EJECUCION
     }
 }

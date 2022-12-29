@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import gdv.ucm.libengine.IEngine;
-import gdv.ucm.libengine.IFont;
 import gdv.ucm.libengine.IGraphics;
-import gdv.ucm.libengine.IImage;
 import gdv.ucm.libengine.IState;
 import gdv.ucm.libengine.IInput;
 
@@ -20,7 +18,7 @@ public class MainScene implements IState {
     private ButtonSurrender bSurrender;
 
 
-    public MainScene(IEngine engine, int cols, int fils) {
+    public MainScene(IEngine engine, int cols, int fils) { //ESCENA DE JUEGO
         this.engine = engine;
         IGraphics gr = this.engine.getGraphics();
         this.board = new Board(cols, fils);
@@ -39,7 +37,7 @@ public class MainScene implements IState {
     public void update(double deltaTime) {
         this.bCheck.update(deltaTime);
         this.hints.update(deltaTime);
-        if(this.hints.getEnd()) {
+        if(this.hints.getEnd()) { // SI EL JUGADOR HA COMPLETADO EL NIVEL
             this.engine.getAudio().playSound("win");
             WinScene scene = new WinScene(this.engine, this.board);
             this.engine.setCurrentScene(scene);

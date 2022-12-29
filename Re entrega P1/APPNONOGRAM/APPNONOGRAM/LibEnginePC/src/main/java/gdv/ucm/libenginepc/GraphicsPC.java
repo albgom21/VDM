@@ -25,16 +25,18 @@ public class GraphicsPC implements IGraphics {
     private FontPC font;
     private Graphics2D graphics2D;
 
+    // Tam logico
     private int logicWidth;
     private int logicHeight;
 
-    public int borderWidth;
-    public int borderHeight;
-
-    public int borderTop;
+    // Medidas de bordes
+    private int borderWidth;
+    private int borderHeight;
+    private int borderTop;
 
     private int window;
 
+    // Factores de escala
     private float factorScale;
     private float factorX;
     private float factorY;
@@ -66,6 +68,7 @@ public class GraphicsPC implements IGraphics {
         this.factorY = (float)getHeight() / (float)this.logicHeight;
         this.factorScale = Math.min(this.factorX, this.factorY);
 
+        // Establecer bordes
         if(((float)getWidth()/(float)getHeight())<((float)2/(float)3))
         {
             this.window = (int)(this.logicWidth * this.factorX);
@@ -77,76 +80,42 @@ public class GraphicsPC implements IGraphics {
             int a = (int) ((getWidth() - this.window) / 2);
             this.borderWidth = a; //Bordes Laterales
         }
-        this.borderTop = this.myView.getInsets().top;       //TOMANDO EL INSET SUPERIOR
+        this.borderTop = this.myView.getInsets().top;            // TOMANDO EL INSET SUPERIOR
     }
 
-    public void show() { this.bufferStrategy.show(); }      //MUESTRA EL BUFFER STRATEGY
+    // METODOS COLOR
+    @Override
+    public void setColor(int color) { this.graphics2D.setColor(new Color(color)); } // CAMBIA COLOR
 
     @Override
-    public int getWidth() { return this.myView.getWidth();}     //ANCHO DE LA VENTANA
-    @Override
-    public int getHeight() {
-        return this.myView.getHeight();
-    }       //ALTO DE LA VENTANA
-
-    @Override
-    public int getHeightLogic() { return this.logicHeight; }        //ALTURA LOGICA
-
-    @Override
-    public int getBorderTop() {
-        return this.borderTop;
-    }       //BORDE SUPERIOR
-
-    @Override
-    public void setResolution(int w, int h) {       //ACTUALIZA LA RESOLUCION
-        this.myView.setSize(w, h);
-
-        this.factorX = (float)w / (float)this.logicWidth;
-        this.factorY = (float)h / (float)this.logicHeight;
-        this.factorScale = Math.min(this.factorX, this.factorY);
-
-        if(((float)getWidth()/(float)getHeight())<((float)2/(float)3))      //DEPENDIENDO DE LA RESOLUCION DE LA VENTANA SE CREAN LOS BORDES POR ARRIBA Y ABAJO O LOS LADOS
-        {
-            this.window = (int)(this.logicWidth * this.factorX);
-            int a = (int) ((getHeight() - (this.logicHeight * this.factorX)) / 2);
-            this.borderHeight = a; //Bordes arriba y abajo
-            this.borderWidth=0;
-        }
-        else {
-            this.window = (int)(this.logicWidth*this.factorY);
-            int a = (int) ((getWidth() - (this.logicWidth * this.factorY)) / 2);
-            this.borderWidth = a; //Bordes Laterales
-            this.borderHeight=0;
-        }
+    public void clear(int color) {                                       //LIMPIA PANTALLA CON COLOR
+        this.graphics2D.setColor(new Color(color));
+        this.graphics2D.fillRect(0,0, this.getWidth(), this.getHeight());
+        this.graphics2D.setPaintMode();
     }
 
-    @Override
-    public void setFont(IFont font) {       //PONE UNA FUENTE
-        this.font = (FontPC)font;
-        this.graphics2D.setFont(((FontPC) font).getFont());
-    }
+    //METODOS PARA GESTION DE FRAME
+    public void show() { this.bufferStrategy.show(); }           // MUESTRA EL BUFFER STRATEGY
 
-    public void prepareFrame() {        //ACTUALIZA LA NUEVA RESOLUCION EN CADA FRAME
+    public void prepareFrame() {                                // ACTUALIZA LA NUEVA RESOLUCION EN CADA FRAME
         setResolution(getWidth(),getHeight());
         this.graphics2D = (Graphics2D)this.bufferStrategy.getDrawGraphics();
     }
 
     public void finishFrame() {
         this.graphics2D.dispose();
-    }       //LIBERA EL GRAPHICS
+    }    // LIBERA EL GRAPHICS
 
-    public boolean cambioBuffer(){      //CAMBIA EL BUFFER
+    public boolean cambioBuffer(){                              // CAMBIA EL BUFFER
         if(bufferStrategy.contentsRestored()){
             return false; // se ha restaurado en algun momento el bufer
         }
         return !this.bufferStrategy.contentsLost();
     }
 
+    // METODOS PARA CREAR RECURSOS
     @Override
-    public int getWidthLogic() { return this.logicWidth; }      //ANCHO LOGICO
-
-    @Override
-    public IImage newImage(String filename) { //ruta nombreproyecto/data        //CREA UNA NUEVA IMAGEN
+    public IImage newImage(String filename) { //ruta nombreproyecto/  //CREA UNA NUEVA IMAGEN
 
         Image img = null;
         try {
@@ -159,7 +128,7 @@ public class GraphicsPC implements IGraphics {
     }
 
     @Override
-    public IFont newFont(String filename, int size, boolean isBold) {       //CREA UNA NUEVA FUENTE
+    public IFont newFont(String filename, int size, boolean isBold) {   //CREA UNA NUEVA FUENTE
         InputStream is = null;
         Font font = null;
         try {
@@ -181,35 +150,24 @@ public class GraphicsPC implements IGraphics {
         return fontPC;
     }
 
+    // METODOS PARA DIBUJAR
     @Override
     public void drawImage(IImage image, int x, int y, int w, int h) {       //DIBUJA LA IMAGEN CON POSICION Y TAMAÑO
         this.graphics2D.drawImage(((ImagePC) image).getImg(),
-                                logicToRealX(x) - (scaleToReal(w)/2),logicToRealY(y) - (scaleToReal(h)/2),
-                                   (scaleToReal(w)),(scaleToReal(h)),null);
+                logicToRealX(x) - (scaleToReal(w)/2),logicToRealY(y) - (scaleToReal(h)/2),
+                (scaleToReal(w)),(scaleToReal(h)),null);
     }
 
     public void drawImage(IImage image, int x, int y) {     //DIBUJA LA IMAGEN CON UNICAMENTE LA POSICION
         this.graphics2D.drawImage(((ImagePC) image).getImg(),logicToRealX(x),logicToRealY(y),null);
     }
 
-    @Override
-    public void setColor(int color) {
-        this.graphics2D.setColor(new Color(color)); //new Color
-    }
-
-    @Override
-    public void clear(int color) {          //LIMPIA LA PANTALLA
-        this.graphics2D.setColor(new Color(color)); //new Color
-        this.graphics2D.fillRect(0,0, this.getWidth(), this.getHeight());
-        this.graphics2D.setPaintMode();
-    }
-
-    @Override
+    @Override                                               //DIBUJA CUADRADO RELLENO
     public void fillSquare(int cx, int cy, int side) {      //RELLENAR CUADRADO
         this.graphics2D.fillRect(cx,cy,side,side);
     }
 
-    @Override
+    @Override                                               // DIBUJA RECTANGULO RELLENO
     public void fillRect(int x, int y, int w, int h) {      //RELLENAR RECTANGULO
         this.graphics2D.fillRect(x,y,w,h);
     }
@@ -220,35 +178,34 @@ public class GraphicsPC implements IGraphics {
         this.graphics2D.setPaintMode();
     }
 
-    @Override
-    public void drawLine(int initX, int initY, int endX, int endY) {        //DIBUJA LINEA
+    @Override                                                //DIBUJA LINEA
+    public void drawLine(int initX, int initY, int endX, int endY) {
         this.graphics2D.drawLine(initX,initY,endX,endY);
     }
 
-    @Override
-    public void drawText(String text, int x, int y, int color,IFont font, float tam) {      //DIBUJA TEXTO
+    @Override                                                //DIBUJA TEXTO
+    public void drawText(String text, int x, int y, int color,IFont font, float tam) {
         FontPC f2 = null;
         if(tam!=-1) {
             Font f = this.font.getFont().deriveFont(tam);
             f2 = new FontPC(f);
         }
-
         if(font != null)
             setFont(font);
         else if(f2 != null)
             setFont(f2);
-
         this.graphics2D.setColor(new Color (color));
         this.graphics2D.drawString(text, x - (getWidthString(text)/2), y - (getHeightString(text)/2));
     }
 
-    @Override
-    public void drawRect(int x, int y, int width, int height) {     //DIBUJA RECTANGULO EN POSICION Y TAMAÑO
+    @Override                                               //DIBUJA RECTANGULO
+    public void drawRect(int x, int y, int width, int height) {
         this.graphics2D.drawRect(x,y, width,height);
     }
 
+    //CONVERSORES DE COORDENADAS
     @Override
-    public int logicToRealX(int x) { return (int)(x*factorScale + borderWidth); }       //CONVERSOR DE TAMAÑO LOGICO A REAL EN X
+    public int logicToRealX(int x) { return (int)(x*factorScale + borderWidth); }
 
     @Override
     public int logicToRealY(int y) {        //CONVERSOR DE TAMAÑO LOGICO A REAL EN Y
@@ -258,14 +215,34 @@ public class GraphicsPC implements IGraphics {
     @Override
     public int scaleToReal(int s) {
         return (int)(s*(factorScale));
-    }       //CONVERSOR DE ESCALA
+    }
+
+    //GETTERS
+    @Override
+    public int getWidth() { return this.myView.getWidth();}      // ANCHO DE LA VENTANA
+    @Override
+    public int getHeight() {
+        return this.myView.getHeight();
+    }   // ALTO DE LA VENTANA
 
     @Override
+    public int getHeightLogic() { return this.logicHeight; }     // ALTURA LOGICA
+
+    @Override
+    public int getWidthLogic() { return this.logicWidth; }       //ANCHO LOGICO
+
+    @Override
+    public int getBorderTop() {
+        return this.borderTop;
+    }         // BORDE SUPERIOR
+
+
+    @Override                                                    // ANCHO DE UNA CADENA DE TEXTO
     public int getWidthString(String text) {
         return (int)this.graphics2D.getFont().getStringBounds(text,this.graphics2D.getFontRenderContext()).getWidth();
     }
 
-    @Override
+    @Override                                                    // ALTO DE UNA CADENA DE TEXTO
     public int getHeightString(String text) {
         return (int)this.graphics2D.getFont().getStringBounds(text,this.graphics2D.getFontRenderContext()).getHeight();
     }
@@ -273,5 +250,36 @@ public class GraphicsPC implements IGraphics {
     @Override
     public int getWindow() {
         return window;
-    }   //VENTANA
+    }                   //VENTANA
+
+    //SETTERS
+    @Override
+    public void setResolution(int w, int h) {                    // ACTUALIZA LA RESOLUCION
+        this.myView.setSize(w, h);
+
+        this.factorX = (float)w / (float)this.logicWidth;
+        this.factorY = (float)h / (float)this.logicHeight;
+        this.factorScale = Math.min(this.factorX, this.factorY);
+
+        //DEPENDIENDO DE LA RESOLUCION DE LA VENTANA SE CREAN LOS BORDES POR ARRIBA Y ABAJO O LOS LADOS
+        if(((float)getWidth()/(float)getHeight())<((float)2/(float)3))
+        {
+            this.window = (int)(this.logicWidth * this.factorX);
+            int a = (int) ((getHeight() - (this.logicHeight * this.factorX)) / 2);
+            this.borderHeight = a; //Bordes arriba y abajo
+            this.borderWidth=0;
+        }
+        else {
+            this.window = (int)(this.logicWidth*this.factorY);
+            int a = (int) ((getWidth() - (this.logicWidth * this.factorY)) / 2);
+            this.borderWidth = a; //Bordes Laterales
+            this.borderHeight=0;
+        }
+    }
+
+    @Override
+    public void setFont(IFont font) {                           // PONE UNA FUENTE
+        this.font = (FontPC)font;
+        this.graphics2D.setFont(((FontPC) font).getFont());
+    }
 }
