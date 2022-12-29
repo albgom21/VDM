@@ -1,0 +1,19 @@
+GRAVE: No se tienen en cuenta los insets en escritorio (barra de título de aplicación) por lo que en ventanas pequeñas la parte superior acaba oculta, así como algunos pixeles de los laterales. 
+
+Cambios:
+	Hemos eliminado la comprobación de si un audio está cargado en las clases lógicas y lo hemos incluido en el manager del audio a la hora de crear un nuevo audio.
+	
+	El tamaño de la lógica ahora se manda al Graphics desde la constructora del motor para así poder crear distintos tamaños lógicos.
+
+	Refactorización de clases como GraphicsPC en el que teníamos atributos que no usábamos o getter que conceptualmente no eran correctos.
+
+	Las clases Input (A y PC) dejan de tener métodos synchronized que no hacían falta ya que no estaban sincronizándonse con nada.
+
+	Refactorización en GraphicsA que ahora contiene el Canvas y SurfaceHolder ya que antes lo tenía EngineA sin tener motivo, además recibe el AssetManager desde
+	el constructor sin necesidad de un setter para ello.
+	
+	Las filas y columnas que no tienen ninguna casilla correcta ahora muestran un 0.
+
+	El botón de comprobar ahora solo se puede pulsar una vez que haya terminado de mostrar el mensaje y las casillas erróneas para así evitar fallos al pulsarlo muy seguido.
+
+	En el móvil se ejecuta la aplicación en pantalla completa ocupando así la totalidad de la pantalla.

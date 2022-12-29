@@ -18,12 +18,12 @@ public class EnginePC implements Runnable, IEngine {
     private GraphicsPC graphics;    //GRAPHICS QUE DIBUJA
     private AudioPC audio;          //GESTOR DE AUDIO
 
-    public EnginePC(JFrame myView){
+    public EnginePC(JFrame myView, int logicWidth, int logicHeight){
         this.myView = myView;
         this.input = new InputPC();
         this.myView.addMouseListener(this.input);
 
-        this.graphics = new GraphicsPC(this.myView, 400,600);
+        this.graphics = new GraphicsPC(this.myView, logicWidth, logicHeight);
         this.audio = new AudioPC();
     }
 

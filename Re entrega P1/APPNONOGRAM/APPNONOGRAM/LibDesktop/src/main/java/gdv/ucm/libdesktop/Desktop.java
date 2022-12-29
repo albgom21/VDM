@@ -13,7 +13,7 @@ public class Desktop {
         renderView.setVisible(true);
 
         // Creación del motor de PC y la escena inicial
-        EnginePC engine = new EnginePC(renderView);     //MOTOR
+        EnginePC engine = new EnginePC(renderView, 400, 600);     //MOTOR
         TitleScene scene = new TitleScene(engine);      //PRIMERA ESCENA
         engine.setCurrentScene(scene);
         engine.resume();                                //COMIENZA LA EJECUCION
