@@ -1,0 +1,21 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "APPNONOGRAM"
+include ':app'
+include ':LibLogica'
+include ':LibDesktop'
+include ':LibEngine'
+include ':LibEnginePC'
+include ':LibEngineA'
