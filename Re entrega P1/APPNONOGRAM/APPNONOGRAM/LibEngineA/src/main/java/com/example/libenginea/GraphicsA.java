@@ -57,44 +57,44 @@ public class GraphicsA implements IGraphics {
     @Override
     public int getHeight() {
         return this.myView.getHeight();
-    }
+    }       //ALTURA VENTANA
 
     @Override
     public int getBorderTop() {
         return this.borderTop;
-    }
+    }       //BORDE SUPERIOR
 
     @Override
     public int getWindow() {
         return this.window;
-    }
+    }       //VENTANA
 
     @Override
     public void setResolution(int w, int h) { //no deberia llamarse en Android
         this.myView.getHolder().setFixedSize(w,h);
+    }       //CAMBIA LA RESOLUCION
+
+    @Override
+    public void setFont(IFont font) {           //CAMBIA LA FUENTE
+        this.paint.setTypeface(((FontA) font).getFont());
     }
 
     @Override
-    public void setFont(IFont font) {
-        this.paint.setTypeface(((FontA)font).getFont());
-    }
-
-    @Override
-    public int getWidth() {
+    public int getWidth() {     //ANCHO VENTANA
         return this.myView.getWidth();
     }
 
     @Override
-    public int getWidthLogic() {
+    public int getWidthLogic() {        //ANCHO LOGICO
         return this.logicWidth;
     }
     @Override
-    public int getHeightLogic() {
+    public int getHeightLogic() {       //ALTURA LOGICA
         return this.logicHeight;
     }
 
     @Override
-    public IImage newImage(String name) {
+    public IImage newImage(String name) {       //NUEVA IMAGEN
         Bitmap bitmap = null;
         try {
             InputStream is = this.mgr.open(name);
@@ -107,7 +107,7 @@ public class GraphicsA implements IGraphics {
     }
 
     @Override
-    public IFont newFont(String filename, int size, boolean isBold) {
+    public IFont newFont(String filename, int size, boolean isBold) {       //NUEVA FUENTE
         Typeface tface = Typeface.createFromAsset(mgr, filename);
         this.paint.setTypeface(tface);
         this.paint.setTextSize(size);
@@ -131,7 +131,7 @@ public class GraphicsA implements IGraphics {
     }
 
     @Override
-    public void drawImage(IImage image, int x, int y, int w, int h) {
+    public void drawImage(IImage image, int x, int y, int w, int h) {       //DIBUJA IMAGEN CON POSICION Y TAMAÑO
         float newW = (scaleToReal(w));
         float newH = (scaleToReal(h));
         Bitmap aux = getResizedBitmap(((ImageA)image).getImg(),newW ,newH);
@@ -139,58 +139,58 @@ public class GraphicsA implements IGraphics {
     }
 
     @Override
-    public void drawImage(IImage image, int x, int y) {
+    public void drawImage(IImage image, int x, int y) {     //DIBUJA IMAGEN CON POSICION
         this.canvas.drawBitmap(((ImageA)image).getImg(),logicToRealX(x) - (scaleToReal(((ImageA)image).getImg().getWidth())/2),logicToRealX(x) - (scaleToReal(((ImageA)image).getImg().getHeight())/2),this.paint); //CAMBIAR----------------------------
     }
 
     @Override
-    public void setColor(int colorRGB) {
+    public void setColor(int colorRGB) {        //CAMBIA COLOR
         colorRGB += 0xFF000000;
         int colorARGB = colorRGB + 0xFF000000;
         this.paint.setColor(colorARGB);
     }
 
     @Override
-    public void clear(int color) {
+    public void clear(int color) {      //LIMPIA COLOR
         color+= 0xFF000000;
         this.canvas.drawColor(color);
     }
 
     @Override
-    public void fillSquare(int cx, int cy, int side) {
+    public void fillSquare(int cx, int cy, int side) {      //RELLENA CUADRADO
         Rect rect = new Rect(cx,cy,cx+side,cy+side);
         this.paint.setStyle(Paint.Style.FILL);
         this.canvas.drawRect(rect, this.paint);
     }
 
     @Override
-    public void fillRect(int x, int y, int w, int h) {
+    public void fillRect(int x, int y, int w, int h) {      //RELLENA RECTANGULO VARIABLE
         Rect rect = new Rect(x,y,x+w,y+h);
         this.paint.setStyle(Paint.Style.FILL);
         this.canvas.drawRect(rect, this.paint);
     }
 
     @Override
-    public void drawSquare(int cx, int cy, int side) {
+    public void drawSquare(int cx, int cy, int side) {      //DIBUJA CUADRADO
         Rect rect = new Rect(cx,cy,cx+side,cy+side);
         this.paint.setStyle(Paint.Style.STROKE);
         this.canvas.drawRect(rect, this.paint);
     }
 
     @Override
-    public void drawLine(int initX, int initY, int endX, int endY) {
+    public void drawLine(int initX, int initY, int endX, int endY) {        //DIBUJA LINEA
         this.canvas.drawLine(initX,initY,endX,endY, this.paint);
     }
 
     @Override
-    public void drawRect(int x, int y, int width, int height) {
+    public void drawRect(int x, int y, int width, int height) {     //DIBUJA RECTANGULO VARIABLE
         Rect rect = new Rect(x,y,x+width,y+height);
         this.paint.setStyle(Paint.Style.STROKE);
         this.canvas.drawRect(rect, this.paint);
     }
 
     @Override
-    public void drawText(String text, int x, int y, int color, IFont font, float tam) {
+    public void drawText(String text, int x, int y, int color, IFont font, float tam) {     //DIBUJA TEXTO
         color += 0xFF000000;
         if(font != null)
             setFont(font);
@@ -200,15 +200,15 @@ public class GraphicsA implements IGraphics {
     }
 
     @Override
-    public int logicToRealX(int x) { return (int)(x*(float)factorScale + borderWidth); }
+    public int logicToRealX(int x) { return (int)(x*(float)factorScale + borderWidth); }            //CONVERSOR DE LOGICO A REAL EN X
 
     @Override
-    public int logicToRealY(int y) {
+    public int logicToRealY(int y) {            //CONVERSOR DE LOGICO A REAL EN Y
         return (int)(y*(float)factorScale + borderHeight);
     }
 
     @Override
-    public int scaleToReal(int s) {
+    public int scaleToReal(int s) {     //CONVERSOR DE ESCALA A REAL
         return (int)(s*(factorScale));
     }
 
@@ -224,14 +224,14 @@ public class GraphicsA implements IGraphics {
         return bounds.height();
     }
 
-    public void lockCanvas(){
+    public void lockCanvas(){       //BLOQUEA CANVAS
         this.canvas = this.myView.getHolder().lockCanvas();
     }
-    public void unlockCanvas(){
+    public void unlockCanvas(){     //DESBLOQUEA CANVAS
         this.myView.getHolder().unlockCanvasAndPost(this.canvas);
     }
 
-    public void prepareFrame() {
+    public void prepareFrame() {        //PREPARA EL NUEVO FRAME
 
         this.factorX = (float)getWidth() / (float)this.logicWidth;
         this.factorY = (float)getHeight() / (float)this.logicHeight;

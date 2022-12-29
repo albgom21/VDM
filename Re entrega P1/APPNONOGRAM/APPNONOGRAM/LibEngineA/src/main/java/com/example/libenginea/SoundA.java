@@ -13,7 +13,7 @@ public class SoundA implements ISound {
         this.loop = loop;
     }
 
-    void setSoundPool(SoundPool soundPool){
+    void setSoundPool(SoundPool soundPool){       //SETEA EL SOUNDPOOL
         this.soundPool = soundPool;
     }
     public int getLoop(){
@@ -23,12 +23,12 @@ public class SoundA implements ISound {
         return this.id;
     }
     @Override
-    public void play() {
+    public void play() {        //INICIA EL SONIDO
         soundPool.play(this.id, 1, 1,1, this.loop, 1);
     }
 
     @Override
-    public void stop() {
+    public void stop() {        //PARA EL SONIDO
         soundPool.stop(id);
     }
 }

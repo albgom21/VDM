@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import gdv.ucm.libengine.IInput;
 
 public class InputA implements IInput, View.OnTouchListener{
-    public ArrayList<Event> eventos;
+    public ArrayList<Event> eventos;        //ARRAY DE EVENTOS
 
     InputA(){
         eventos = new ArrayList<>();
@@ -16,19 +16,19 @@ public class InputA implements IInput, View.OnTouchListener{
     @Override
     public ArrayList<Event>getEvents() {
         return eventos;
-    }
+    }       //COGE EL ARRAY DE EVENTOS
 
     @Override
     public void clearEvents() {
         eventos.clear();
-    }
+    }       //LIMPIA EL ARRAY DE EVENTOS
 
     @Override
     public void clearIndexEvent(int i) {
         eventos.remove(i);
-    }
+    }       //LIMPIA UN ELEMENTO DEL ARRAY
 
-    public void addEvent(MotionEvent event){
+    public void addEvent(MotionEvent event){        //AÑADE EVENTO
         InputTouchType tipo = null;
         if(event.getAction() == MotionEvent.ACTION_DOWN)
             tipo = InputTouchType.PRESSED;

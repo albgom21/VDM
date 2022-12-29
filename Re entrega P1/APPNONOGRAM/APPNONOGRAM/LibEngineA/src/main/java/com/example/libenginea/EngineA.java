@@ -80,12 +80,12 @@ public class EngineA implements Runnable, IEngine {
         this.currentScene.render(this.graphics);
     }
 
-    protected void handleInputs() {
+    protected void handleInputs() {       //GESTION DEL INPUT
         this.currentScene.handleInputs(this.input);
     }
     protected void clearInputs() {
         this.input.clearEvents();
-    }
+    }           //LIMPIAR INPUTS
 
     //Métodos sincronización (parar y reiniciar aplicación)
     public void resume() {
@@ -115,7 +115,7 @@ public class EngineA implements Runnable, IEngine {
             }
         }
     }
-
+    //GETTERS Y SETTERS
     @Override
     public IGraphics getGraphics() {
         return this.graphics;

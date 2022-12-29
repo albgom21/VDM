@@ -14,10 +14,10 @@ import gdv.ucm.libengine.ISound;
 import java.util.HashMap;
 
 public class AudioPC implements IAudio {
-    HashMap<String,SoundPC> sounds = new HashMap<>();
+    HashMap<String,SoundPC> sounds = new HashMap<>();   //MAPA DE CLAVE-VALOR NOMBRE-SONIDO
 
     @Override
-    public ISound newSound(String file, boolean loop) {
+    public ISound newSound(String file, boolean loop) {     //NUEVO SONIDO
         AudioInputStream audioStream = null;
         Clip clip = null;
         if (!isLoaded(file)){
@@ -51,7 +51,7 @@ public class AudioPC implements IAudio {
     }
 
     @Override
-    public ISound newSoundAmbient(String file) {
+    public ISound newSoundAmbient(String file) {        //NUEVA MUSICA
         AudioInputStream audioStream = null;
         Clip clip = null;
         if(!isLoaded(file)){
@@ -85,7 +85,7 @@ public class AudioPC implements IAudio {
     }
 
     @Override
-    public void playSound(String id) {
+    public void playSound(String id) {      //TOCAR SONIDO DESDE EL PRINCIPIO
         sounds.get(id+".wav").getClip().setFramePosition(0);
         sounds.get(id+".wav").play();
     }
@@ -93,5 +93,5 @@ public class AudioPC implements IAudio {
     @Override
     public boolean isLoaded(String id) {
         return sounds.containsKey(id);
-    }
+    }   //SI ESTA CARGADO
 }

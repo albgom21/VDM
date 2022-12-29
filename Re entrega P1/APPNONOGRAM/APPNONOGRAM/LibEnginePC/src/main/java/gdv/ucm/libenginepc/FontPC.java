@@ -11,15 +11,15 @@ public class FontPC implements IFont {
         this.font = font;
     }
 
-    public Font getFont() {return this.font;}
+    public Font getFont() {return this.font;}       //COGER FUENTE
     @Override
     public int getSize() {
         return this.font.getSize();
-    }
+    }       //TAMAÑO FUENTE
 
     @Override
     public boolean isBold() {
         return this.font.isBold();
-    }
+    }       //NEGRITA
 
 }

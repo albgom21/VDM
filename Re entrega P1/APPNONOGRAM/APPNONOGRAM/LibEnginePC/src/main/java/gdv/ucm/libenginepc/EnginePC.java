@@ -10,13 +10,13 @@ import gdv.ucm.libengine.IInput;
 import gdv.ucm.libengine.IState;
 
 public class EnginePC implements Runnable, IEngine {
-    private JFrame myView;
-    private Thread renderThread;
-    private boolean running;
-    private InputPC input;
-    private IState currentScene;
-    private GraphicsPC graphics;
-    private AudioPC audio;
+    private JFrame myView;      //VENTANA
+    private Thread renderThread;    //HILO DE RENDER
+    private boolean running;    //BOOLEANO PARA SABER SI LA APLIACION ESTA CORRIENDO
+    private InputPC input;      //CONTROL DE INPUT
+    private IState currentScene;    //ESCENA ACTUAL
+    private GraphicsPC graphics;    //GRAPHICS QUE DIBUJA
+    private AudioPC audio;          //GESTOR DE AUDIO
 
     public EnginePC(JFrame myView){
         this.myView = myView;
@@ -65,7 +65,7 @@ public class EnginePC implements Runnable, IEngine {
 
     protected void update(double deltaTime) {
         this.currentScene.update(deltaTime);
-    }
+    }   //UPDATE DE LA ESCENA
 
     protected void render() {
         // "Borramos" el fondo.
@@ -87,12 +87,12 @@ public class EnginePC implements Runnable, IEngine {
 
     }
 
-    protected void handleInputs() {
+    protected void handleInputs() {     //CONTROL DE INPUT DE LA ESCENA ACTUAL
         this.currentScene.handleInputs(this.input);
     }
     protected void clearInputs() {
         this.input.clearEvents();
-    }
+    }       //LIMPIAR INPUTS
 
     //Métodos sincronización (parar y reiniciar aplicación)
     public void resume() {
@@ -141,7 +141,7 @@ public class EnginePC implements Runnable, IEngine {
     }
 
     @Override
-    public void setCurrentScene(IState currentScene) {
+    public void setCurrentScene(IState currentScene) {  //CAMBIO ESCENA
         this.currentScene = currentScene;
     }
 }

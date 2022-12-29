@@ -8,15 +8,15 @@ public class ImageA implements IImage {
 
     ImageA(Bitmap img){this.img = img;}
 
-    public Bitmap getImg(){return img;}
+    public Bitmap getImg(){return img;}     //IMAGEN
 
     @Override
     public int getWidth() {
         return this.img.getWidth();
-    }
+    }       //ANCHO IMAGEN
 
     @Override
     public int getHeight() {
         return this.img.getHeight();
-    }
+    }       //ALTURA IMAGEN
 }

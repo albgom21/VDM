@@ -13,10 +13,10 @@ import gdv.ucm.libengine.IAudio;
 import gdv.ucm.libengine.ISound;
 
 public class AudioA implements IAudio {
-    private AssetManager mgr;
-    private SoundPool soundPool;
-    HashMap<String,SoundA> sounds = new HashMap<>();
-    private MediaPlayer mPlayer;
+    private AssetManager mgr;       //ASSET MANAGER
+    private SoundPool soundPool;    //SOUNDPOOL
+    HashMap<String,SoundA> sounds = new HashMap<>();    //MAPA DE CLAVE VALOR CON NOMBRE SONIDO
+    private MediaPlayer mPlayer;        //MEDIAPLAYER
     AudioA(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             this.soundPool = new SoundPool.Builder().setMaxStreams(10).build();
@@ -25,7 +25,7 @@ public class AudioA implements IAudio {
         mPlayer.reset();
     }
     @Override
-    public ISound newSound(String file, boolean loop) {
+    public ISound newSound(String file, boolean loop) {     //CREA UN NUEVO SONIDO QUE PUEDE ESTAR EN BUCLE O NO
         if(!isLoaded(file)){
             int soundId = -1;
             try {
@@ -45,7 +45,7 @@ public class AudioA implements IAudio {
     }
 
     @Override
-    public ISound newSoundAmbient(String file) {
+    public ISound newSoundAmbient(String file) {        //CREA NUEVA MUSICA
         if(!isLoaded(file)){
             try {
                 AssetFileDescriptor afd = mgr.openFd(file);
@@ -67,18 +67,18 @@ public class AudioA implements IAudio {
     }
 
     @Override
-    public void playSound(String id) {
+    public void playSound(String id) {      //TOCAR MUSICA
         soundPool.play(sounds.get(id+".wav").getId(), 1, 1,1, sounds.get(id+".wav").getLoop(), 1);
     }
 
     @Override
-    public boolean isLoaded(String id) {
+    public boolean isLoaded(String id) {       //COMPRUEBA SI ESTA CARGADO
         return sounds.containsKey(id);
     }
 
     public void setAssetManager(AssetManager mgr){
         this.mgr = mgr;
-    }
+    }       //PONER ASSET MANAGER
 
     public MediaPlayer getmPlayer() {
         return this.mPlayer;

@@ -11,10 +11,10 @@ public class FontA implements IFont {
         this.font = font;
     }
 
-    public Typeface getFont(){return this.font;}
+    public Typeface getFont(){return this.font;}        //FUENTE
 
     @Override
-    public int getSize() {
+    public int getSize() {          //TAMAÑO FUENTE
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
             return font.getWeight();
         return -1;
@@ -23,5 +23,5 @@ public class FontA implements IFont {
     @Override
     public boolean isBold() {
         return this.font.isBold();
-    }
+    }           //COMPROBAR SI ES NEGRITA
 }

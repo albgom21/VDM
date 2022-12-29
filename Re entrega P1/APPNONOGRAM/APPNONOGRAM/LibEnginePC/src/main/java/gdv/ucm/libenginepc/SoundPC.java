@@ -10,15 +10,15 @@ public class SoundPC implements ISound {
         this.clip = clip;
     }
 
-    public Clip getClip(){return this.clip;}
+    public Clip getClip(){return this.clip;}        //CLIP DE AUDIO
 
     @Override
     public void play() {
         this.clip.start();
-    }
+    }       //EMPEZAR SONIDO
 
     @Override
-    public void stop() {
+    public void stop() {        //PARAR SONIDO
         if(this.clip.isRunning())
             this.clip.stop();
     }
