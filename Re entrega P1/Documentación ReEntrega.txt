@@ -1,4 +1,4 @@
-Cambios:
+Cambios para mejorar la práctica:
 	En todos los métodos de renderizado tanto de PC como Android se ha añadido un offset para el borde superior para así tenerlo en cuenta y no dibujar en sitios no visibles,
 	en Android vale 0 y en PC el valor que tiene el inset.top (barra de título de la aplicación), el input de los botones se han adaptado para este cambio.
 	
@@ -18,3 +18,14 @@ Cambios:
 	El botón de comprobar ahora solo se puede pulsar una vez que haya terminado de mostrar el mensaje y las casillas erróneas para así evitar fallos al pulsarlo muy seguido.
 
 	En el móvil se ejecuta la aplicación en pantalla completa ocupando así la totalidad de la pantalla.
+	
+	Más comentarios en todo el código.
+	
+Motivos de los cambios:
+	
+	En general nuestros cambios son para tener el código de forma correcta conceptualmente, ya que antes teníamos cosas incoherentes con las divisiones de clases/modulos
+	y el uso del motor por un usuario. Teniendo en cuenta la corrección de la práctica 1 hemos mejorado esto.
+	
+	Otros cambios son para no tener errores visuales como puede ser el tema de los insets y ocupar más pantalla en el móvil.
+	
+	Finalmente, algún cambio en la experiencia del usuario como poner los 0s cuando no haya ninguna pista en lugar de no poner nada y solo usar el botón check cuando no esté pulsado.
