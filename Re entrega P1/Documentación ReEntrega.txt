@@ -1,7 +1,8 @@
-GRAVE: No se tienen en cuenta los insets en escritorio (barra de título de aplicación) por lo que en ventanas pequeñas la parte superior acaba oculta, así como algunos pixeles de los laterales. 
-
 Cambios:
-	Hemos eliminado la comprobación de si un audio está cargado en las clases lógicas y lo hemos incluido en el manager del audio a la hora de crear un nuevo audio.
+	En todos los métodos de renderizado tanto de PC como Android se ha añadido un offset para el borde superior para así tenerlo en cuenta y no dibujar en sitios no visibles,
+	en Android vale 0 y en PC el valor que tiene el inset.top (barra de título de la aplicación), el input de los botones se han adaptado para este cambio.
+	
+	Se ha eliminado la comprobación de si un audio está cargado en las clases lógicas y lo hemos incluido en el manager del audio a la hora de crear un nuevo audio.
 	
 	El tamaño de la lógica ahora se manda al Graphics desde la constructora del motor para así poder crear distintos tamaños lógicos.
 
