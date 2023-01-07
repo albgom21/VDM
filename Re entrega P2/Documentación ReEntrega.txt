@@ -1,0 +1,24 @@
+Cambios para mejorar la práctica:
+	Hemos metido el código en carpetas para una mejor organización.
+	
+	Los elementos de la interfaz como botones y monedas se distribuyen de mejor forma al estar en modo landscape.
+	
+	Ahora se puede abrir la aplicación en horizontal ya que se comprueba si hay existe banner válido.
+	
+	Se ha cambiado la distribución de la serialización, anuncios y sensores en managers para no tener todo en el Engine.
+	
+	El tamaño de la lógica ahora se manda al Graphics desde la constructora del motor para así poder crear distintos tamaños lógicos.
+	
+	Las notificaciones ahora se envían tras cerrar la aplicación.
+	
+	Hemos añadido un botón que se crea con un rectángulo y un texto para no depender de imágenes a la hora de crear botones.
+	
+	Más comentarios en todo el código.
+	
+Motivos de los cambios:
+	
+	En general nuestros cambios son para tener el código mejor organizado y cambiar código al lugar correspondiente.
+	
+	Arreglar errores que pueden hacer que la aplicación no funcione y hacer un uso correcto de las notificaciones.
+	
+	

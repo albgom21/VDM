@@ -107,6 +107,17 @@ public class GraphicsA {
         this.canvas.drawRect(rect, this.paint);
     }
 
+    public void fillRectTransformed(int x, int y, int w, int h) {
+        Rect rect = new Rect
+                (logicToRealX(x) - (scaleToReal(w)/2),
+                logicToRealY(y) - (scaleToReal(h)/2) ,
+                logicToRealX(x) - (scaleToReal(w)/2) + scaleToReal(w),
+                logicToRealY(y) - (scaleToReal(h)/2) + scaleToReal(h));
+
+        this.paint.setStyle(Paint.Style.FILL);
+        this.canvas.drawRect(rect, this.paint);
+    }
+
     public void fillRect(int x, int y, int w, int h) {
         Rect rect = new Rect(x,y,x+w,y+h);
         this.paint.setStyle(Paint.Style.FILL);
@@ -136,6 +147,15 @@ public class GraphicsA {
         this.paint.setColor(color);
         this.paint.setTextSize(tam);
         this.canvas.drawText(text,x - (getWidthString(text)/2), y-(getHeightString(text)/2),this.paint);
+    }
+
+    public void drawTextTransformed(String text, int x, int y, int color, FontA font, float tam) {
+        color += 0xFF000000;
+        if(font != null)
+            setFont(font);
+        this.paint.setColor(color);
+        this.paint.setTextSize(tam);
+        this.canvas.drawText(text,logicToRealX(x) - (getWidthString(text)/2), logicToRealY(y),this.paint);
     }
 
     // CAMBIAR TAM A UNA IMAGEN
